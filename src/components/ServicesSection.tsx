@@ -119,11 +119,11 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                   )}
 
                   {/* Price */}
-                  {service.priceStarting && (
+                  {service.pricing?.starting && (
                     <div className="pt-6 border-t border-border">
                       <span className="text-sm text-muted-foreground">Starting at </span>
-                      <span className="text-lg font-bold gradient-text">${service.priceStarting}</span>
-                      <span className="text-sm text-muted-foreground">/mo</span>
+                      <span className="text-lg font-bold gradient-text">${service.pricing.starting}</span>
+                      <span className="text-sm text-muted-foreground">{service.pricing.unit || '/mo'}</span>
                     </div>
                   )}
                 </Link>

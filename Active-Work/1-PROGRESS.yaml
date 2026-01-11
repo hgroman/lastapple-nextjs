@@ -1,0 +1,352 @@
+# Project Progress Tracker
+# Last Updated: 2026-01-11 (update this when you make changes)
+
+# ============================================================
+# INSTRUCTIONS FOR AI - READ THIS FIRST
+# ============================================================
+# 1. Read Active-Work/0-START-HERE.md for orientation
+# 2. Check "current" section below for exact position
+# 3. Open 2-BUILD-PLAN.md, find the current step
+# 4. Execute the next NOT_STARTED substep
+# 5. Update this file: change status to COMPLETE
+# 6. Update "current" section to next substep
+# 7. Add session note at bottom
+# ============================================================
+
+current:
+  step: 5
+  step_name: "Create Route Pages"
+  substep: "5.1"
+  substep_name: "Create stream archive page"
+  status: NOT_STARTED
+  blocked_by: null
+  next_action: "Create src/app/stream/page.tsx"
+
+decisions:
+  component_strategy: hybrid  # Options were: pure_mdx, templates, hybrid
+  email_service: resend
+  image_hosting: pending  # Options: vercel, wordpress_cdn
+
+steps:
+  step_1:
+    name: "Fix the Build"
+    status: COMPLETE  # NOT_STARTED | IN_PROGRESS | COMPLETE
+    substeps:
+      1.1_stream_schema:
+        file: content/schema/stream.ts
+        status: COMPLETE
+      1.2_service_schema:
+        file: content/schema/service.ts
+        status: COMPLETE
+      1.3_solution_schema:
+        file: content/schema/solution.ts
+        status: COMPLETE
+      1.4_placeholder_content:
+        files:
+          - content/stream/placeholder.mdx
+          - content/services/placeholder.mdx
+          - content/solutions/placeholder.mdx
+        status: COMPLETE
+      1.5_verify_build:
+        command: npm run build
+        status: COMPLETE
+    test: "npm run build passes without errors"
+
+  step_2:
+    name: "Create Base Layout Components"
+    status: COMPLETE
+    substeps:
+      2.1_base_layout:
+        file: src/components/content/layouts/BaseLayout.tsx
+        status: COMPLETE
+      2.2_stream_layout:
+        file: src/components/content/layouts/StreamLayout.tsx
+        status: COMPLETE
+      2.3_service_layout:
+        file: src/components/content/layouts/ServiceLayout.tsx
+        status: COMPLETE
+      2.4_solution_layout:
+        file: src/components/content/layouts/SolutionLayout.tsx
+        status: COMPLETE
+      2.5_index_export:
+        file: src/components/content/index.ts
+        status: COMPLETE
+      2.6_test:
+        status: COMPLETE
+    test: "Layouts render without errors, styling matches design system"
+
+  step_3:
+    name: "Create Block Components"
+    status: COMPLETE
+    substeps:
+      3.1_hero:
+        file: src/components/content/blocks/Hero.tsx
+        status: COMPLETE
+      3.2_feature_grid:
+        file: src/components/content/blocks/FeatureGrid.tsx
+        status: COMPLETE
+      3.3_pricing_table:
+        file: src/components/content/blocks/PricingTable.tsx
+        status: COMPLETE
+      3.4_process_steps:
+        file: src/components/content/blocks/ProcessSteps.tsx
+        status: COMPLETE
+      3.5_cta_section:
+        file: src/components/content/blocks/CTASection.tsx
+        status: COMPLETE
+      3.6_case_study:
+        file: src/components/content/blocks/CaseStudy.tsx
+        status: COMPLETE
+      3.7_faq:
+        file: src/components/content/blocks/FAQ.tsx
+        status: COMPLETE
+      3.8_update_exports:
+        file: src/components/content/index.ts
+        status: COMPLETE
+      3.9_test:
+        status: COMPLETE
+    test: "All blocks render, responsive, dark theme correct"
+
+  step_4:
+    name: "Create Prose Components"
+    status: COMPLETE
+    substeps:
+      4.1_callout:
+        file: src/components/content/prose/Callout.tsx
+        status: COMPLETE
+      4.2_code_block:
+        file: src/components/content/prose/CodeBlock.tsx
+        status: COMPLETE
+      4.3_table:
+        file: src/components/content/prose/Table.tsx
+        status: COMPLETE
+      4.4_mdx_components:
+        file: src/lib/mdx-components.tsx
+        status: COMPLETE
+      4.5_test:
+        status: COMPLETE
+    test: "MDX renders with styled elements"
+
+  step_5:
+    name: "Create Route Pages"
+    status: NOT_STARTED
+    substeps:
+      5.1_stream_archive:
+        file: src/app/stream/page.tsx
+        status: NOT_STARTED
+      5.2_stream_detail:
+        file: src/app/stream/[slug]/page.tsx
+        status: NOT_STARTED
+      5.3_services_archive:
+        file: src/app/services/page.tsx
+        status: NOT_STARTED
+      5.4_services_detail:
+        file: src/app/services/[slug]/page.tsx
+        status: NOT_STARTED
+      5.5_solutions_archive:
+        file: src/app/solutions/page.tsx
+        status: NOT_STARTED
+      5.6_solutions_detail:
+        file: src/app/solutions/[slug]/page.tsx
+        status: NOT_STARTED
+      5.7_about:
+        file: src/app/about/page.tsx
+        status: NOT_STARTED
+      5.8_contact:
+        file: src/app/contact/page.tsx
+        status: NOT_STARTED
+      5.9_privacy:
+        file: src/app/privacy/page.tsx
+        status: NOT_STARTED
+      5.10_terms:
+        file: src/app/terms/page.tsx
+        status: NOT_STARTED
+      5.11_test:
+        status: NOT_STARTED
+    test: "All routes return 200, no 404s"
+
+  step_6:
+    name: "SEO Infrastructure"
+    status: NOT_STARTED
+    substeps:
+      6.1_metadata:
+        description: "Add generateMetadata to all dynamic routes"
+        status: NOT_STARTED
+      6.2_sitemap:
+        file: src/app/sitemap.ts
+        status: NOT_STARTED
+      6.3_robots:
+        file: src/app/robots.ts
+        status: NOT_STARTED
+      6.4_json_ld:
+        description: "Add structured data to layout"
+        status: NOT_STARTED
+      6.5_rss:
+        file: src/app/feed.xml/route.ts
+        status: NOT_STARTED
+      6.6_test:
+        status: NOT_STARTED
+    test: "/sitemap.xml and /robots.txt accessible, meta tags present"
+
+  step_7:
+    name: "Contact Form"
+    status: NOT_STARTED
+    substeps:
+      7.1_form_component:
+        file: src/components/ContactForm.tsx
+        status: NOT_STARTED
+      7.2_api_route:
+        file: src/app/api/contact/route.ts
+        status: NOT_STARTED
+      7.3_resend_setup:
+        description: "Install resend, add API key to env"
+        status: NOT_STARTED
+      7.4_integrate:
+        description: "Add form to contact page"
+        status: NOT_STARTED
+      7.5_test:
+        status: NOT_STARTED
+    test: "Form submits, email received at hank@lastapple.com"
+
+  step_8:
+    name: "Redirects"
+    status: NOT_STARTED
+    substeps:
+      8.1_add_redirects:
+        file: next.config.ts
+        status: NOT_STARTED
+      8.2_test:
+        status: NOT_STARTED
+    test: "Old WordPress URLs return 301/308 to new paths"
+
+  step_9:
+    name: "Analytics"
+    status: NOT_STARTED
+    substeps:
+      9.1_get_ids:
+        description: "Extract Clarity and GA IDs from WordPress"
+        status: NOT_STARTED
+      9.2_add_scripts:
+        file: src/app/layout.tsx
+        status: NOT_STARTED
+      9.3_test:
+        status: NOT_STARTED
+    test: "Tracking calls visible in network tab"
+
+content_migration:
+  status: NOT_STARTED  # Only start after steps 1-9 complete
+  priority_1:
+    - wordpress_maintenance: NOT_STARTED
+    - maintenance_plans: NOT_STARTED
+    - ai_chatbot_solutions: NOT_STARTED
+    - b2b_email_list: NOT_STARTED
+    - data_integration: NOT_STARTED
+    - contact_page: NOT_STARTED
+  priority_2:
+    - wordpress_performance: NOT_STARTED
+    - wordpress_resurrection: NOT_STARTED
+    - website_renaissance: NOT_STARTED
+    - hubspot_integration: NOT_STARTED
+    - content_creation: NOT_STARTED
+    - social_strategies: NOT_STARTED
+    - audio_scapes: NOT_STARTED
+  priority_3:
+    - blog_posts: NOT_STARTED  # 14 total
+  priority_4:
+    - about: NOT_STARTED
+    - privacy: NOT_STARTED
+    - terms: NOT_STARTED
+
+# Statistics
+stats:
+  infrastructure_steps: 9
+  infrastructure_complete: 4
+  content_pages_total: 49  # 35 pages + 14 posts
+  content_pages_migrated: 0
+  estimated_hours_remaining: 4.5  # infrastructure only
+
+# Instructions for AI (read this first)
+instructions: |
+  1. Read Active-Work/0-START-HERE.md for orientation
+  2. Check "current" section below for exact position
+  3. Open 2-BUILD-PLAN.md, find the current step
+  4. Execute the next NOT_STARTED substep
+  5. Update this file: change status to COMPLETE
+  6. Update "current" section to next substep
+  7. Add session note at bottom
+
+# Notes from sessions (append new notes, don't delete old)
+session_notes:
+  - date: 2026-01-11
+    session: 1
+    duration: "~2 hours"
+    what_happened:
+      - Tested GitHub MCP (working)
+      - Audited WordPress via CLI (35 pages, 14 posts, 40+ plugins)
+      - Extracted menus, categories, social links, contact info
+      - Created site architecture (routes, SEO, forms, redirects)
+      - Created 9-step build plan
+      - Created numbered doc system (0 through 5)
+      - Decided hybrid component strategy
+    current_state:
+      complete:
+        - Homepage (6 sections, animations)
+        - Navigation (mega menu, mobile)
+        - Design system (Tailwind v4, dark theme)
+      broken:
+        - Content pipeline (schemas deleted)
+      missing:
+        - All routes except /
+        - Forms
+        - SEO infrastructure
+    decisions_made:
+      - component_strategy: hybrid
+      - email_service: resend
+    next_action: "Execute Step 1.1 - Create content/schema/stream.ts"
+    tools:
+      github_mcp: "mcp__github__* functions"
+      wordpress_cli: "ssh -p 18765 u1596-ygnccu9irco4@gcam1100.siteground.biz"
+      build: "npm run build"
+      dev: "npm run dev"
+
+  - date: 2026-01-11
+    session: 2
+    duration: "~45 min"
+    what_happened:
+      - Executed Step 1 (Fix the Build)
+      - Created 3 Zod schemas (stream, service, solution)
+      - Created placeholder MDX files for all 3 content types
+      - Fixed type error in ServicesSection.tsx (priceStarting → pricing.starting)
+      - Executed Step 2 (Create Base Layout Components)
+      - Created 4 layout components (Base, Stream, Service, Solution)
+      - Executed Step 3 (Create Block Components)
+      - Created 7 block components (Hero, FeatureGrid, PricingTable, ProcessSteps, CTASection, CaseStudy, FAQ)
+      - Fixed Framer Motion type errors (ease as const)
+      - Executed Step 4 (Create Prose Components)
+      - Created 3 prose components (Callout, CodeBlock, Table)
+      - Created mdx-components.tsx with full element mappings
+      - All builds pass successfully
+    files_created:
+      - content/schema/stream.ts
+      - content/schema/service.ts
+      - content/schema/solution.ts
+      - content/stream/placeholder.mdx
+      - content/services/placeholder.mdx
+      - content/solutions/placeholder.mdx
+      - src/components/content/layouts/BaseLayout.tsx
+      - src/components/content/layouts/StreamLayout.tsx
+      - src/components/content/layouts/ServiceLayout.tsx
+      - src/components/content/layouts/SolutionLayout.tsx
+      - src/components/content/blocks/Hero.tsx
+      - src/components/content/blocks/FeatureGrid.tsx
+      - src/components/content/blocks/PricingTable.tsx
+      - src/components/content/blocks/ProcessSteps.tsx
+      - src/components/content/blocks/CTASection.tsx
+      - src/components/content/blocks/CaseStudy.tsx
+      - src/components/content/blocks/FAQ.tsx
+      - src/components/content/prose/Callout.tsx
+      - src/components/content/prose/CodeBlock.tsx
+      - src/components/content/prose/Table.tsx
+      - src/components/content/index.ts
+      - src/lib/mdx-components.tsx
+    next_action: "Execute Step 5 - Create Route Pages"

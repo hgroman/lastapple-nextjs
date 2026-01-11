@@ -1,0 +1,695 @@
+# Last Apple Site Architecture
+# Complete Migration Blueprint
+# Generated: 2026-01-11
+
+# ============================================================
+# WORDPRESS SITE AUDIT (LIVE)
+# ============================================================
+
+wordpress:
+  url: https://lastapple.com
+  tagline: "Where no question is too small... or too Big!"
+  admin_email: hank@lastapple.com
+
+  pages:
+    total: 35
+    published: 35
+
+  posts:
+    total: 14
+    categories:
+      - name: AI
+        slug: ai
+        count: 11
+      - name: SEO
+        slug: seo
+        count: 2
+      - name: Uncategorized
+        slug: uncategorized
+        count: 1
+    tags: [] # No tags in use
+
+  plugins_active:
+    # MUST REPLICATE
+    - name: elementor
+      purpose: Page builder
+      next_js: Already rebuilt as components
+
+    - name: forminator
+      purpose: Contact forms
+      next_js: Need contact form + email sending
+
+    - name: go_pricing
+      purpose: Pricing tables
+      next_js: PricingSection component exists
+
+    - name: wp-seopress
+      purpose: SEO meta, sitemaps
+      next_js: Need metadata API + sitemap.ts
+
+    - name: 301-redirects
+      purpose: URL redirects
+      next_js: next.config.ts redirects array
+
+    - name: microsoft-clarity
+      purpose: Analytics/heatmaps
+      next_js: Script in layout.tsx
+
+    - name: google-site-kit
+      purpose: GA4, Search Console
+      next_js: Script in layout.tsx
+
+    # CAN IGNORE
+    - name: jetpack
+      purpose: Stats, CDN
+      next_js: Vercel handles
+
+    - name: sg-cachepress
+      purpose: SiteGround caching
+      next_js: Vercel Edge handles
+
+    - name: updraftplus
+      purpose: Backups
+      next_js: Git is the backup
+
+  social:
+    facebook: https://www.facebook.com/LastAppleConsulting
+    instagram: https://www.instagram.com/hjgroman/
+    linkedin: https://www.linkedin.com/in/hankgroman/
+    twitter: hankgroman
+    youtube: https://www.youtube.com/channel/UC3OPbkyTemkxPwFNvIhHu2g
+    whatsapp: "+1 714-813-9973"
+    skype: hankgroman
+
+  contact:
+    phone: "714-813-9973"
+    email: hank@lastapple.com
+    address: "6 Centerpointe Dr Ste 700, La Palma, CA 90623"
+
+# ============================================================
+# NEXT.JS SITE ARCHITECTURE
+# ============================================================
+
+nextjs:
+
+  # URL STRUCTURE
+  routes:
+    static:
+      - path: /
+        component: app/page.tsx
+        status: BUILT
+
+      - path: /about
+        component: app/about/page.tsx
+        status: NOT_BUILT
+
+      - path: /contact
+        component: app/contact/page.tsx
+        status: NOT_BUILT
+        has_form: true
+
+      - path: /stream
+        component: app/stream/page.tsx
+        status: NOT_BUILT
+        purpose: Blog archive with pagination
+
+      - path: /services
+        component: app/services/page.tsx
+        status: NOT_BUILT
+        purpose: Services overview/listing
+
+      - path: /solutions
+        component: app/solutions/page.tsx
+        status: NOT_BUILT
+        purpose: Solutions overview/listing
+
+      - path: /privacy
+        component: app/privacy/page.tsx
+        status: NOT_BUILT
+
+      - path: /terms
+        component: app/terms/page.tsx
+        status: NOT_BUILT
+
+    dynamic:
+      - path: /stream/[slug]
+        component: app/stream/[slug]/page.tsx
+        status: NOT_BUILT
+        content_source: content/stream/*.mdx
+        generates_from: getAllStreamSlugs()
+
+      - path: /services/[slug]
+        component: app/services/[slug]/page.tsx
+        status: NOT_BUILT
+        content_source: content/services/*.mdx
+
+      - path: /solutions/[slug]
+        component: app/solutions/[slug]/page.tsx
+        status: NOT_BUILT
+        content_source: content/solutions/*.mdx
+
+    api:
+      - path: /api/contact
+        purpose: Contact form submission
+        status: NOT_BUILT
+        sends_to: hank@lastapple.com
+
+    generated:
+      - path: /sitemap.xml
+        component: app/sitemap.ts
+        status: NOT_BUILT
+
+      - path: /robots.txt
+        component: app/robots.ts
+        status: NOT_BUILT
+
+      - path: /feed.xml
+        component: app/feed/route.ts
+        status: NOT_BUILT
+        purpose: RSS feed for stream
+
+  # CONTENT MODEL
+  content:
+    stream:
+      location: content/stream/
+      schema: StreamPostSchema
+      fields:
+        - title (required, min 5 chars)
+        - description (required, max 160 chars for SEO)
+        - slug (auto from filename)
+        - publishedAt (ISO date)
+        - updatedAt (optional)
+        - tags (array of strings)
+        - category (optional, enum: ai, seo, wordpress, automation)
+        - featured (boolean)
+        - published (boolean)
+        - image (optional, OG image)
+        - author (default: Hank Groman)
+      example_filename: 2025-06-20-coffee-shop-seo.mdx
+
+    services:
+      location: content/services/
+      schema: ServiceSchema
+      fields:
+        - title
+        - description
+        - slug
+        - icon (lucide icon name)
+        - category (wordpress, ai, integration)
+        - features (array, min 3)
+        - pricing (optional object)
+        - cta_text
+        - cta_link
+        - published
+        - order (for sorting)
+      files_needed:
+        - wordpress-maintenance.mdx
+        - maintenance-plans.mdx
+        - website-renaissance.mdx
+        - wordpress-performance.mdx
+        - wordpress-resurrection.mdx
+        - augmentive-services.mdx # Overview page
+
+    solutions:
+      location: content/solutions/
+      schema: SolutionSchema
+      fields:
+        - title
+        - description
+        - slug
+        - icon
+        - category (ai, integration, automation, data)
+        - outcomes (array of results)
+        - case_study (optional object)
+        - published
+        - order
+      files_needed:
+        - ai-chatbot-solutions.mdx
+        - b2b-email-list.mdx
+        - data-integration.mdx
+        - hubspot-integration.mdx
+        - content-creation.mdx
+        - social-strategies.mdx
+        - audio-scapes.mdx
+
+  # NAVIGATION
+  navigation:
+    primary_menu:
+      - label: Stream
+        href: /stream
+
+      - label: Portfolios
+        type: mega_menu
+        columns:
+          services:
+            - label: WordPress Maintenance
+              href: /services/wordpress-maintenance
+              description: Premium white-glove service
+            - label: Maintenance Plans
+              href: /services/maintenance-plans
+              description: Tiered pricing options
+            - label: Performance & SEO
+              href: /services/wordpress-performance
+              description: Speed and visibility
+          solutions:
+            - label: AI Chatbots
+              href: /solutions/ai-chatbot-solutions
+              description: Intelligent customer engagement
+            - label: Data Integration
+              href: /solutions/data-integration
+              description: Connect your systems
+            - label: B2B Email Lists
+              href: /solutions/b2b-email-list
+              description: AI-powered prospecting
+          client_work:
+            - label: View All Work
+              href: /clients
+
+      - label: About
+        href: /about
+
+    cta:
+      label: "Let's Talk"
+      href: /contact
+
+    footer:
+      columns:
+        services:
+          - WordPress Maintenance
+          - Performance & SEO
+          - Website Renaissance
+        solutions:
+          - AI Chatbots
+          - Data Integration
+          - HubSpot Integration
+        company:
+          - About
+          - Blog/Stream
+          - Contact
+        legal:
+          - Privacy Policy
+          - Terms of Use
+
+  # SEO
+  seo:
+    global:
+      title_template: "%s | Last Apple Business Solutions"
+      default_description: "30+ years system integration expertise. WordPress maintenance, AI-powered solutions, and intelligent automation for businesses."
+      keywords:
+        - WordPress maintenance
+        - AI business solutions
+        - system integration
+        - digital marketing
+        - process automation
+
+    opengraph:
+      type: website
+      site_name: Last Apple Business Solutions
+      default_image: /og-default.png
+
+    twitter:
+      card: summary_large_image
+      site: "@hankgroman"
+
+    structured_data:
+      organization:
+        name: Last Apple Business Solutions
+        url: https://lastapple.com
+        logo: /logo.png
+        sameAs:
+          - https://www.facebook.com/LastAppleConsulting
+          - https://www.linkedin.com/in/hankgroman/
+          - https://twitter.com/hankgroman
+          - https://www.youtube.com/channel/UC3OPbkyTemkxPwFNvIhHu2g
+        contactPoint:
+          telephone: "+1-714-813-9973"
+          contactType: customer service
+          areaServed: US
+
+      local_business:
+        type: ProfessionalService
+        name: Last Apple Business Solutions
+        address:
+          streetAddress: 6 Centerpointe Dr Ste 700
+          addressLocality: La Palma
+          addressRegion: CA
+          postalCode: "90623"
+          addressCountry: US
+        geo:
+          latitude: 33.8536
+          longitude: -118.0467
+        telephone: "+1-714-813-9973"
+        priceRange: "$$"
+
+  # ANALYTICS & TRACKING
+  analytics:
+    microsoft_clarity:
+      enabled: true
+      project_id: TBD # Get from WordPress
+
+    google_analytics:
+      enabled: true
+      measurement_id: TBD # Get from Site Kit
+
+    google_search_console:
+      verification: TBD
+
+  # FORMS
+  forms:
+    contact:
+      fields:
+        - name (required)
+        - email (required, validated)
+        - phone (optional)
+        - message (required)
+      submit_to: /api/contact
+      sends_email_to: hank@lastapple.com
+      email_service: resend # or sendgrid
+      success_message: "Thanks! We'll be in touch within 24 hours."
+
+  # REDIRECTS (from WordPress URLs to new structure)
+  redirects:
+    permanent:
+      # WordPress services to new paths
+      - source: /wordpress-maintenance
+        destination: /services/wordpress-maintenance
+
+      - source: /wordpress-maintenance-plans
+        destination: /services/maintenance-plans
+
+      - source: /wordpress-performance-optimization-seo-services
+        destination: /services/wordpress-performance
+
+      - source: /wordpress-resurrection-breathing-new-life-into-aging-websites
+        destination: /services/wordpress-resurrection
+
+      - source: /website-renaissance-transforming-digital-presence
+        destination: /services/website-renaissance
+
+      # AI solutions
+      - source: /ai-powered-chatbot-solutions
+        destination: /solutions/ai-chatbot-solutions
+
+      - source: /ai-powered-b2b-email-list-services
+        destination: /solutions/b2b-email-list
+
+      - source: /ai-driven-data-integration-and-process-optimization
+        destination: /solutions/data-integration
+
+      - source: /unleash-hubspots-full-potential-with-last-apple
+        destination: /solutions/hubspot-integration
+
+      - source: /ai-powered-content-creation-services-elevate-your-digital-presence
+        destination: /solutions/content-creation
+
+      - source: /elevate-your-social-presence-with-ai-driven-strategies
+        destination: /solutions/social-strategies
+
+      # Blog posts (keep slug, change path)
+      - source: /coffee-shop-seo-how-local-businesses-can-brew-better-search-rankings
+        destination: /stream/coffee-shop-seo
+
+      - source: /blog
+        destination: /stream
+
+      # Other pages
+      - source: /seo-guide-for-solopreneurs
+        destination: /solutions/seo-guide
+
+      - source: /audio-scapes
+        destination: /solutions/audio-scapes
+
+      - source: /partners
+        destination: /about#partners
+
+      - source: /services
+        destination: /services/wordpress-maintenance
+
+      - source: /augmentive-services
+        destination: /solutions
+
+# ============================================================
+# MIGRATION CONTENT MAP
+# ============================================================
+
+migration:
+
+  # WordPress Page ID → Next.js MDX file
+  pages:
+    # SERVICES
+    4406:
+      wp_title: WordPress Maintenance
+      wp_slug: wordpress-maintenance
+      next_file: content/services/wordpress-maintenance.mdx
+      priority: P1
+
+    9816:
+      wp_title: Maintenance Plans
+      wp_slug: wordpress-maintenance-plans
+      next_file: content/services/maintenance-plans.mdx
+      priority: P1
+
+    9046:
+      wp_title: Website Renaissance
+      wp_slug: website-renaissance-transforming-digital-presence
+      next_file: content/services/website-renaissance.mdx
+      priority: P2
+
+    8925:
+      wp_title: WordPress Performance Optimization
+      wp_slug: wordpress-performance-optimization-seo-services
+      next_file: content/services/wordpress-performance.mdx
+      priority: P2
+
+    8944:
+      wp_title: WordPress Resurrection
+      wp_slug: wordpress-resurrection-breathing-new-life-into-aging-websites
+      next_file: content/services/wordpress-resurrection.mdx
+      priority: P2
+
+    # SOLUTIONS (AI Services)
+    8970:
+      wp_title: AI-Powered Chatbot Solutions
+      wp_slug: ai-powered-chatbot-solutions
+      next_file: content/solutions/ai-chatbot-solutions.mdx
+      priority: P1
+
+    10833:
+      wp_title: AI-Powered B2B Email List Services
+      wp_slug: ai-powered-b2b-email-list-services
+      next_file: content/solutions/b2b-email-list.mdx
+      priority: P1
+
+    9131:
+      wp_title: AI-Driven Data Integration
+      wp_slug: ai-driven-data-integration-and-process-optimization
+      next_file: content/solutions/data-integration.mdx
+      priority: P1
+
+    9320:
+      wp_title: HubSpot Integration
+      wp_slug: unleash-hubspots-full-potential-with-last-apple
+      next_file: content/solutions/hubspot-integration.mdx
+      priority: P2
+
+    8954:
+      wp_title: AI-Powered Content Creation
+      wp_slug: ai-powered-content-creation-services-elevate-your-digital-presence
+      next_file: content/solutions/content-creation.mdx
+      priority: P2
+
+    10159:
+      wp_title: AI-Driven Social Strategies
+      wp_slug: elevate-your-social-presence-with-ai-driven-strategies
+      next_file: content/solutions/social-strategies.mdx
+      priority: P2
+
+    396:
+      wp_title: Audio Scapes
+      wp_slug: audio-scapes
+      next_file: content/solutions/audio-scapes.mdx
+      priority: P3
+
+    # STATIC PAGES (not MDX, custom components)
+    8940:
+      wp_title: About
+      wp_slug: about
+      next_file: app/about/page.tsx
+      priority: P2
+
+    33:
+      wp_title: Contact
+      wp_slug: contact
+      next_file: app/contact/page.tsx
+      priority: P1
+
+    1040:
+      wp_title: Privacy
+      wp_slug: privacy
+      next_file: app/privacy/page.tsx
+      priority: P3
+
+    1042:
+      wp_title: Terms of Use
+      wp_slug: terms-use
+      next_file: app/terms/page.tsx
+      priority: P3
+
+  # BLOG POSTS → Stream
+  posts:
+    11206:
+      wp_title: "Coffee Shop SEO: How Local Businesses Can Brew Better Search Rankings"
+      wp_date: 2025-06-20
+      next_file: content/stream/2025-06-20-coffee-shop-seo.mdx
+      category: seo
+
+    11189:
+      wp_title: "From Chaos to Symphony: AI Cognitive Overload to Multi-Persona Breakthrough"
+      wp_date: 2025-06-17
+      next_file: content/stream/2025-06-17-ai-multi-persona-breakthrough.mdx
+      category: ai
+
+    11129:
+      wp_title: "Cursor, Claude, and Chaos: Building a Mautic Data Enrichment Tool"
+      wp_date: 2025-02-03
+      next_file: content/stream/2025-02-03-mautic-data-enrichment.mdx
+      category: ai
+
+    11097:
+      wp_title: "Building a Brain (Not Just Another Marketing Tool)"
+      wp_date: 2025-01-29
+      next_file: content/stream/2025-01-29-building-a-brain.mdx
+      category: ai
+
+    11088:
+      wp_title: "Beyond the Blueprint: Multiple AIs and Marketing Automation"
+      wp_date: 2025-01-23
+      next_file: content/stream/2025-01-23-beyond-the-blueprint.mdx
+      category: ai
+
+    11074:
+      wp_title: "Orchestrating the AI Ensemble: Multi-LLM Collaboration"
+      wp_date: 2025-01-16
+      next_file: content/stream/2025-01-16-ai-ensemble.mdx
+      category: ai
+
+    11066:
+      wp_title: "The Symphony of AI-Powered Marketing Automation"
+      wp_date: 2025-01-14
+      next_file: content/stream/2025-01-14-marketing-automation-symphony.mdx
+      category: ai
+
+    10988:
+      wp_title: "From Sketches to Systems: Four Months of Marketing Automation"
+      wp_date: 2025-01-06
+      next_file: content/stream/2025-01-06-sketches-to-systems.mdx
+      category: ai
+
+    10923:
+      wp_title: "Context Anchoring in AI Troubleshooting"
+      wp_date: 2024-12-27
+      next_file: content/stream/2024-12-27-context-anchoring.mdx
+      category: ai
+
+    10903:
+      wp_title: "Kickstart Your Productivity: AI Meeting Management"
+      wp_date: 2024-12-27
+      next_file: content/stream/2024-12-27-ai-meeting-management.mdx
+      category: ai
+
+    10878:
+      wp_title: "Why Your Company Needs a Brain: AI Knowledge Engine"
+      wp_date: 2024-12-18
+      next_file: content/stream/2024-12-18-company-brain.mdx
+      category: ai
+
+    10849:
+      wp_title: "Technical Debt in the Age of AI"
+      wp_date: 2024-11-19
+      next_file: content/stream/2024-11-19-technical-debt-ai.mdx
+      category: ai
+
+    9336:
+      wp_title: "From Manual Drudgery to AI-Driven Efficiency"
+      wp_date: 2024-09-10
+      next_file: content/stream/2024-09-10-manual-to-ai-efficiency.mdx
+      category: ai
+
+    8805:
+      wp_title: "Revolutionizing Digital Marketing: The Power of AI in SEO"
+      wp_date: 2024-06-28
+      next_file: content/stream/2024-06-28-ai-in-seo.mdx
+      category: seo
+
+# ============================================================
+# BUILD ORDER
+# ============================================================
+
+build_order:
+
+  phase_1_foundation:
+    name: "Fix Build & Core Infrastructure"
+    tasks:
+      - Restore content/schema/*.ts files from git
+      - Create content directories structure
+      - Verify npm run build passes
+      - Add next.config.ts redirects array
+
+  phase_2_routes:
+    name: "Build All Routes"
+    tasks:
+      - Create app/stream/page.tsx (archive)
+      - Create app/stream/[slug]/page.tsx (detail)
+      - Create app/services/page.tsx (listing)
+      - Create app/services/[slug]/page.tsx (detail)
+      - Create app/solutions/page.tsx (listing)
+      - Create app/solutions/[slug]/page.tsx (detail)
+      - Create app/about/page.tsx
+      - Create app/contact/page.tsx
+      - Create app/privacy/page.tsx
+      - Create app/terms/page.tsx
+
+  phase_3_seo:
+    name: "SEO & Discovery"
+    tasks:
+      - Add generateMetadata to all routes
+      - Create app/sitemap.ts
+      - Create app/robots.ts
+      - Add JSON-LD structured data
+      - Create app/feed/route.ts (RSS)
+
+  phase_4_forms:
+    name: "Contact & Forms"
+    tasks:
+      - Create ContactForm component
+      - Create app/api/contact/route.ts
+      - Set up Resend for email
+      - Add form validation with Zod
+
+  phase_5_analytics:
+    name: "Analytics & Tracking"
+    tasks:
+      - Add Microsoft Clarity script
+      - Add Google Analytics script
+      - Verify Search Console
+
+  phase_6_content:
+    name: "Migrate Content"
+    tasks:
+      - Migrate P1 services (2 pages)
+      - Migrate P1 solutions (3 pages)
+      - Migrate all 14 blog posts
+      - Migrate P2 services (3 pages)
+      - Migrate P2 solutions (4 pages)
+      - Create About page content
+      - Create Privacy/Terms content
+
+  phase_7_polish:
+    name: "Launch Prep"
+    tasks:
+      - Test all redirects
+      - Verify all links work
+      - Mobile responsive check
+      - Performance audit (Lighthouse)
+      - Cross-browser testing
+      - DNS cutover plan

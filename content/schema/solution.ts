@@ -1,12 +1,16 @@
 import { z } from 'zod';
 
 export const SolutionSchema = z.object({
-  title: z.string().min(5, 'Title must be at least 5 characters'),
-  description: z.string().max(160, 'Description max 160 chars for SEO'),
+  title: z.string().min(5),
+  description: z.string().max(160),
   slug: z.string(),
   icon: z.string(),
   category: z.enum(['ai', 'integration', 'automation', 'data']),
-  outcomes: z.array(z.string()).min(2, 'Need at least 2 outcomes'),
+  outcomes: z.array(z.string()).min(2),
+  caseStudy: z.object({
+    client: z.string(),
+    outcome: z.string(),
+  }).optional(),
   published: z.boolean().default(true),
   order: z.number().default(0),
   body: z.string(),
