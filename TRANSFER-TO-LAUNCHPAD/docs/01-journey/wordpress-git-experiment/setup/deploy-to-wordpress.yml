@@ -1,0 +1,97 @@
+# GitHub Actions Workflow: Deploy Content to WordPress via SiteGround
+# Save this as: .github/workflows/deploy-to-wordpress.yml in your content repo
+
+name: Deploy to WordPress
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'sync/**'  # Only trigger on content changes
+  workflow_dispatch:  # Allow manual trigger
+
+env:
+  SSH_PORT: 18765
+  WP_PATH: /home/${{ secrets.SITEGROUND_USER }}/www/${{ secrets.SITEGROUND_SITE }}/public_html
+
+jobs:
+  deploy:
+    name: Deploy Content to WordPress
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit for diff
+
+      # Step 2: Set up SSH agent
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Step 3: Add SiteGround to known hosts
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ env.SSH_PORT }} -H ${{ secrets.SITEGROUND_HOST }} >> ~/.ssh/known_hosts
+
+      # Step 4: Check what changed
+      - name: Detect changed files
+        id: changes
+        run: |
+          echo "Checking for content changes..."
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- sync/ || echo "")
+          if [ -z "$CHANGED" ]; then
+            echo "No content changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changed files:"
+            echo "$CHANGED"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      # Step 5: Sync content files to server
+      - name: Sync content to server
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          rsync -avz --delete \
+            -e "ssh -p ${{ env.SSH_PORT }}" \
+            ./sync/ \
+            ${{ secrets.SITEGROUND_USER }}@${{ secrets.SITEGROUND_HOST }}:${{ env.WP_PATH }}/wp-content/plugins/db-version-control/sync/
+
+      # Step 6: Import content via WP-CLI
+      - name: Import content to WordPress
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          ssh -p ${{ env.SSH_PORT }} \
+            ${{ secrets.SITEGROUND_USER }}@${{ secrets.SITEGROUND_HOST }} \
+            "cd ${{ env.WP_PATH }} && wp dbvc import --yes"
+
+      # Step 7: Clear caches
+      - name: Clear WordPress cache
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          ssh -p ${{ env.SSH_PORT }} \
+            ${{ secrets.SITEGROUND_USER }}@${{ secrets.SITEGROUND_HOST }} \
+            "cd ${{ env.WP_PATH }} && wp cache flush && wp sg purge"
+
+      # Step 8: Verify deployment
+      - name: Verify deployment
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          ssh -p ${{ env.SSH_PORT }} \
+            ${{ secrets.SITEGROUND_USER }}@${{ secrets.SITEGROUND_HOST }} \
+            "cd ${{ env.WP_PATH }} && wp option get blogname && echo 'Deployment successful!'"
+
+      # Step 9: Summary
+      - name: Deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes detected:** ${{ steps.changes.outputs.has_changes }}" >> $GITHUB_STEP_SUMMARY

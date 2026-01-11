@@ -1,0 +1,92 @@
+{
+  "slug": "wordpress-care",
+
+  "seo": {
+    "title": "WordPress Care Services | Last Apple",
+    "description": "Comprehensive WordPress maintenance, performance optimization, and site revival. 30 years of system integration expertise.",
+    "ogImage": "/images/services/wordpress-care-og.jpg"
+  },
+
+  "page": {
+    "h1": "WordPress Care",
+    "intro": "Your website is the digital heartbeat of your business. We keep it healthy."
+  },
+
+  "offerings": [
+    {
+      "id": "maintenance",
+      "h2": "Maintenance",
+      "tagline": "Keep it running",
+      "description": "Daily backups, security monitoring, updates, and white-glove support.",
+      "tiers": [
+        {
+          "name": "Essentials",
+          "price": 150,
+          "period": "month",
+          "features": [
+            "Daily backups",
+            "WordPress core updates",
+            "Plugin & theme updates",
+            "Security monitoring",
+            "1 hour content edits"
+          ]
+        },
+        {
+          "name": "Growth",
+          "price": 300,
+          "period": "month",
+          "features": [
+            "Everything in Essentials",
+            "Performance optimization",
+            "Malware scanning",
+            "SEO monitoring",
+            "2 hours content edits",
+            "Weekly reports"
+          ]
+        },
+        {
+          "name": "Business",
+          "price": 500,
+          "period": "month",
+          "features": [
+            "Everything in Growth",
+            "Priority support",
+            "Custom development",
+            "Advanced SEO",
+            "Unlimited content edits",
+            "Dedicated account manager"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "h2": "Performance & SEO",
+      "tagline": "Make it fast",
+      "description": "Speed optimization, Core Web Vitals improvement, and search engine visibility.",
+      "outcomes": [
+        "Sub-3-second load times",
+        "90+ PageSpeed score",
+        "Improved search rankings",
+        "Better user experience"
+      ]
+    },
+    {
+      "id": "resurrection",
+      "h2": "Resurrection",
+      "tagline": "Bring it back",
+      "description": "Revive aging, neglected, or broken WordPress sites. We've seen it all and fixed it all.",
+      "outcomes": [
+        "Security cleanup & hardening",
+        "Modern rebuild on solid foundation",
+        "Performance restoration",
+        "Future-proof architecture"
+      ]
+    }
+  ],
+
+  "cta": {
+    "text": "Schedule WordPress Consultation",
+    "href": "/consultation"
+  }
+}

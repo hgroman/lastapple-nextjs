@@ -39,3 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Sensitive WordPress exports with OAuth tokens
+TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/options.json

@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
+      }
+    },
+    "ssh": {
+      "command": "npx",
+      "args": ["-y", "ssh-mcp"],
+      "env": {
+        "SSH_HOST": "${SITEGROUND_HOST}",
+        "SSH_USER": "${SITEGROUND_USER}",
+        "SSH_PORT": "18765",
+        "SSH_PRIVATE_KEY_PATH": "${SSH_KEY_PATH}"
+      }
+    },
+    "wordpress": {
+      "command": "npx",
+      "args": ["-y", "@instawp/mcp-wp"],
+      "env": {
+        "WP_URL": "${WP_SITE_URL}",
+        "WP_USER": "${WP_ADMIN_USER}",
+        "WP_APP_PASSWORD": "${WP_APP_PASSWORD}"
+      }
+    }
+  }
+}

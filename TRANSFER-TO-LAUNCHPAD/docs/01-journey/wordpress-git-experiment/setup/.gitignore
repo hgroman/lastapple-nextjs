@@ -1,0 +1,11 @@
+# Ignore actual credentials
+.env
+*.pem
+*.key
+*_key
+id_rsa*
+*.private
+
+# Keep templates
+!.env.template
+!mcp-config.json

@@ -1,0 +1,46 @@
+{
+  "slug": "system-integration",
+
+  "seo": {
+    "title": "System Integration & Automation | Last Apple",
+    "description": "Connect your tools, automate your workflows, and eliminate manual data entry. 30 years of integration expertise.",
+    "ogImage": "/images/services/system-integration-og.jpg"
+  },
+
+  "page": {
+    "h1": "System Integration",
+    "intro": "Your tools should talk to each other. We make the introductions."
+  },
+
+  "offerings": [
+    {
+      "id": "data-integration",
+      "h2": "Data Integration",
+      "tagline": "Connect everything",
+      "description": "Break down silos. Automate data flow between your CRM, marketing tools, and operations.",
+      "outcomes": [
+        "Automated workflows",
+        "Single source of truth",
+        "Eliminated manual entry",
+        "Real-time data sync"
+      ]
+    },
+    {
+      "id": "hubspot",
+      "h2": "HubSpot Optimization",
+      "tagline": "Unleash the full platform",
+      "description": "Get more from your HubSpot investment with custom integrations, workflow automation, and reporting.",
+      "outcomes": [
+        "Custom integrations",
+        "Advanced workflow automation",
+        "Reporting dashboards",
+        "Training & support"
+      ]
+    }
+  ],
+
+  "cta": {
+    "text": "Discuss Integration Needs",
+    "href": "/consultation"
+  }
+}
