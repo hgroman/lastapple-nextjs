@@ -139,17 +139,7 @@ export function StreamLayout({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.35 }}
-        className="prose prose-invert prose-lg max-w-none
-          prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
-          prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-          prose-p:text-muted-foreground prose-p:leading-relaxed
-          prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-          prose-strong:text-foreground
-          prose-code:text-accent prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-          prose-pre:bg-card prose-pre:border prose-pre:border-border
-          prose-blockquote:border-l-primary prose-blockquote:bg-card/50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg
-          prose-li:text-muted-foreground"
+        className="prose-content"
       >
         {children}
       </motion.article>
