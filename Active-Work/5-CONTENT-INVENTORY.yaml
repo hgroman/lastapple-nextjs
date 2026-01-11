@@ -1,0 +1,295 @@
+# WordPress Content Inventory
+# Generated: 2026-01-11
+# Source: lastapple.com (WordPress/Elementor)
+
+summary:
+  pages: 35
+  posts: 14
+  media: 52
+  media_size: "3.6MB"
+
+pages:
+  core:
+    - id: 30
+      title: Home
+      slug: /
+      priority: P0
+      status: rebuilt
+      notes: Front page - already in Next.js
+
+    - id: 8940
+      title: About
+      slug: /about/
+      priority: P2
+      status: pending
+      notes: Empty export (Elementor-only)
+
+    - id: 33
+      title: Contact
+      slug: /contact/
+      priority: P1
+      status: pending
+      has_form: true
+      has_map: true
+
+  wordpress_services:
+    - id: 32
+      title: Services
+      slug: /services/
+      priority: P2
+      type: category_landing
+
+    - id: 4406
+      title: WordPress Maintenance
+      slug: /wordpress-maintenance/
+      priority: P1
+      type: core_service
+      notes: Full details, tiered plans, add-ons
+
+    - id: 9816
+      title: Maintenance Plans
+      slug: /wordpress-maintenance-plans/
+      priority: P1
+      type: pricing
+      tiers: [Essentials, Growth Accelerator, Business Transformer, Enterprise AI]
+
+    - id: 9046
+      title: Website Renaissance
+      slug: /website-renaissance-transforming-digital-presence/
+      priority: P2
+      type: service
+
+    - id: 8925
+      title: WordPress Performance Optimization
+      slug: /wordpress-performance-optimization-seo-services/
+      priority: P2
+      type: service
+
+    - id: 8944
+      title: WordPress Resurrection
+      slug: /wordpress-resurrection-breathing-new-life-into-aging-websites/
+      priority: P2
+      type: service
+
+  ai_services:
+    - id: 8937
+      title: Augmentive Services
+      slug: /augmentive-services/
+      priority: P2
+      type: category_landing
+
+    - id: 31
+      title: SEO
+      slug: /seo-guide-for-solopreneurs/
+      priority: P2
+      type: service
+
+    - id: 8970
+      title: AI-Powered Chatbot Solutions
+      slug: /ai-powered-chatbot-solutions/
+      priority: P1
+      type: ai_service
+      has_case_study: true
+
+    - id: 10833
+      title: AI-Powered B2B Email List
+      slug: /ai-powered-b2b-email-list-services/
+      priority: P1
+      type: ai_service
+
+    - id: 9131
+      title: AI-Driven Data Integration
+      slug: /ai-driven-data-integration-and-process-optimization/
+      priority: P1
+      type: ai_service
+
+    - id: 9320
+      title: HubSpot Integration
+      slug: /unleash-hubspots-full-potential-with-last-apple/
+      priority: P2
+      type: integration
+
+    - id: 8954
+      title: AI-Powered Content Creation
+      slug: /ai-powered-content-creation-services-elevate-your-digital-presence/
+      priority: P2
+      type: ai_service
+
+    - id: 10159
+      title: AI-Driven Social Strategies
+      slug: /elevate-your-social-presence-with-ai-driven-strategies/
+      priority: P2
+      type: ai_service
+
+    - id: 396
+      title: Audio Scapes
+      slug: /audio-scapes/
+      priority: P3
+      type: niche_service
+
+  about_section:
+    - id: 8964
+      title: Why Choose Last Apple
+      slug: /why-choose-last-apple-pioneering-ai-driven-digital-marketing/
+      priority: P2
+      type: trust
+
+    - id: 9628
+      title: Request Free SEO Audit
+      slug: /java-seo-technical-audits-coffee-shops/
+      priority: P2
+      type: lead_gen
+
+    - id: 10481
+      title: Schedule Audit Review
+      slug: /zoom/
+      priority: P3
+      type: scheduling
+
+    - id: 1263
+      title: Our Partners
+      slug: /partners/
+      priority: P3
+      type: partnerships
+
+    - id: 8792
+      title: Our Blog
+      slug: /blog/
+      priority: P2
+      type: archive
+
+  unlisted:
+    ids: [695, 1040, 1042, 9697, 10592, 10605, 10777, 10778, 10779, 10780, 9853, 10494]
+    status: needs_review
+
+posts:
+  total: 14
+  target: content/stream/
+  items:
+    - id: 11206
+      title: "Coffee Shop SEO: How Local Businesses Can Brew Better Search Rankings"
+      quality: excellent
+      has_tables: true
+      has_code: true
+
+    - id: 11189
+      status: needs_review
+    - id: 11129
+      status: needs_review
+    - id: 11097
+      status: needs_review
+    - id: 11088
+      status: needs_review
+    - id: 11074
+      status: needs_review
+    - id: 11066
+      status: needs_review
+    - id: 10988
+      status: needs_review
+    - id: 10923
+      status: needs_review
+    - id: 10903
+      status: needs_review
+    - id: 10878
+      status: needs_review
+    - id: 10849
+      status: needs_review
+    - id: 9336
+      status: needs_review
+    - id: 8805
+      status: needs_review
+
+typography:
+  wordpress:
+    body:
+      font: Montserrat
+      size: 16px
+      weight: 400
+      line_height: 1.5em
+    h1:
+      font: Montserrat
+      size: 50px
+      weight: 600
+      transform: capitalize
+    h2:
+      font: Montserrat
+      size: 28px
+      weight: 600
+    h3:
+      font: Montserrat
+      size: 30px
+      weight: 600
+      notes: Larger than H2 (unusual)
+    h4:
+      font: Montserrat
+      size: 23px
+      weight: 400
+      transform: lowercase
+    h5:
+      font: Montserrat
+      size: 18px
+      weight: 400
+    h6:
+      font: Montserrat
+      size: 15px
+      weight: 400
+
+colors:
+  wordpress:
+    primary: "#1a6c7a"
+    heading: "#4D8490"
+    dark_blue: "#000f2b"
+    text: "#3a3a3a"
+    background: "#ffffff"
+    accent_gold: "#F2AD44"
+    dark_teal: "#153243"
+    cta_teal: "#154753"
+
+  nextjs:
+    background: "#141010"
+    foreground: "#f5f0e8"
+    primary: "#a63d3d"
+    accent: "#3d9999"
+    notes: Dark theme vs WP light theme
+
+content_patterns:
+  service_page:
+    - hero_with_gradient
+    - intro_paragraph
+    - benefits_list
+    - process_steps
+    - features_list
+    - case_study
+    - cta_section
+
+  pricing_page:
+    - plan_tiers
+    - feature_lists
+    - select_buttons
+    - add_ons_section
+
+  blog_post:
+    - title_subtitle
+    - data_tables
+    - code_blocks
+    - bullet_lists
+    - cta_footer
+
+cleanup:
+  remove:
+    - elementor_markup
+    - wordpress_shortcodes
+    - inline_styles
+    - notionvc_comments
+    - broken_images
+
+  add:
+    - mdx_frontmatter
+    - semantic_html
+    - component_imports
+    - updated_links
+
+files:
+  exports: docs/wordpress-exports/
+  media: public/images/wp/
+  menus: docs/wordpress-exports/menus.json

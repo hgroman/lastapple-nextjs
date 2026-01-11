@@ -1,0 +1,14 @@
+{
+    "ID": 10778,
+    "post_title": "Cart",
+    "post_content": "<!-- wp:shortcode -->[woocommerce_cart]<!-- /wp:shortcode -->",
+    "post_excerpt": "",
+    "post_type": "page",
+    "post_status": "publish",
+    "post_name": "cart",
+    "meta": {
+        "_wpcom_is_markdown": [
+            "1"
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "business": {
+    "name": "Last Apple Business Solutions",
+    "email": "hank@lastapple.com",
+    "phone": "+1 714-813-9973",
+    "skype": "hankgroman"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/LastAppleConsulting",
+    "instagram": "https://www.instagram.com/hjgroman/",
+    "linkedin": "https://www.linkedin.com/in/hankgroman/",
+    "twitter": "hankgroman",
+    "youtube": "https://www.youtube.com/channel/UC3OPbkyTemkxPwFNvIhHu2g"
+  },
+  "owner": {
+    "name": "Hank Groman",
+    "email": "hank@lastapple.com"
+  }
+}

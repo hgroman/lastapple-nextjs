@@ -1,0 +1,50 @@
+{
+    "ID": 8940,
+    "post_title": "About",
+    "post_content": "",
+    "post_excerpt": "",
+    "post_type": "page",
+    "post_status": "publish",
+    "post_name": "about",
+    "meta": {
+        "_wpcom_is_markdown": [
+            "1"
+        ],
+        "_edit_lock": [
+            "1725492054:1"
+        ],
+        "_seopress_robots_primary_cat": [
+            ""
+        ],
+        "_seopress_titles_title": [
+            ""
+        ],
+        "_seopress_titles_desc": [
+            ""
+        ],
+        "_seopress_robots_index": [
+            ""
+        ],
+        "ast-site-content-layout": [
+            "default"
+        ],
+        "theme-transparent-header-meta": [
+            ""
+        ],
+        "adv-header-id-meta": [
+            ""
+        ],
+        "stick-header-meta": [
+            ""
+        ],
+        "astra-migrate-meta-layouts": [
+            "set"
+        ],
+        "footnotes": [
+            ""
+        ],
+        "_edit_last": [
+            "1"
+        ]
+    }
+}
