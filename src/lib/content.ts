@@ -1,11 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { marked } from 'marked';
 import { StreamPostSchema, type StreamPost } from '../../content/schema/stream';
 import { ServiceSchema, type Service } from '../../content/schema/service';
 import { SolutionSchema, type Solution } from '../../content/schema/solution';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
+
+// Configure marked for safe HTML output
+marked.setOptions({
+  gfm: true, // GitHub Flavored Markdown
+  breaks: true, // Convert \n to <br>
+});
 
 // Generic content loader
 function loadContent<T>(
@@ -27,10 +34,13 @@ function loadContent<T>(
     const content = fs.readFileSync(filePath, 'utf-8');
     const { data, content: body } = matter(content);
 
+    // Parse markdown to HTML
+    const htmlBody = marked.parse(body) as string;
+
     return schema.parse({
       ...data,
       slug: file.replace(/\.mdx?$/, ''),
-      body,
+      body: htmlBody,
     });
   });
 }
