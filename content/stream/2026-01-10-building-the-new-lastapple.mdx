@@ -1,0 +1,31 @@
+---
+title: "Building the New LastApple: From WordPress to Git-First"
+description: "Today we started the rebuild of lastapple.com as an AI-native, Git-first platform. Here's the journey."
+publishedAt: "2026-01-10"
+tags: ["ai", "development", "architecture"]
+featured: true
+published: true
+---
+
+Today marks a turning point. After years of wrestling with WordPress - database corruption, plugin conflicts, the constant fear of breaking something - we're building something different.
+
+## The Vision
+
+Edit content from my phone at a red light. Claude commits to Git. Site updates in 90 seconds.
+
+No database. No CMS. Just files, Git, and conversation.
+
+## Why Now?
+
+The WordPress experiment failed. We tried Git integration with `wp dbvc import` and it overwrote 60,000+ lines of settings. Site broke. Lesson learned.
+
+**File-first beats database-first.**
+
+## What We're Building
+
+- Next.js 15+ with App Router
+- Content as MDX files in Git
+- Zod schemas for validation
+- Claude as the content editor
+
+The website isn't the product. The conversation is the product. The website is just the artifact.
