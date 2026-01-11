@@ -14,13 +14,14 @@
 # ============================================================
 
 current:
-  step: INFRASTRUCTURE_COMPLETE
-  step_name: "Content Migration"
-  substep: "priority_1"
-  substep_name: "Migrate priority 1 content"
+  step: 10
+  step_name: "Rich Page Templates"
+  substep: "10.1"
+  substep_name: "Download missing WordPress images"
   status: NOT_STARTED
   blocked_by: null
-  next_action: "Start migrating WordPress content to MDX"
+  next_action: "SSH to WordPress and download missing webp images"
+  work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
 
 decisions:
   component_strategy: hybrid  # Options were: pure_mdx, templates, hybrid
@@ -233,6 +234,66 @@ steps:
         status: COMPLETE  # Build passes, needs runtime test with IDs
     test: "Tracking calls visible in network tab"
 
+  step_10:
+    name: "Rich Page Templates"
+    status: NOT_STARTED
+    work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
+    rationale: "Service/solution pages are boring compared to homepage. Fix template BEFORE migrating more content."
+    substeps:
+      10.1_download_images:
+        description: "SSH to WordPress, download missing webp images"
+        status: NOT_STARTED
+        images:
+          - last-apple-digital-heartbeat-of-business.webp
+          - wordpress-starter-plan-maintenance-tool-box.webp
+          - wordpress-intermediate-plan-performance-optimization.webp
+          - wordpress-advanced-plan-luxury-service.webp
+          - futuristic-digital-navigation-charting-tools.webp
+          - futuristic-digital-archer-targeting-marketing-goals.webp
+          - advanced-wordpress-maintenance-command-center.webp
+      10.2_rename_images:
+        description: "Rename all images with semantic names"
+        status: NOT_STARTED
+      10.3_image_manifest:
+        description: "Create IMAGE-MANIFEST.md with name → usage mapping"
+        file: docs/IMAGE-MANIFEST.md
+        status: NOT_STARTED
+      10.4_update_schemas:
+        description: "Add heroImage and images fields to schemas"
+        files:
+          - content/schema/service.ts
+          - content/schema/solution.ts
+          - content/schema/stream.ts
+        status: NOT_STARTED
+      10.5_redesign_service_layout:
+        description: "Redesign ServiceLayout with hero image, animated cards, pricing tiers"
+        file: src/components/content/layouts/ServiceLayout.tsx
+        status: NOT_STARTED
+      10.6_redesign_solution_layout:
+        description: "Redesign SolutionLayout with similar treatment"
+        file: src/components/content/layouts/SolutionLayout.tsx
+        status: NOT_STARTED
+      10.7_enhance_stream_layout:
+        description: "Add featured image support to blog layout"
+        file: src/components/content/layouts/StreamLayout.tsx
+        status: NOT_STARTED
+      10.8_content_image_component:
+        description: "Create reusable ContentImage component with animations"
+        file: src/components/content/ContentImage.tsx
+        status: NOT_STARTED
+      10.9_remigrate_p1_content:
+        description: "Re-migrate 4 P1 pages with images and new template"
+        pages:
+          - wordpress-maintenance.mdx
+          - ai-chatbot.mdx
+          - b2b-email-lists.mdx
+          - data-integration.mdx
+        status: NOT_STARTED
+      10.10_test:
+        description: "Verify visual parity with homepage, all images load, build passes"
+        status: NOT_STARTED
+    test: "Service/solution pages have visual richness matching homepage"
+
 content_migration:
   status: NOT_STARTED  # Only start after steps 1-9 complete
   priority_1:
@@ -259,11 +320,13 @@ content_migration:
 
 # Statistics
 stats:
-  infrastructure_steps: 9
-  infrastructure_complete: 9  # ALL INFRASTRUCTURE DONE!
+  infrastructure_steps: 10  # Added Step 10: Rich Page Templates
+  infrastructure_complete: 9  # Steps 1-9 done, Step 10 NOT_STARTED
   content_pages_total: 49  # 35 pages + 14 posts
-  content_pages_migrated: 0
-  estimated_hours_remaining: 0  # infrastructure complete, content migration next
+  content_pages_migrated: 4  # P1 content migrated (needs re-migration with images)
+  step_10_substeps: 10
+  step_10_complete: 0
+  estimated_hours_remaining: 4  # Step 10 estimate
 
 # Instructions for AI (read this first)
 instructions: |
@@ -430,3 +493,51 @@ session_notes:
       - NEXT_PUBLIC_GA_MEASUREMENT_ID: "Google Analytics 4 measurement ID"
       - NEXT_PUBLIC_CLARITY_PROJECT_ID: "Microsoft Clarity project ID"
     next_action: "Start content migration (migrate WordPress content to MDX)"
+
+  - date: 2026-01-11
+    session: 4
+    duration: "~1.5 hours"
+    what_happened:
+      - Fixed 3 critical security issues from peer review (XSS, HTML injection, honeypot)
+      - Created src/lib/sanitize.ts with sanitizeContent() and escapeHtml()
+      - Updated all [slug] pages to sanitize MDX content
+      - Added honeypot field to contact form
+      - Migrated 4 P1 content pages (wordpress-maintenance, ai-chatbot, b2b-email-lists, data-integration)
+      - Fixed markdown parsing bug (installed marked library)
+      - Implemented global typography system (@tailwindcss/typography)
+      - Created prose-content CSS class with full styling hierarchy
+      - User reviewed deployed pages - typography working but pages are "boring"
+      - Strategic decision: Fix template BEFORE migrating more content
+      - Created WORK-ORDER-RICH-TEMPLATES.md
+      - Added Step 10 to build plan (Rich Page Templates)
+    security_fixes:
+      - XSS in dangerouslySetInnerHTML: FIXED (sanitize-html)
+      - HTML injection in email: FIXED (escapeHtml)
+      - Spam protection: FIXED (honeypot field)
+    peer_review_grade: "A- (up from B+)"
+    typography_system:
+      - Installed @tailwindcss/typography
+      - Created prose-content class (250+ lines)
+      - H2: Crimson underline, H3: Teal accent bar
+      - Lists: Gradient bullets (ul) and numbered circles (ol)
+      - Blockquotes: Teal border with background
+      - Code: JetBrains Mono with muted bg
+    strategic_decision: |
+      Service/solution pages are boring walls of text compared to homepage.
+      User has valuable AI-generated images from WordPress that need incorporating.
+      Decision: Create rich templates with image slots BEFORE migrating more content.
+      This prevents having to redo 30+ pages later.
+    files_created:
+      - src/lib/sanitize.ts
+      - content/services/wordpress-maintenance.mdx
+      - content/services/ai-chatbot.mdx
+      - content/services/b2b-email-lists.mdx
+      - content/solutions/data-integration.mdx
+      - Active-Work/WORK-ORDER-RICH-TEMPLATES.md
+    files_modified:
+      - src/app/globals.css (typography plugin + prose-content class)
+      - src/lib/content.ts (marked library for MD→HTML)
+      - src/components/content/layouts/*.tsx (prose-content class)
+      - src/app/api/contact/route.ts (escapeHtml, honeypot)
+      - src/components/ContactForm.tsx (honeypot field)
+    next_action: "Execute Step 10.1 - Download missing WordPress webp images"
