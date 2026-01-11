@@ -9,6 +9,7 @@ interface FormData {
   email: string;
   phone: string;
   message: string;
+  website: string; // Honeypot field - should remain empty
 }
 
 interface FormErrors {
@@ -25,6 +26,7 @@ export function ContactForm() {
     email: '',
     phone: '',
     message: '',
+    website: '', // Honeypot - bots will fill this
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>('idle');
@@ -90,7 +92,7 @@ export function ContactForm() {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '', website: '' });
     } catch (error) {
       setStatus('error');
       setErrorMessage(
@@ -181,6 +183,20 @@ export function ContactForm() {
           disabled={status === 'submitting'}
           className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
           placeholder="(555) 123-4567"
+        />
+      </div>
+
+      {/* Honeypot field - hidden from real users, bots will fill it */}
+      <div className="absolute -left-[9999px]" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          tabIndex={-1}
+          autoComplete="off"
         />
       </div>
 

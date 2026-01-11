@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getSolutions, getSolution } from '@/lib/content';
+import { sanitizeContent } from '@/lib/sanitize';
 import { SolutionLayout } from '@/components/content/layouts/SolutionLayout';
 
 interface PageProps {
@@ -52,8 +53,8 @@ export default async function SolutionPage({ params }: PageProps) {
       outcomes={solution.outcomes}
       caseStudy={solution.caseStudy}
     >
-      {/* MDX content would be rendered here */}
-      <div dangerouslySetInnerHTML={{ __html: solution.body }} />
+      {/* Sanitized content - XSS protected */}
+      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(solution.body) }} />
     </SolutionLayout>
   );
 }

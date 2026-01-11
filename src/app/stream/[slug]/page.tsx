@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getStreamPosts, getStreamPost } from '@/lib/content';
+import { sanitizeContent } from '@/lib/sanitize';
 import { StreamLayout } from '@/components/content/layouts/StreamLayout';
 
 interface PageProps {
@@ -60,8 +61,8 @@ export default async function StreamPostPage({ params }: PageProps) {
       category={post.category}
       readingTime={readingTime}
     >
-      {/* MDX content would be rendered here */}
-      <div dangerouslySetInnerHTML={{ __html: post.body }} />
+      {/* Sanitized content - XSS protected */}
+      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(post.body) }} />
     </StreamLayout>
   );
 }

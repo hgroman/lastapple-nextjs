@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getServices, getService } from '@/lib/content';
+import { sanitizeContent } from '@/lib/sanitize';
 import { ServiceLayout } from '@/components/content/layouts/ServiceLayout';
 
 interface PageProps {
@@ -53,8 +54,8 @@ export default async function ServicePage({ params }: PageProps) {
       pricing={service.pricing}
       cta={service.cta}
     >
-      {/* MDX content would be rendered here */}
-      <div dangerouslySetInnerHTML={{ __html: service.body }} />
+      {/* Sanitized content - XSS protected */}
+      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(service.body) }} />
     </ServiceLayout>
   );
 }

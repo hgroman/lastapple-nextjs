@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { z } from 'zod';
+import { escapeHtml } from '@/lib/sanitize';
 
 // Lazy initialization to avoid build-time errors
 let resend: Resend | null = null;
@@ -17,6 +18,7 @@ const ContactFormSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().optional(),
   message: z.string().min(10, 'Message must be at least 10 characters'),
+  website: z.string().optional(), // Honeypot field
 });
 
 export async function POST(request: Request) {
@@ -33,7 +35,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, phone, message } = result.data;
+    const { name, email, phone, message, website } = result.data;
+
+    // Honeypot check - if filled, it's likely a bot
+    if (website && website.length > 0) {
+      // Silently accept but don't send - bot doesn't know it failed
+      console.log('Honeypot triggered - likely bot submission');
+      return NextResponse.json(
+        { success: true },
+        { status: 200 }
+      );
+    }
 
     // Check if API key is configured
     const resendClient = getResend();
@@ -45,20 +57,26 @@ export async function POST(request: Request) {
       );
     }
 
+    // Escape all user inputs to prevent HTML injection
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = phone ? escapeHtml(phone) : '';
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
+
     // Send email via Resend
     const { data, error } = await resendClient.emails.send({
       from: 'Last Apple Contact <onboarding@resend.dev>',
       to: ['hank@lastapple.com'],
       replyTo: email,
-      subject: `New Contact Form Submission from ${name}`,
+      subject: `New Contact Form Submission from ${safeName}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        ${safePhone ? `<p><strong>Phone:</strong> ${safePhone}</p>` : ''}
         <hr />
         <h3>Message:</h3>
-        <p>${message.replace(/\n/g, '<br />')}</p>
+        <p>${safeMessage}</p>
         <hr />
         <p style="color: #666; font-size: 12px;">
           This message was sent from the contact form at lastapple.com
