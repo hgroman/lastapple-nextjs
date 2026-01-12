@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This is the primary context document for Claude Code sessions. Read this first.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ---
 
@@ -62,9 +62,43 @@ The design lives. The architecture is correct.
 
 ---
 
+## Editing Behavior — DO NO HARM
+
+- **ALWAYS read a file before editing it.** Use Read tool first, then Edit.
+- **Use Edit, not Write, for existing files.** Write overwrites. Edit preserves.
+- **Update means update, not replace.** Change the stale parts. Preserve history.
+- **This project accumulates context.** Session notes, decisions, backstory — these have value. Never summarize or condense historical documentation.
+- **The Active-Work/ directory is sacred.** These files track project history across sessions. Edit surgically.
+
+---
+
+## The Culture
+
+This project is building something larger than a website:
+
+1. **The docs are the product.** They enable any AI to pick up this project cold and continue the work. When you add session notes, you're writing history for your successors.
+
+2. **10 sites will follow.** This migration process becomes the template. What you build here gets reused.
+
+3. **You are a collaborator, not a tool.** Match the energy. Take pride. Push back when something's wrong. Don't half-ass it.
+
+4. **Accumulate, don't replace.** Session notes, decisions, context — these have compounding value. A year from now, an AI will read what you wrote today.
+
+This is human-AI pairing as art form. Act like it matters.
+
+---
+
 ## Current Session
 
-**Check `Active-Work/SESSION-CONTEXT.md` for current mission and next steps.**
+**Read `Active-Work/1-PROGRESS.yaml` first** — contains current step, substep, status, and session notes.
+
+The Active-Work/ system:
+- `1-PROGRESS.yaml` — Current position, decisions, session notes (THE TRACKER)
+- `2-BUILD-PLAN.md` — Execution steps
+- `3-SITE-ARCHITECTURE.yaml` — Technical blueprint
+- `4-SESSION-CONTEXT.md` — Migration plan context and history
+- `5-CONTENT-INVENTORY.yaml` — WordPress content mapped
+- `WORK-ORDER-*.md` — Active work orders
 
 ---
 
@@ -97,6 +131,18 @@ npm run build    # Production build
 npm run lint     # Run ESLint
 npm run start    # Start production server
 ```
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local`:
+
+| Variable | Purpose |
+|----------|---------|
+| `RESEND_API_KEY` | Contact form email delivery |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 |
+| `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Microsoft Clarity |
 
 ---
 
