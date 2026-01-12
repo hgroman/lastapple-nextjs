@@ -16,12 +16,13 @@
 current:
   step: 10
   step_name: "Rich Page Templates"
-  substep: "10.1"
-  substep_name: "Download missing WordPress images"
+  substep: "10.0"
+  substep_name: "Complete WordPress Audit"
   status: NOT_STARTED
   blocked_by: null
-  next_action: "SSH to WordPress and download missing webp images"
+  next_action: "SSH to WordPress, extract complete inventory: pages, posts, SEO metadata, images, headings, internal links"
   work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
+  rationale: "AUDIT BEFORE ACTION - Cannot migrate properly without knowing what we're preserving"
 
 decisions:
   component_strategy: hybrid  # Options were: pure_mdx, templates, hybrid
@@ -240,22 +241,46 @@ steps:
     work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
     rationale: "Service/solution pages are boring compared to homepage. Fix template BEFORE migrating more content."
     substeps:
+      # ============================================================
+      # PHASE A: WORDPRESS AUDIT (Must complete before ANY migration)
+      # ============================================================
+      10.0_wordpress_audit:
+        description: "Complete WordPress audit - extract everything needed for migration"
+        status: NOT_STARTED
+        rationale: "Cannot migrate properly without knowing what we're preserving"
+        deliverable: "docs/WORDPRESS-AUDIT.md"
+        must_capture:
+          page_inventory:
+            - "All 35 pages: ID, title, slug, original URL, publish status"
+            - "All 14 posts: ID, title, slug, original URL, publish date, categories"
+          seo_metadata:
+            - "Meta title (from SEOPress) for each page/post"
+            - "Meta description for each page/post"
+            - "OG image if set"
+            - "Canonical URL if different"
+          images:
+            - "Every image filename and WordPress URL"
+            - "Which page(s) reference each image"
+            - "Position: hero, inline, featured, background"
+            - "Alt text from WordPress"
+          heading_structure:
+            - "H1/H2/H3 hierarchy for each page"
+            - "Flag any SEO issues (multiple H1s, skipped levels)"
+          internal_links:
+            - "All links between WordPress pages"
+            - "Map old URL → new URL for link rewriting"
+          redirect_verification:
+            - "Compare audit URLs against next.config.ts redirects"
+            - "Identify missing redirects"
+            - "Add any missing redirects before proceeding"
+      # ============================================================
+      # PHASE B: ASSET PREPARATION (After audit complete)
+      # ============================================================
       10.1_download_images:
-        description: "SSH to WordPress, download missing webp images"
+        description: "SSH to WordPress, download ALL images (not just the 7 listed)"
         status: NOT_STARTED
-        images:
-          - last-apple-digital-heartbeat-of-business.webp
-          - wordpress-starter-plan-maintenance-tool-box.webp
-          - wordpress-intermediate-plan-performance-optimization.webp
-          - wordpress-advanced-plan-luxury-service.webp
-          - futuristic-digital-navigation-charting-tools.webp
-          - futuristic-digital-archer-targeting-marketing-goals.webp
-          - advanced-wordpress-maintenance-command-center.webp
-      10.1b_analyze_wp_exports:
-        description: "Export WordPress page HTML, map which images are used on which pages"
-        status: NOT_STARTED
-        rationale: "Can't rename images semantically without knowing their context/usage"
-        output: "Image usage map: filename → page(s) → suggested semantic name"
+        depends_on: "10.0_wordpress_audit"
+        note: "Use audit to get complete image list, not hardcoded list"
       10.2_rename_images:
         description: "Rename all images with semantic names"
         status: NOT_STARTED
@@ -328,10 +353,10 @@ stats:
   infrastructure_steps: 10  # Added Step 10: Rich Page Templates
   infrastructure_complete: 9  # Steps 1-9 done, Step 10 NOT_STARTED
   content_pages_total: 49  # 35 pages + 14 posts
-  content_pages_migrated: 4  # P1 content migrated (needs re-migration with images)
-  step_10_substeps: 10
+  content_pages_migrated: 0  # Reset - 4 P1 pages need proper re-migration with audit data
+  step_10_substeps: 11  # Added 10.0 (WordPress Audit)
   step_10_complete: 0
-  estimated_hours_remaining: 4  # Step 10 estimate
+  estimated_hours_remaining: 6  # Added ~2 hours for proper audit
 
 # Instructions for AI (read this first)
 instructions: |
@@ -576,6 +601,21 @@ session_notes:
       - Active-Work/1-PROGRESS.yaml (this file - session 5, substep fix)
     plan_correction: |
       Original: 10.1 download → 10.2 rename → 10.3 manifest
-      Problem: Can't rename semantically without knowing which pages use which images
-      Fixed: 10.1 download → 10.1b analyze WP exports → 10.2 rename → 10.3 manifest
-    next_action: "Execute Step 10.1 - Download images, then 10.1b - Analyze usage"
+      Problem: Can't migrate without knowing what we're preserving
+
+      User insight: "What about headers? What about SEO? What about URLs?
+      If we migrate content before identifying linked images, we do triple work.
+      If we don't capture SEO metadata before migration, we lose rankings.
+      We need to think about EVERYTHING that makes a page work."
+
+      Fixed: Added Step 10.0 COMPLETE WORDPRESS AUDIT as prerequisite
+      - Page inventory (all 35 pages, 14 posts)
+      - SEO metadata (meta titles, descriptions from SEOPress)
+      - Images (which pages use which, position, alt text)
+      - Heading structure (H1/H2/H3 per page)
+      - Internal links (for rewriting)
+      - Redirect verification (are all URLs covered?)
+
+      New order: AUDIT → ASSETS → TEMPLATES → MIGRATE
+      Deliverable: docs/WORDPRESS-AUDIT.md before ANY migration work
+    next_action: "Execute Step 10.0 - Complete WordPress Audit"

@@ -228,21 +228,47 @@ images:
 
 ## EXECUTION ORDER
 
+### PHASE A: WORDPRESS AUDIT (Must complete first)
+
 | Step | Task | Estimated |
 |------|------|-----------|
-| 1 | SSH to WordPress, download missing webp images | 15 min |
-| 1b | Export WP page HTML, map image → page usage (MUST DO BEFORE RENAME) | 30 min |
-| 2 | Rename all images semantically (using usage map from 1b) | 30 min |
+| 0 | **COMPLETE WORDPRESS AUDIT** | 2 hrs |
+| | - Page inventory (35 pages, 14 posts): ID, title, slug, URL | |
+| | - SEO metadata: meta title, meta description per page (from SEOPress) | |
+| | - Images: every image, which pages use it, position, alt text | |
+| | - Heading structure: H1/H2/H3 hierarchy per page | |
+| | - Internal links: all cross-page links for rewriting | |
+| | - Redirect verification: compare against next.config.ts | |
+| | **Deliverable:** `docs/WORDPRESS-AUDIT.md` | |
+
+### PHASE B: ASSET PREPARATION (After audit)
+
+| Step | Task | Estimated |
+|------|------|-----------|
+| 1 | Download ALL images (complete list from audit) | 30 min |
+| 2 | Rename images semantically (context from audit) | 30 min |
 | 3 | Create IMAGE-MANIFEST.md | 15 min |
+
+### PHASE C: TEMPLATE DEVELOPMENT
+
+| Step | Task | Estimated |
+|------|------|-----------|
 | 4 | Update schemas with image fields | 15 min |
 | 5 | Redesign ServiceLayout.tsx | 45 min |
 | 6 | Redesign SolutionLayout.tsx | 30 min |
 | 7 | Enhance StreamLayout.tsx | 20 min |
 | 8 | Create ContentImage component | 10 min |
-| 9 | Re-migrate 4 P1 pages with images | 40 min |
+
+### PHASE D: MIGRATION (Using audit data)
+
+| Step | Task | Estimated |
+|------|------|-----------|
+| 9 | Re-migrate 4 P1 pages with proper SEO + images | 1 hr |
 | 10 | Test and refine | 30 min |
 
-**Total: ~4.5 hours**
+**Total: ~6 hours**
+
+**CRITICAL:** Do NOT skip Phase A. The audit creates the blueprint for everything else.
 
 ---
 
