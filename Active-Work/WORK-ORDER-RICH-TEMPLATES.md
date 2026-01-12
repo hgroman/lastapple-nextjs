@@ -231,7 +231,8 @@ images:
 | Step | Task | Estimated |
 |------|------|-----------|
 | 1 | SSH to WordPress, download missing webp images | 15 min |
-| 2 | Rename all images semantically | 30 min |
+| 1b | Export WP page HTML, map image → page usage (MUST DO BEFORE RENAME) | 30 min |
+| 2 | Rename all images semantically (using usage map from 1b) | 30 min |
 | 3 | Create IMAGE-MANIFEST.md | 15 min |
 | 4 | Update schemas with image fields | 15 min |
 | 5 | Redesign ServiceLayout.tsx | 45 min |
@@ -241,7 +242,7 @@ images:
 | 9 | Re-migrate 4 P1 pages with images | 40 min |
 | 10 | Test and refine | 30 min |
 
-**Total: ~4 hours**
+**Total: ~4.5 hours**
 
 ---
 

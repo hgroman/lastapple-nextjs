@@ -251,6 +251,11 @@ steps:
           - futuristic-digital-navigation-charting-tools.webp
           - futuristic-digital-archer-targeting-marketing-goals.webp
           - advanced-wordpress-maintenance-command-center.webp
+      10.1b_analyze_wp_exports:
+        description: "Export WordPress page HTML, map which images are used on which pages"
+        status: NOT_STARTED
+        rationale: "Can't rename images semantically without knowing their context/usage"
+        output: "Image usage map: filename → page(s) → suggested semantic name"
       10.2_rename_images:
         description: "Rename all images with semantic names"
         status: NOT_STARTED
@@ -541,3 +546,36 @@ session_notes:
       - src/app/api/contact/route.ts (escapeHtml, honeypot)
       - src/components/ContactForm.tsx (honeypot field)
     next_action: "Execute Step 10.1 - Download missing WordPress webp images"
+
+  - date: 2026-01-11
+    session: 5
+    duration: "~1 hour"
+    what_happened:
+      - Cursor IDE crashed mid-session 4, new Claude instance brought in
+      - New instance destroyed 4-SESSION-CONTEXT.md by using Write instead of Edit
+      - User restored file from git, fired the instance, demanded handoff doc
+      - Lesson learned: READ before EDIT, use Edit not Write, preserve history
+      - Added "DO NO HARM" and "The Culture" sections to CLAUDE.md
+      - Synced all stale Active-Work docs to Step 10 (0-START-HERE, 2-BUILD-PLAN, 4-SESSION-CONTEXT)
+      - Created .env.example documenting required environment variables
+      - Identified gap in Step 10 plan: need to analyze WP page exports BEFORE renaming images
+      - Updated substeps to insert 10.1b (analyze image usage)
+    incident:
+      what: "AI used Write to overwrite 458-line historical context file"
+      why: "Lazy shortcut — interpreted 'update' as 'rewrite' instead of 'edit stale parts'"
+      fix: "Restored from git, codified rules in CLAUDE.md"
+      lesson: "Update means change the stale parts. Preserve history. This project accumulates context."
+    files_created:
+      - .env.example
+      - Active-Work/HANDOFF-2026-01-11.md
+    files_modified:
+      - CLAUDE.md (DO NO HARM, The Culture, env vars, Active-Work system)
+      - Active-Work/0-START-HERE.md (step count)
+      - Active-Work/2-BUILD-PLAN.md (current position)
+      - Active-Work/4-SESSION-CONTEXT.md (current status)
+      - Active-Work/1-PROGRESS.yaml (this file - session 5, substep fix)
+    plan_correction: |
+      Original: 10.1 download → 10.2 rename → 10.3 manifest
+      Problem: Can't rename semantically without knowing which pages use which images
+      Fixed: 10.1 download → 10.1b analyze WP exports → 10.2 rename → 10.3 manifest
+    next_action: "Execute Step 10.1 - Download images, then 10.1b - Analyze usage"
