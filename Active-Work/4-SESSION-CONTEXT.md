@@ -426,12 +426,12 @@ git log --oneline -5
 ```
 Decision:  Hybrid component strategy (Option C) ✅
 Plan:      Active-Work/BUILD-PLAN.md ← THE EXECUTION PLAN
-Position:  Step 1 (Fix Build) - NOT STARTED
-Next:      Execute Step 1.1 — Create content/schema/stream.ts
+Position:  Step 10 (Rich Page Templates) - Substep 10.1
+Next:      Download missing WordPress webp images (see WORK-ORDER-RICH-TEMPLATES.md)
 ```
 
 **The BUILD-PLAN.md contains:**
-- 9 sequential steps
+- 10 sequential steps (Steps 1-9 complete, Step 10 in progress)
 - Exact code for each file
 - Test criteria for each step
 - Time estimates (~10 hours total infrastructure)

@@ -17,7 +17,7 @@ We're migrating lastapple.com from WordPress to Next.js. The design is done. The
 |---|------|---------|
 | 0 | `0-START-HERE.md` | **You are here.** Entry point. |
 | 1 | `1-PROGRESS.yaml` | Current status. What's done, what's next. |
-| 2 | `2-BUILD-PLAN.md` | Step-by-step execution plan (9 steps) |
+| 2 | `2-BUILD-PLAN.md` | Step-by-step execution plan (10 steps) |
 | 3 | `3-SITE-ARCHITECTURE.yaml` | Full technical blueprint |
 | 4 | `4-SESSION-CONTEXT.md` | Background, decisions made, tools available |
 | 5 | `5-CONTENT-INVENTORY.yaml` | WordPress content mapped to Next.js files |
