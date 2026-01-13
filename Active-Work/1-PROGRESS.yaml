@@ -1,5 +1,5 @@
 # Project Progress Tracker
-# Last Updated: 2026-01-11 (update this when you make changes)
+# Last Updated: 2026-01-12 Session 6h (Foundation gaps identified, Step 10.0c added)
 
 # ============================================================
 # INSTRUCTIONS FOR AI - READ THIS FIRST
@@ -16,13 +16,19 @@
 current:
   step: 10
   step_name: "Rich Page Templates"
-  substep: "10.0"
-  substep_name: "Complete WordPress Audit"
+  substep: "10.0c"
+  substep_name: "Foundation Fixes"
   status: NOT_STARTED
-  blocked_by: null
-  next_action: "SSH to WordPress, extract complete inventory: pages, posts, SEO metadata, images, headings, internal links"
-  work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
-  rationale: "AUDIT BEFORE ACTION - Cannot migrate properly without knowing what we're preserving"
+  blocked_by: "User action required: Create Resend account"
+  next_action: "Fix foundation gaps: email, favicon, 404 page, footer, schema"
+  work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
+  peer_review: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md"
+  rationale: "Foundation gaps discovered - must fix before content migration."
+  p0_completed: "2026-01-11"
+  audit_complete: "2026-01-11"
+  p2_complete: "2026-01-11"
+  plugin_audit_complete: "2026-01-12"
+  foundation_gaps_documented: "2026-01-12"
 
 decisions:
   component_strategy: hybrid  # Options were: pure_mdx, templates, hybrid
@@ -240,15 +246,95 @@ steps:
     status: NOT_STARTED
     work_order: "Active-Work/WORK-ORDER-RICH-TEMPLATES.md"
     rationale: "Service/solution pages are boring compared to homepage. Fix template BEFORE migrating more content."
+    peer_review:
+      date: 2026-01-11
+      location: "Active-Work/peer-reviews/"
+      request: "PEER-REVIEW-REQUEST-2026-01-11.md"
+      response: "PEER-REVIEW-RESPONSE-2026-01-11.md"
+      grade: "A-"
+      verdict: "Solid plan — proceed with noted improvements"
+      key_gaps_identified:
+        - "Redirect coverage: only 16 of 49+ URLs covered"
+        - "Trailing slash mismatch: WordPress /slug/ vs Next.js /slug"
+        - "Analytics IDs not extracted from WordPress"
+        - "Missing: canonical URLs, publish dates, rollback plan"
+        - "No internal link rewriting strategy"
+        - "No 404 monitoring setup"
     substeps:
       # ============================================================
-      # PHASE A: WORDPRESS AUDIT (Must complete before ANY migration)
+      # P0 PREREQUISITES (Must complete BEFORE audit)
+      # Source: Peer Review Response Section 4 - Priority Order
+      # ============================================================
+      10.0a_p0_prerequisites:
+        description: "P0 items from peer review - must complete before audit"
+        status: COMPLETE
+        completed_date: "2026-01-11"
+        source: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md Section 4"
+        items:
+          trailing_slash_handling:
+            description: "Add trailing slash handling to redirects"
+            rationale: "WordPress uses /slug/, Next.js uses /slug - mismatch causes 404s"
+            file: next.config.ts
+            status: COMPLETE
+            implementation: "Changed all redirect sources to use /:path* pattern (e.g., /wordpress-maintenance/:path*)"
+          extract_analytics_ids:
+            description: "Extract GA4 and Clarity IDs from WordPress"
+            rationale: "Step 9 marked complete but IDs are still placeholders"
+            commands:
+              - "wp option list --search='*clarity*' --format=json"
+              - "wp option list --search='*analytics*' --format=json"
+              - "wp option list --search='*seopress*' --format=json"
+            status: COMPLETE
+            results:
+              ga4_measurement_id: "G-FZS6N6JB5Z"
+              ga4_property_id: "309035327"
+              clarity_site_id: "5e11a7a1-bade-49fa-b226-2f095afd0146"
+              note: "Values added to .env.example"
+          complete_redirect_inventory:
+            description: "Get full page/post list to generate complete redirect map"
+            rationale: "Only 16 redirects exist for 49+ URLs"
+            commands:
+              - "wp post list --post_type=page --post_status=publish --fields=ID,post_name,guid --format=csv"
+              - "wp post list --post_type=post --post_status=publish --fields=ID,post_name,guid --format=csv"
+            status: COMPLETE
+            results:
+              pages_found: 36
+              posts_found: 14
+              total_urls: 50
+              redirects_created: 45
+              same_path_no_redirect: 5
+            deliverables:
+              - "docs/wordpress-audit/PAGE-INVENTORY.csv"
+              - "docs/wordpress-audit/POST-INVENTORY.csv"
+              - "docs/wordpress-audit/REDIRECT-MAP.yaml"
+              - "next.config.ts (45 redirects with trailing slash handling)"
+      # ============================================================
+      # PHASE A: WORDPRESS AUDIT (After P0 prerequisites)
+      # Enhanced with peer review P1 items
       # ============================================================
       10.0_wordpress_audit:
         description: "Complete WordPress audit - extract everything needed for migration"
-        status: NOT_STARTED
+        status: COMPLETE
+        completed_date: "2026-01-11"
         rationale: "Cannot migrate properly without knowing what we're preserving"
-        deliverable: "docs/WORDPRESS-AUDIT.md"
+        deliverables:
+          - "docs/wordpress-audit/PAGE-INVENTORY.csv"
+          - "docs/wordpress-audit/POST-INVENTORY.csv"
+          - "docs/wordpress-audit/REDIRECT-MAP.yaml"
+          - "docs/wordpress-audit/SEO-INVENTORY.yaml"
+          - "docs/wordpress-audit/IMAGE-INVENTORY.yaml"
+          - "docs/wordpress-audit/INTERNAL-LINKS.yaml"
+          - "docs/wordpress-audit/PLUGIN-INVENTORY.yaml"
+        progress:
+          seo_inventory: COMPLETE
+          seo_deliverable: "docs/wordpress-audit/SEO-INVENTORY.yaml"
+          images: COMPLETE
+          image_deliverable: "docs/wordpress-audit/IMAGE-INVENTORY.yaml"
+          headings: SKIPPED  # Will be analyzed during content migration
+          internal_links: COMPLETE
+          internal_links_deliverable: "docs/wordpress-audit/INTERNAL-LINKS.yaml"
+          plugins: COMPLETE
+          plugins_deliverable: "docs/wordpress-audit/PLUGIN-INVENTORY.yaml"
         must_capture:
           page_inventory:
             - "All 35 pages: ID, title, slug, original URL, publish status"
@@ -258,23 +344,122 @@ steps:
             - "Meta description for each page/post"
             - "OG image if set"
             - "Canonical URL if different"
+            # P1 additions from peer review:
+            - "Focus keywords (from SEOPress) - useful for content review"
+            - "Publish dates - affects freshness signals"
+            - "Last modified dates - for accurate sitemap <lastmod>"
           images:
             - "Every image filename and WordPress URL"
             - "Which page(s) reference each image"
             - "Position: hero, inline, featured, background"
             - "Alt text from WordPress"
+            # P1 addition from peer review:
+            - "Flag images with missing/poor alt text for human review"
           heading_structure:
             - "H1/H2/H3 hierarchy for each page"
             - "Flag any SEO issues (multiple H1s, skipped levels)"
           internal_links:
             - "All links between WordPress pages"
             - "Map old URL → new URL for link rewriting"
+            # P1 addition from peer review:
+            - "Create URL mapping table for search-replace during migration"
           redirect_verification:
             - "Compare audit URLs against next.config.ts redirects"
             - "Identify missing redirects"
             - "Add any missing redirects before proceeding"
+            # P1 addition from peer review:
+            - "Check for existing 301 redirects in WordPress that may chain"
+        # P1 addition from peer review - split into machine-parseable files:
+        recommended_deliverables:
+          - "docs/wordpress-audit/PAGE-INVENTORY.csv"
+          - "docs/wordpress-audit/POST-INVENTORY.csv"
+          - "docs/wordpress-audit/SEO-METADATA.csv"
+          - "docs/wordpress-audit/IMAGE-MANIFEST.csv"
+          - "docs/wordpress-audit/INTERNAL-LINKS.csv"
+          - "docs/wordpress-audit/REDIRECT-MAP.yaml"
+          - "docs/wordpress-audit/AUDIT-SUMMARY.md"
       # ============================================================
-      # PHASE B: ASSET PREPARATION (After audit complete)
+      # P2 ITEMS: Before Content Migration (After audit, before templates)
+      # Source: Peer Review Response Section 4 - Priority Order
+      # ============================================================
+      10.0b_p2_pre_migration:
+        description: "P2 items from peer review - complete before migrating content"
+        status: COMPLETE
+        completed_date: "2026-01-11"
+        source: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md Section 4"
+        items:
+          url_mapping_table:
+            description: "Create complete URL mapping table for internal link rewriting"
+            rationale: "Links in MDX must point to new URLs, not old WordPress paths"
+            deliverable: "docs/wordpress-audit/INTERNAL-LINKS.yaml"
+            status: COMPLETE
+            note: "40+ URL mappings in url_mapping section"
+          pre_migration_checklist:
+            description: "Create quality gate checklist for each page migration"
+            rationale: "Ensures consistent quality and no missing metadata"
+            deliverable: "docs/PRE-MIGRATION-CHECKLIST.md"
+            status: COMPLETE
+          rollback_plan:
+            description: "Document rollback strategy in case of issues"
+            rationale: "Safety net for DNS cutover and post-launch issues"
+            deliverable: "docs/ROLLBACK-PLAN.md"
+            status: COMPLETE
+      # ============================================================
+      # FOUNDATION FIXES: Critical infrastructure gaps
+      # Discovered during audit - must fix before content migration
+      # ============================================================
+      10.0c_foundation_fixes:
+        description: "Fix foundation infrastructure gaps in Next.js implementation"
+        status: NOT_STARTED
+        rationale: "Contact form broken, no favicon, missing 404 page, footer issues"
+        work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
+        process_doc: "docs/processes/FOUNDATION-AUDIT-PROCESS.md"
+        gap_analysis: "docs/FOUNDATION-GAPS.yaml"
+        items:
+          email_infrastructure:
+            description: "Configure Resend, create .env.local, test contact form"
+            priority: P0
+            status: NOT_STARTED
+            deliverables:
+              - ".env.local with RESEND_API_KEY"
+              - "Tested contact form"
+            user_action_required: "Create Resend account and API key"
+          favicon_suite:
+            description: "Generate and configure favicon, apple-touch-icon, manifest"
+            priority: P0
+            status: NOT_STARTED
+            deliverables:
+              - "public/favicon.ico"
+              - "public/favicon-16x16.png"
+              - "public/favicon-32x32.png"
+              - "public/apple-touch-icon.png"
+              - "public/site.webmanifest"
+          not_found_page:
+            description: "Create custom 404 page matching site design"
+            priority: P0
+            status: NOT_STARTED
+            deliverable: "src/app/not-found.tsx"
+          footer_fixes:
+            description: "Fix broken links, logo reference, add social icons"
+            priority: P1
+            status: NOT_STARTED
+            file: "src/components/Footer.tsx"
+            issues:
+              - "Links to non-existent pages"
+              - "Logo path /logo.jpg doesn't exist"
+              - "No social media icons"
+          schema_updates:
+            description: "Update JSON-LD social links to match WordPress data"
+            priority: P1
+            status: NOT_STARTED
+            file: "src/app/layout.tsx"
+          og_image:
+            description: "Create default Open Graph image for social shares"
+            priority: P2
+            status: NOT_STARTED
+            deliverable: "public/og-image.png"
+      # ============================================================
+      # PHASE B: ASSET PREPARATION (After foundation fixes)
       # ============================================================
       10.1_download_images:
         description: "SSH to WordPress, download ALL images (not just the 7 listed)"
@@ -322,6 +507,61 @@ steps:
       10.10_test:
         description: "Verify visual parity with homepage, all images load, build passes"
         status: NOT_STARTED
+      # ============================================================
+      # P3 ITEMS: Before DNS Cutover
+      # Source: Peer Review Response Section 4 - Priority Order
+      # ============================================================
+      10.11_p3_pre_cutover:
+        description: "P3 items from peer review - complete before DNS cutover"
+        status: NOT_STARTED
+        source: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md Section 4"
+        items:
+          setup_404_monitoring:
+            description: "Configure 404 monitoring to catch missing redirects"
+            rationale: "Fast detection of SEO issues post-launch"
+            implementation:
+              - "Configure Search Console for Vercel domain"
+              - "Add middleware logging for 404s"
+              - "Create alert for 404 spikes"
+            code_example: |
+              // src/middleware.ts
+              export function middleware(request: NextRequest) {
+                if (response.status === 404) {
+                  console.log(`404: ${request.url}`);
+                }
+              }
+            status: NOT_STARTED
+          dns_cutover_plan:
+            description: "Document step-by-step DNS cutover procedure"
+            rationale: "Minimize downtime, enable quick rollback if needed"
+            deliverable: "docs/DNS-CUTOVER-PLAN.md"
+            steps:
+              - "Set TTL to 300 seconds, 24 hours before cutover"
+              - "Verify Vercel custom domain configured"
+              - "Update A/CNAME records"
+              - "Monitor propagation with dig lastapple.com"
+              - "Keep WordPress running for 30 days post-cutover"
+              - "Monitor Search Console daily for first week"
+            status: NOT_STARTED
+          staging_verification:
+            description: "Full verification on Vercel preview before cutover"
+            rationale: "Catch issues before they affect production"
+            verification_items:
+              - "All 49 content pages render"
+              - "All redirects work (test each)"
+              - "sitemap.xml contains all URLs"
+              - "Contact form submits successfully"
+              - "Analytics fires (check network tab)"
+            status: NOT_STARTED
+          smoke_test_script:
+            description: "Create automated smoke test for deployment"
+            rationale: "Repeatable verification, run before every deploy"
+            deliverable: "scripts/smoke-test.sh"
+            tests:
+              - "Hit all URLs, verify 200 status codes"
+              - "Check for missing images"
+              - "Check for broken links"
+            status: NOT_STARTED
     test: "Service/solution pages have visual richness matching homepage"
 
 content_migration:
@@ -351,12 +591,18 @@ content_migration:
 # Statistics
 stats:
   infrastructure_steps: 10  # Added Step 10: Rich Page Templates
-  infrastructure_complete: 9  # Steps 1-9 done, Step 10 NOT_STARTED
-  content_pages_total: 49  # 35 pages + 14 posts
+  infrastructure_complete: 9  # Steps 1-9 done, Step 10 IN_PROGRESS
+  content_pages_total: 50  # 36 pages + 14 posts (updated from WordPress inventory)
   content_pages_migrated: 0  # Reset - 4 P1 pages need proper re-migration with audit data
-  step_10_substeps: 11  # Added 10.0 (WordPress Audit)
-  step_10_complete: 0
-  estimated_hours_remaining: 6  # Added ~2 hours for proper audit
+  step_10_substeps: 15  # 10.0a (P0), 10.0 (audit), 10.0b (P2), 10.0c (foundation), 10.1-10.10 (assets/templates), 10.11 (P3)
+  step_10_complete: 3  # 10.0a P0, 10.0 Audit, 10.0b P2 - all COMPLETE (10.0c foundation NOT_STARTED)
+  estimated_hours_remaining: 7  # Added 2 hours for foundation fixes
+  peer_review_incorporated: true  # All P0/P1/P2/P3 items now tracked
+  redirects_configured: 45  # Complete redirect coverage (was 16)
+  analytics_ids_extracted: true  # GA4 and Clarity IDs captured
+  audit_deliverables: 7  # PAGE-INVENTORY, POST-INVENTORY, REDIRECT-MAP, SEO-INVENTORY, IMAGE-INVENTORY, INTERNAL-LINKS, PLUGIN-INVENTORY
+  p2_deliverables: 2  # PRE-MIGRATION-CHECKLIST.md, ROLLBACK-PLAN.md
+  process_docs: 3  # SEO-AUDIT-PROCESS.md, IMAGE-AUDIT-PROCESS.md, PLUGIN-AUDIT-PROCESS.md
 
 # Instructions for AI (read this first)
 instructions: |
@@ -619,3 +865,422 @@ session_notes:
       New order: AUDIT → ASSETS → TEMPLATES → MIGRATE
       Deliverable: docs/WORDPRESS-AUDIT.md before ANY migration work
     next_action: "Execute Step 10.0 - Complete WordPress Audit"
+
+  - date: 2026-01-11
+    session: 6
+    duration: "~30 min"
+    what_happened:
+      - Continued from session 5 (context recovery after compaction)
+      - User requested peer review before proceeding with Step 10
+      - Created peer review request document
+      - External Claude (fresh instance) conducted comprehensive peer review
+      - Grade: A- with 6+ gaps identified
+      - Created Active-Work/peer-reviews/ folder for review artifacts
+      - Moved PEER-REVIEW-REQUEST-2026-01-11.md and PEER-REVIEW-RESPONSE-2026-01-11.md to folder
+      - Systematically incorporated ALL peer review findings into 1-PROGRESS.yaml
+    peer_review_integration:
+      p0_added:
+        - "Trailing slash handling for redirects"
+        - "Extract analytics IDs from WordPress (GA4, Clarity)"
+        - "Complete redirect inventory (all 49 URLs)"
+      p1_added:
+        - "Focus keywords from SEOPress"
+        - "Publish dates for freshness signals"
+        - "Last modified dates for sitemap lastmod"
+        - "Flag images with missing/poor alt text"
+        - "Check for existing 301 redirect chains in WordPress"
+        - "Split audit into CSV files (machine-parseable)"
+      p2_added:
+        - "URL mapping table for internal link rewriting"
+        - "Pre-migration checklist (quality gate per page)"
+        - "Rollback plan documentation"
+      p3_added:
+        - "404 monitoring setup"
+        - "DNS cutover plan"
+        - "Staging verification checklist"
+        - "Smoke test script"
+    files_created:
+      - Active-Work/peer-reviews/ (folder)
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (peer review findings integrated)
+    yaml_updates:
+      - "Added peer_review section to step_10"
+      - "Added 10.0a_p0_prerequisites substep"
+      - "Enhanced 10.0_wordpress_audit with P1 items"
+      - "Added 10.0b_p2_pre_migration substep"
+      - "Added 10.11_p3_pre_cutover substep"
+      - "Updated stats (substeps 11→14, hours 6→8)"
+    lesson: |
+      User's guidance: "Stop rushing to action."
+      Peer review caught gaps we would have hit later:
+      - Only 16 of 49 redirects covered (HIGH risk)
+      - Trailing slash mismatch (WordPress /slug/ vs Next.js /slug)
+      - No rollback plan documented
+      The extra planning time prevents rework.
+    next_action: "Execute Step 10.0a - P0 prerequisites (trailing slash, analytics IDs, complete redirect map)"
+
+  - date: 2026-01-11
+    session: 6b
+    duration: "~45 min"
+    what_happened:
+      - EXECUTED Step 10.0a P0 Prerequisites (all 3 items)
+      - SSH to WordPress - extracted complete page inventory (36 pages)
+      - SSH to WordPress - extracted complete post inventory (14 posts)
+      - SSH to WordPress - extracted analytics IDs from wp_options
+      - Found GA4 Measurement ID: G-FZS6N6JB5Z
+      - Found Clarity Site ID: 5e11a7a1-bade-49fa-b226-2f095afd0146
+      - Rewrote next.config.ts with 45 redirects (was 16)
+      - All redirects now use /:path* pattern for trailing slash handling
+      - Created docs/wordpress-audit/ directory with CSV deliverables
+      - Updated .env.example with actual analytics IDs
+      - Build passes (npm run build)
+    p0_execution_details:
+      trailing_slash_handling:
+        before: "16 redirects with bare paths (e.g., /wordpress-maintenance)"
+        after: "45 redirects with /:path* pattern (e.g., /wordpress-maintenance/:path*)"
+        why: "WordPress URLs end with /, Next.js doesn't - pattern catches both"
+      analytics_extraction:
+        commands_run:
+          - "wp option list --search='*clarity*' --format=json"
+          - "wp option list --search='*analytics*' --format=json"
+          - "wp option list --search='*google*' --format=json"
+        ga4_found_in: "googlesitekit_analytics-4_settings"
+        clarity_found_in: "clarity_wordpress_site_id"
+      redirect_inventory:
+        wordpress_pages: 36
+        wordpress_posts: 14
+        total_urls: 50
+        redirects_needed: 45
+        same_path_no_redirect: 5
+        categories:
+          services: 6
+          solutions: 8
+          blog_posts: 15
+          consultation: 7
+          other: 5
+          woocommerce: 4
+    files_created:
+      - docs/wordpress-audit/PAGE-INVENTORY.csv
+      - docs/wordpress-audit/POST-INVENTORY.csv
+      - docs/wordpress-audit/REDIRECT-MAP.yaml
+    files_modified:
+      - next.config.ts (complete rewrite - 45 redirects with trailing slash handling)
+      - .env.example (actual analytics IDs added)
+      - Active-Work/1-PROGRESS.yaml (P0 marked COMPLETE)
+    build_verification: "npm run build passes - 19 static pages generated"
+    next_action: "Execute Step 10.0 - Complete WordPress Audit (SEO metadata, images, headings, internal links)"
+
+  - date: 2026-01-11
+    session: 6c
+    duration: "~30 min"
+    what_happened:
+      - Continued Step 10.0 WordPress Audit - SEO Metadata phase
+      - SSH extracted _seopress_titles_title and _seopress_titles_desc for all 50 pages/posts
+      - Discovered SEO data is incomplete/inconsistent in WordPress
+      - Created comprehensive SEO-INVENTORY.yaml schema
+    seo_audit_findings:
+      total_pages: 50
+      seo_ready: 10
+      seo_wrong: 4
+      seo_empty: 32
+      skip_pages: 16
+      key_issues:
+        - "4 pages have WRONG metadata (copy-paste errors during WordPress creation)"
+        - "All 14 blog posts have EMPTY SEO metadata"
+        - "About, Contact, Services overview pages have EMPTY metadata"
+        - "Core service pages mostly have correct metadata"
+    pages_with_wrong_seo:
+      - "8970 (ai-chatbot): Has 'Social Media Strategies' title instead of chatbot"
+      - "8954 (content-creation): Has 'Social Media Strategies' title"
+      - "8964 (why-choose-us): Has 'Social Media Strategies' title"
+      - "10159 (social-strategies): Has 'WordPress Resurrection' title"
+    schema_designed:
+      per_page_fields:
+        - "wp_id, wp_title, nextjs_path"
+        - "type (page|post), category (service|solution|stream|static)"
+        - "priority (P1-P4)"
+        - "dates.published, dates.modified"
+        - "seo.status (READY|WRONG|EMPTY|SKIP)"
+        - "seo.wp_title, seo.wp_description, seo.wp_keywords"
+        - "seo.target_title, seo.target_description, seo.target_keywords"
+        - "seo.notes (action needed)"
+        - "images.hero, images.og_image"
+        - "migration.status, migration.content_migrated, migration.seo_verified"
+    files_created:
+      - docs/wordpress-audit/SEO-INVENTORY.yaml (650+ lines, all 50 pages)
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (audit progress, session notes)
+    practical_approach: |
+      User guidance: "practice no theater. if the information is not present, then that is the fact."
+      Applied: EMPTY fields noted as EMPTY, not invented. Target values proposed but will require
+      semantic analysis of actual page content to finalize. Schema enables systematic rollout.
+    next_action: "Continue 10.0 audit - extract images from WordPress pages"
+
+  - date: 2026-01-11
+    session: 6d
+    duration: "~30 min"
+    what_happened:
+      - Created reusable process documentation for future migrations
+      - Created docs/processes/SEO-AUDIT-PROCESS.md (280 lines)
+      - Created docs/processes/IMAGE-AUDIT-PROCESS.md (280 lines)
+      - Both processes designed for 10+ planned site migrations
+      - Executed image audit via SSH
+      - Extracted media library (174 total images)
+      - Mapped 13 featured images to blog posts
+      - Identified 7 key AI-generated images for service pages
+      - Created IMAGE-INVENTORY.yaml with structured schema
+    process_docs_created:
+      seo_audit:
+        location: "docs/processes/SEO-AUDIT-PROCESS.md"
+        includes:
+          - "Plugin identification (SEOPress, Yoast, RankMath, etc.)"
+          - "WP-CLI extraction commands"
+          - "Status categorization (READY/WRONG/EMPTY/SKIP)"
+          - "YAML schema specification"
+          - "Reusable checklist for future sites"
+      image_audit:
+        location: "docs/processes/IMAGE-AUDIT-PROCESS.md"
+        includes:
+          - "Media library extraction commands"
+          - "Featured image mapping"
+          - "Inline image scanning (Elementor)"
+          - "Alt text assessment"
+          - "Image categorization (hero/featured/inline/icon/logo/background)"
+          - "Reusable checklist for future sites"
+    image_audit_findings:
+      total_images: 174
+      categories:
+        ai_generated: 7
+        blog_featured: 13
+        logos: 12
+        screenshots: 15
+        stock: ~50
+        misc: ~77
+      priority_images:
+        - "last-apple-digital-heartbeat-of-business.webp (hero)"
+        - "online-presence-resurgence.webp (service)"
+        - "enhanced-customer-engagement.webp (service)"
+        - "last-apple-data-flow.webp (solution)"
+        - "last-apple-chatbot-enhanced.webp (solution)"
+        - "last-apple-b2b-leads.webp (solution)"
+        - "audio-scapes-last-apple.webp (service)"
+      alt_text_assessment:
+        has_alt: ~60
+        missing_alt: ~114
+        note: "Most stock images lack alt text - will add during migration"
+    files_created:
+      - docs/processes/SEO-AUDIT-PROCESS.md
+      - docs/processes/IMAGE-AUDIT-PROCESS.md
+      - docs/wordpress-audit/IMAGE-INVENTORY.yaml
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (image audit marked COMPLETE)
+    user_guidance: |
+      "IMPORTANT=this seo audit effort requires a process. we will do this 10 more times.
+      would you please create a doc for this to be repeated in the future? be kind to our
+      future selves."
+    next_action: "Execute 10.0 - extract internal links (last remaining audit item)"
+
+  - date: 2026-01-11
+    session: 6e
+    duration: "~15 min"
+    what_happened:
+      - Completed WordPress audit - extracted internal links
+      - SSH extracted all internal links from page content (23 links)
+      - SSH extracted navigation menu structure (22 items)
+      - Created comprehensive URL mapping table (40+ mappings)
+      - Created INTERNAL-LINKS.yaml with full inventory
+      - Identified 7 consultation pages to consolidate into /contact
+      - Identified 4 pages to merge into parent pages as sections
+      - Marked 10.0_wordpress_audit as COMPLETE
+    internal_links_findings:
+      content_links: 23
+      navigation_links: 22
+      unique_destinations: 12
+      image_references: 163
+      most_linked:
+        - "/maintenance-plan-quote-request/ (6 references)"
+        - "/wordpress-strategy-consultation/ (5 references)"
+        - "/wordpress-maintenance-plans/ (2 references)"
+        - "/social-media-consultation/ (2 references)"
+        - "/contact/ (2 references)"
+    consolidation_decisions:
+      consultation_pages: |
+        7 WordPress pages → single /contact?type= with query params:
+        - /consultation/ → /contact
+        - /wordpress-strategy-consultation/ → /contact?type=strategy
+        - /social-media-consultation/ → /contact?type=social
+        - /maintenance-plan-quote-request/ → /contact?type=maintenance
+        - /zoom/ → /contact?type=meeting
+        - /meeting-demo/ → /contact?type=demo
+        - /schedule-free-seo-report-review/ → /contact?type=seo-review
+      merge_into_sections:
+        - "why-choose-last-apple → /about#why-choose-us"
+        - "partners → /about#partners"
+        - "wordpress-maintenance-plans → /services/wordpress-maintenance#plans"
+        - "onboarding-process → /services/wordpress-maintenance#onboarding"
+    files_created:
+      - docs/wordpress-audit/INTERNAL-LINKS.yaml
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (audit marked COMPLETE, stats updated)
+    audit_summary: |
+      WORDPRESS AUDIT COMPLETE - 6 deliverables created:
+      1. PAGE-INVENTORY.csv (36 pages)
+      2. POST-INVENTORY.csv (14 posts)
+      3. REDIRECT-MAP.yaml (45 redirects)
+      4. SEO-INVENTORY.yaml (50 pages with SEO status)
+      5. IMAGE-INVENTORY.yaml (174 images cataloged)
+      6. INTERNAL-LINKS.yaml (URL mapping table)
+    next_action: "Execute 10.0b - P2 pre-migration items (checklist, rollback plan)"
+
+  - date: 2026-01-11
+    session: 6f
+    duration: "~10 min"
+    what_happened:
+      - Completed Step 10.0b P2 Pre-Migration Items
+      - Created PRE-MIGRATION-CHECKLIST.md (comprehensive quality gate)
+      - Created ROLLBACK-PLAN.md (DNS cutover safety net)
+      - URL mapping table already complete (in INTERNAL-LINKS.yaml)
+      - All pre-migration preparation now complete
+    p2_deliverables:
+      pre_migration_checklist:
+        location: "docs/PRE-MIGRATION-CHECKLIST.md"
+        includes:
+          - "Per-page migration checklist (7 sections)"
+          - "SEO status action guide (READY/WRONG/EMPTY/SKIP)"
+          - "Image status action guide (OK/MISSING/NEEDS_IMPROVEMENT)"
+          - "Batch migration tracking template"
+          - "Common issues & solutions"
+      rollback_plan:
+        location: "docs/ROLLBACK-PLAN.md"
+        includes:
+          - "Pre-cutover requirements checklist"
+          - "DNS configuration documentation"
+          - "Step-by-step cutover procedure"
+          - "Rollback triggers (CRITICAL/HIGH/MEDIUM/LOW)"
+          - "Rollback execution procedure (<10 min target)"
+          - "Post-rollback actions"
+          - "30-day WordPress preservation timeline"
+    milestone: |
+      PREPARATION PHASE COMPLETE:
+      - P0 Prerequisites: DONE
+      - WordPress Audit: DONE (6 deliverables)
+      - P2 Pre-Migration: DONE (2 deliverables)
+
+      Ready for ASSET PREPARATION (Step 10.1+):
+      - Download images
+      - Rename semantically
+      - Update schemas
+      - Redesign templates
+    files_created:
+      - docs/PRE-MIGRATION-CHECKLIST.md
+      - docs/ROLLBACK-PLAN.md
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (P2 marked COMPLETE, stats updated)
+    next_action: "Execute 10.1 - Download priority images from WordPress"
+
+  - date: 2026-01-12
+    session: 6g
+    duration: "~20 min"
+    what_happened:
+      - User identified gap: plugin settings audit missing
+      - Created docs/processes/PLUGIN-AUDIT-PROCESS.md (reusable for 10+ migrations)
+      - Executed plugin audit via SSH (40 plugins found)
+      - Extracted key settings: GA4, Clarity, SEOPress, forms, social accounts
+      - Created docs/wordpress-audit/PLUGIN-INVENTORY.yaml
+      - Discovered existing redirects in WordPress (from Yoast Premium, SEOPress)
+      - Found 4 Forminator forms to replicate
+    plugin_audit_findings:
+      total_plugins: 40
+      active: 26
+      inactive: 12
+      must_use: 2
+      by_category:
+        migrate_settings: 8
+        migrate_data: 2
+        not_needed: 18
+        security: 4
+        performance: 3
+    key_settings_extracted:
+      analytics:
+        - "GA4: G-FZS6N6JB5Z (already in .env.example)"
+        - "Clarity: 5e11a7a1-bade-49fa-b226-2f095afd0146 (already in .env.example)"
+        - "Facebook Pixel: not configured"
+      seo:
+        - "Title template: %%post_title%% %%sep%% %%sitetitle%%"
+        - "Separator: -"
+        - "Organization schema: Last Apple, +17148139973"
+      social_accounts:
+        - "Facebook: https://www.facebook.com/LastAppleConsulting"
+        - "Twitter: https://x.com/lastappledma"
+        - "Instagram: https://www.instagram.com/hank_groman/"
+        - "YouTube: https://www.youtube.com/@lastappleai"
+        - "LinkedIn: https://linkedin.com/company/lastapple"
+      forms:
+        - "1407: lastapple-com-contact-form"
+        - "9127: last-apple-signup-blog-archive"
+        - "9706: free-seo-audit-contact-form"
+        - "10496: wordpress-quote-request"
+      existing_redirects:
+        - "/schedule-time-with-me → /consultation (301)"
+        - "/terms-of-use → /terms-use (301)"
+        - "/java/ → /java-seo-technical-audits-coffee-shops/ (slug change)"
+        - "/seo-for-entrepreneurs/ → /seo-guide-for-solopreneurs/ (slug change)"
+    files_created:
+      - docs/processes/PLUGIN-AUDIT-PROCESS.md
+      - docs/wordpress-audit/PLUGIN-INVENTORY.yaml
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (plugin audit added, stats updated)
+    user_insight: |
+      "There should be a process document and yaml for that [plugin settings].
+      And while you are at it, there should be a key process of extracting
+      a list of all plugins and their settings"
+    next_action: "Execute 10.1 - Download priority images from WordPress"
+
+  - date: 2026-01-12
+    session: 6h
+    duration: "~25 min"
+    what_happened:
+      - User identified critical gap: email doesn't work, other foundation issues
+      - Conducted comprehensive foundation infrastructure audit
+      - Created docs/FOUNDATION-GAPS.yaml documenting all gaps
+      - Created Active-Work/WORK-ORDER-FOUNDATION.md (detailed fix plan)
+      - Created docs/processes/FOUNDATION-AUDIT-PROCESS.md (reusable for 10+ sites)
+      - Added Step 10.0c to build plan (Foundation Fixes)
+      - Updated stats: 15 substeps, 7 hours remaining
+    foundation_gaps_identified:
+      critical_p0:
+        - "Email/Contact Form: Resend API key not configured, .env.local doesn't exist"
+        - "Favicon: No favicon.ico, shows generic browser icon"
+        - "404 Page: No custom not-found.tsx, shows default Next.js 404"
+      high_p1:
+        - "Footer Links: Links to /services/wordpress-care etc. don't exist"
+        - "Footer Logo: References /logo.jpg which doesn't exist"
+        - "Social Links: Footer has no social media icons"
+        - "JSON-LD Schema: Social links don't match WordPress extracted data"
+      medium_p2:
+        - "Newsletter Signup: WordPress form 9127 has no Next.js equivalent"
+        - "Multiple Form Types: Only 1 of 4 WordPress forms implemented"
+        - "OG Image: No default image for social shares"
+    strategic_insight: |
+      User: "is there another item that should be factored in? email does NOT work yet.
+      shouldn't this be addressed? What other foundational items need addressing?"
+
+      This revealed a gap in our process - we focused on WordPress audit but didn't
+      verify the Next.js implementation was actually ready. Foundation audit added
+      to process documentation for future migrations.
+    process_improvement: |
+      Added FOUNDATION-AUDIT-PROCESS.md to the migration process sequence:
+      1. SEO Audit (SEO-AUDIT-PROCESS.md)
+      2. Image Audit (IMAGE-AUDIT-PROCESS.md)
+      3. Plugin Audit (PLUGIN-AUDIT-PROCESS.md)
+      4. Foundation Audit (FOUNDATION-AUDIT-PROCESS.md) ← NEW
+
+      This ensures Next.js implementation is verified before content migration.
+    files_created:
+      - docs/FOUNDATION-GAPS.yaml
+      - Active-Work/WORK-ORDER-FOUNDATION.md
+      - docs/processes/FOUNDATION-AUDIT-PROCESS.md
+    files_modified:
+      - Active-Work/1-PROGRESS.yaml (Step 10.0c added, stats updated)
+    blocked_by: "User needs to create Resend account and provide API key"
+    next_action: "Execute Step 10.0c - Foundation Fixes (email, favicon, 404, footer)"

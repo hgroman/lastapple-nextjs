@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -41,3 +42,4 @@ yarn-error.log*
 next-env.d.ts
 # Sensitive WordPress exports with OAuth tokens
 TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/options.json
+.env*.local
