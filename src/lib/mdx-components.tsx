@@ -10,6 +10,11 @@ import {
   TableCell,
   TableHeaderCell,
 } from '@/components/content/prose/Table';
+import {
+  ContentImage,
+  ContentGallery,
+  ContentCompare,
+} from '@/components/content/ContentImage';
 
 // Type-safe component mappings for MDX
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
@@ -165,6 +170,9 @@ export const mdxComponents = {
   // Custom components
   Callout,
   CodeBlock,
+  ContentImage,
+  ContentGallery,
+  ContentCompare,
 };
 
 export type MDXComponents = typeof mdxComponents;

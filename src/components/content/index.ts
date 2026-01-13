@@ -17,3 +17,6 @@ export { FAQ } from './blocks/FAQ';
 export { Callout } from './prose/Callout';
 export { CodeBlock } from './prose/CodeBlock';
 export { Table, TableHead, TableBody, TableRow, TableCell, TableHeaderCell } from './prose/Table';
+
+// Image components
+export { ContentImage, ContentGallery, ContentCompare } from './ContentImage';
