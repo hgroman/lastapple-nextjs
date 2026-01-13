@@ -1461,7 +1461,12 @@ session_notes:
       - docs/wordpress-audit/IMAGE-INVENTORY.yaml (download status updated)
       - Active-Work/1-PROGRESS.yaml (steps 10.1-10.3 marked COMPLETE)
     step_10_progress:
-      complete: 7
+      complete: 8
       total: 15
-      percentage: "47%"
+      percentage: "53%"
+    schema_changes:
+      - "Added ImageSchema { src, alt, width?, height? } to all content schemas"
+      - "service.ts: heroImage, images, tierImages"
+      - "solution.ts: heroImage, images, caseStudy.image"
+      - "stream.ts: featuredImage, images (kept legacy 'image')"
     next_action: "Execute Step 10.5 - Redesign ServiceLayout with hero image, animated cards"
