@@ -36,23 +36,22 @@ critical:
       - "[x] Email received at hank@lastapple.com"
 
   favicon_missing:
-    status: MISSING
+    status: FIXED
     priority: P0
-    description: "No favicon - browser tabs show generic icon"
-    issues:
-      - "No favicon.ico in public/"
-      - "No apple-touch-icon.png"
-      - "No site.webmanifest"
-    current_files:
-      - "/public/logo-small.png (exists - can use as source)"
-      - "/public/images/wp/Original-on-Transparent.png (full logo)"
-    fix_steps:
-      - "Generate favicon.ico from logo (multiple sizes)"
-      - "Create apple-touch-icon.png (180x180)"
-      - "Create favicon-32x32.png, favicon-16x16.png"
-      - "Create site.webmanifest"
-      - "Add to app/layout.tsx metadata"
-    tools: "https://realfavicongenerator.net or https://favicon.io"
+    fixed_date: "2026-01-13"
+    description: "Favicon suite - NOW WORKING"
+    implementation:
+      source: "/public/logo-small.png"
+      script: "scripts/generate-favicons.mjs"
+      files_generated:
+        - "favicon.ico (32x32)"
+        - "favicon-16x16.png"
+        - "favicon-32x32.png"
+        - "apple-touch-icon.png (180x180)"
+        - "android-chrome-192x192.png"
+        - "android-chrome-512x512.png"
+        - "site.webmanifest"
+      metadata_updated: "src/app/layout.tsx - icons and manifest added"
 
   not_found_page_missing:
     status: FIXED
@@ -177,10 +176,17 @@ low:
     fix: "Create src/app/loading.tsx and per-route loading states"
 
   pwa_manifest_missing:
-    status: MISSING
+    status: FIXED
     priority: P3
-    description: "No PWA manifest for mobile installability"
-    fix: "Create public/site.webmanifest"
+    fixed_date: "2026-01-13"
+    description: "PWA manifest - NOW WORKING"
+    implementation:
+      file: "public/site.webmanifest"
+      features:
+        - "App name and short_name"
+        - "Theme color matching site (#a63d3d)"
+        - "Background color matching site (#141010)"
+        - "192x192 and 512x512 icons"
 
   robots_txt_basic:
     status: EXISTS_BUT_BASIC
@@ -232,7 +238,7 @@ fix_order:
     - "[x] 7. Update JSON-LD social links (DONE 2026-01-13)"
 
   immediate:
-    - "[ ] 8. Generate and add favicon files"
+    - "[x] 8. Generate and add favicon files (DONE 2026-01-13)"
     - "[ ] 9. Create og-image.png"
 
   during_migration:
@@ -251,8 +257,8 @@ verification_checklist:
     - "[x] Email received at hank@lastapple.com"
 
   branding:
-    - "[ ] Favicon shows in browser tab"
-    - "[ ] Apple touch icon works"
+    - "[x] Favicon shows in browser tab"
+    - "[x] Apple touch icon works"
     - "[x] Logo loads in footer"
     - "[x] Logo loads in navigation"
 

@@ -1,0 +1,21 @@
+{
+  "name": "Last Apple Business Solutions",
+  "short_name": "Last Apple",
+  "description": "30 years of system integration expertise. AI-powered solutions. WordPress that actually works.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#141010",
+  "theme_color": "#a63d3d",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

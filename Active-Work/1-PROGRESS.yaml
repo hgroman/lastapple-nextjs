@@ -24,10 +24,10 @@ current:
     - "not_found_page (custom 404 with design system)"
     - "footer_fixes (links corrected, social icons added)"
     - "schema_updates (JSON-LD sameAs updated)"
+    - "favicon_suite (generated via sharp, manifest created)"
   remaining:
-    - "favicon_suite (requires external tool)"
     - "og_image (1200x630 branding image)"
-  next_action: "Generate favicon suite via realfavicongenerator.net or continue to Step 10.1"
+  next_action: "Create OG image or continue to Step 10.1 (download images)"
   work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
   peer_review: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md"
   rationale: "Foundation gaps discovered - must fix before content migration."
@@ -442,14 +442,21 @@ steps:
           favicon_suite:
             description: "Generate and configure favicon, apple-touch-icon, manifest"
             priority: P0
-            status: NOT_STARTED
-            note: "Requires external tool (realfavicongenerator.net)"
+            status: COMPLETE
+            completed_date: "2026-01-13"
             deliverables:
               - "public/favicon.ico"
               - "public/favicon-16x16.png"
               - "public/favicon-32x32.png"
               - "public/apple-touch-icon.png"
+              - "public/android-chrome-192x192.png"
+              - "public/android-chrome-512x512.png"
               - "public/site.webmanifest"
+            implementation_notes:
+              - "Generated via sharp (available through Next.js)"
+              - "Source: /public/logo-small.png (stylized red apple)"
+              - "Script: scripts/generate-favicons.mjs"
+              - "Manifest includes PWA support with theme colors"
           not_found_page:
             description: "Create custom 404 page matching site design"
             priority: P0
@@ -617,8 +624,8 @@ stats:
   step_10_complete: 3  # 10.0a P0, 10.0 Audit, 10.0b P2 - all COMPLETE
   step_10_0c_foundation:
     total_items: 6
-    complete: 4  # email, 404, footer, schema
-    remaining: 2  # favicon, og_image
+    complete: 5  # email, 404, footer, schema, favicon
+    remaining: 1  # og_image
   estimated_hours_remaining: 5  # Reduced from 7 after foundation work
   peer_review_incorporated: true  # All P0/P1/P2/P3 items now tracked
   redirects_configured: 45  # Complete redirect coverage (was 16)
