@@ -1,17 +1,16 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { z } from 'zod';
 import { escapeHtml } from '@/lib/sanitize';
 
-// Lazy initialization to avoid build-time errors
-let resend: Resend | null = null;
-
-function getResend() {
-  if (!resend && process.env.RESEND_API_KEY) {
-    resend = new Resend(process.env.RESEND_API_KEY);
-  }
-  return resend;
-}
+// Initialize SES client
+const sesClient = new SESClient({
+  region: process.env.AWS_REGION || 'us-west-2',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  },
+});
 
 const ContactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -47,10 +46,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if API key is configured
-    const resendClient = getResend();
-    if (!resendClient) {
-      console.error('RESEND_API_KEY is not configured');
+    // Check if AWS credentials are configured
+    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+      console.error('AWS credentials are not configured');
       return NextResponse.json(
         { error: 'Email service is not configured' },
         { status: 500 }
@@ -63,26 +61,39 @@ export async function POST(request: Request) {
     const safePhone = phone ? escapeHtml(phone) : '';
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
 
-    // Send email via Resend
-    const { data, error } = await resendClient.emails.send({
-      from: 'Last Apple Contact <onboarding@resend.dev>',
-      to: ['hank@lastapple.com'],
-      replyTo: email,
-      subject: `New Contact Form Submission from ${safeName}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
-        ${safePhone ? `<p><strong>Phone:</strong> ${safePhone}</p>` : ''}
-        <hr />
-        <h3>Message:</h3>
-        <p>${safeMessage}</p>
-        <hr />
-        <p style="color: #666; font-size: 12px;">
-          This message was sent from the contact form at lastapple.com
-        </p>
-      `,
-      text: `
+    const fromEmail = process.env.SES_FROM_EMAIL || 'noreply@lastapple.com';
+
+    // Send email via AWS SES
+    const command = new SendEmailCommand({
+      Source: `Last Apple Contact <${fromEmail}>`,
+      Destination: {
+        ToAddresses: ['hank@lastapple.com'],
+      },
+      ReplyToAddresses: [email],
+      Message: {
+        Subject: {
+          Data: `New Contact Form Submission from ${safeName}`,
+          Charset: 'UTF-8',
+        },
+        Body: {
+          Html: {
+            Data: `
+              <h2>New Contact Form Submission</h2>
+              <p><strong>Name:</strong> ${safeName}</p>
+              <p><strong>Email:</strong> ${safeEmail}</p>
+              ${safePhone ? `<p><strong>Phone:</strong> ${safePhone}</p>` : ''}
+              <hr />
+              <h3>Message:</h3>
+              <p>${safeMessage}</p>
+              <hr />
+              <p style="color: #666; font-size: 12px;">
+                This message was sent from the contact form at lastapple.com
+              </p>
+            `,
+            Charset: 'UTF-8',
+          },
+          Text: {
+            Data: `
 New Contact Form Submission
 
 Name: ${name}
@@ -94,19 +105,17 @@ ${message}
 
 ---
 This message was sent from the contact form at lastapple.com
-      `,
+            `,
+            Charset: 'UTF-8',
+          },
+        },
+      },
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json(
-        { error: 'Failed to send email' },
-        { status: 500 }
-      );
-    }
+    const response = await sesClient.send(command);
 
     return NextResponse.json(
-      { success: true, messageId: data?.id },
+      { success: true, messageId: response.MessageId },
       { status: 200 }
     );
   } catch (error) {
