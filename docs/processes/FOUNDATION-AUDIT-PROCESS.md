@@ -146,36 +146,18 @@ environment_variables:
 
 ## Step 3: Fix Email Infrastructure
 
-### 3.1 Create Email Service Account
+**See full guide:** `docs/processes/EMAIL-INFRASTRUCTURE-PROCESS.md`
 
-**AWS SES (Recommended if you have AWS account):**
-1. Go to AWS IAM Console
-2. Create new user (e.g., `ses-nextjs-app`)
-3. Attach `AmazonSESFullAccess` policy
-4. Create access key (choose "Application running outside AWS")
-5. Copy Access Key ID and Secret Access Key
+### 3.1 Quick Setup (AWS SES)
 
-**Check SES Status:**
-```bash
-aws ses get-account-sending-enabled --profile yourprofile
-aws ses list-identities --profile yourprofile
-```
-
-If SES is in sandbox mode:
-- Request production access in AWS Console → SES → Account Dashboard
-- Or verify specific email addresses for testing
-
-**Alternative: Resend**
-1. Sign up at https://resend.com
-2. Navigate to API Keys
-3. Create new key
-4. Copy key (shown only once)
-
-**Other alternatives: SendGrid, Mailgun, Postmark**
+1. Create IAM user with `AmazonSESFullAccess` policy
+2. Create access keys
+3. Check SES status (sandbox vs production)
+4. Install `@aws-sdk/client-ses`
+5. Create API route with **lazy client initialization**
 
 ### 3.2 Configure Environment
 
-**For AWS SES:**
 ```bash
 # Create .env.local (never commit this file)
 cat << 'EOF' > .env.local
@@ -186,12 +168,27 @@ SES_FROM_EMAIL=noreply@yourdomain.com
 EOF
 ```
 
-**For Resend:**
+### 3.3 Deploy to Vercel
+
+**CRITICAL: Use `printf` not `echo` to avoid newline characters!**
+
 ```bash
-echo "RESEND_API_KEY=re_xxxxxxxxxx" > .env.local
+# WRONG - causes "Invalid region" errors
+echo "us-west-2" | vercel env add AWS_REGION production
+
+# RIGHT
+printf "us-west-2" | vercel env add AWS_REGION production
 ```
 
-### 3.3 Domain Verification (Production)
+Add all credentials:
+```bash
+printf "AKIA..." | vercel env add AWS_ACCESS_KEY_ID production
+printf "secret..." | vercel env add AWS_SECRET_ACCESS_KEY production
+printf "us-west-2" | vercel env add AWS_REGION production
+printf "noreply@domain.com" | vercel env add SES_FROM_EMAIL production
+```
+
+### 3.4 Domain Verification (Production)
 
 For professional "from" address:
 1. In email service dashboard, add domain
