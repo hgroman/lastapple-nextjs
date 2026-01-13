@@ -3,14 +3,21 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { z } from 'zod';
 import { escapeHtml } from '@/lib/sanitize';
 
-// Initialize SES client
-const sesClient = new SESClient({
-  region: process.env.AWS_REGION || 'us-west-2',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-  },
-});
+// Lazy initialization - create client only when needed with current env vars
+let sesClient: SESClient | null = null;
+
+function getSESClient(): SESClient {
+  if (!sesClient) {
+    sesClient = new SESClient({
+      region: process.env.AWS_REGION || 'us-west-2',
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+      },
+    });
+  }
+  return sesClient;
+}
 
 const ContactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -112,7 +119,7 @@ This message was sent from the contact form at lastapple.com
       },
     });
 
-    const response = await sesClient.send(command);
+    const response = await getSESClient().send(command);
 
     return NextResponse.json(
       { success: true, messageId: response.MessageId },
