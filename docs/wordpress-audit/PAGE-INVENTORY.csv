@@ -1,0 +1,36 @@
+ID,slug,title,wordpress_url,nextjs_path,redirect_needed,notes
+10833,ai-powered-b2b-email-list-services,"AI-Powered B2B Email List Services",/ai-powered-b2b-email-list-services/,/solutions/b2b-email-list,YES,Solution page
+10780,my-account,"My account",/my-account/,/,YES,WooCommerce - redirect to home
+10779,checkout,Checkout,/checkout/,/contact,YES,WooCommerce - redirect to contact
+10778,cart,Cart,/cart/,/services,YES,WooCommerce - redirect to services
+10777,shop,Shop,/shop/,/services,YES,WooCommerce - redirect to services
+10605,wordpress-strategy-consultation,"Wordpress Strategy Consultation",/wordpress-strategy-consultation/,/contact,YES,Consultation page
+10592,social-media-consultation,"Social Media Consultation",/social-media-consultation/,/contact,YES,Consultation page
+10494,maintenance-plan-quote-request,"Maintenance Plan Quote Request",/maintenance-plan-quote-request/,/services/maintenance-plans,YES,Quote request form
+10481,zoom,"Schedule your free SEO Report Review",/zoom/,/contact,YES,Scheduling page
+10159,elevate-your-social-presence-with-ai-driven-strategies,"Elevate Your Social Presence with AI-Driven Strategies",/elevate-your-social-presence-with-ai-driven-strategies/,/solutions/social-strategies,YES,Solution page
+9853,last-apple-wordpress-maintenance-onboarding-process,"Last Apple WordPress Maintenance Onboarding Process",/last-apple-wordpress-maintenance-onboarding-process/,/services/wordpress-maintenance,YES,Onboarding → main service
+9816,wordpress-maintenance-plans,"Maintenance Plans",/wordpress-maintenance-plans/,/services/maintenance-plans,YES,Service page
+9697,schedule-free-seo-report-review,"Schedule your free SEO Report Review",/schedule-free-seo-report-review/,/contact,YES,Thank you page
+9628,java-seo-technical-audits-coffee-shops,"Free SEO Audit | Coastal SEO Code Crawl",/java-seo-technical-audits-coffee-shops/,/stream/coffee-shop-seo,YES,Landing page → blog post
+9320,unleash-hubspots-full-potential-with-last-apple,"Unleash HubSpot's Full Potential with Last Apple",/unleash-hubspots-full-potential-with-last-apple/,/solutions/hubspot-integration,YES,Solution page
+9131,ai-driven-data-integration-and-process-optimization,"AI-Driven Data Integration and Process Optimization",/ai-driven-data-integration-and-process-optimization/,/solutions/data-integration,YES,Solution page
+9046,website-renaissance-transforming-digital-presence,"Website Renaissance: Transforming Digital Presence",/website-renaissance-transforming-digital-presence/,/services/website-renaissance,YES,Service page
+8970,ai-powered-chatbot-solutions,"AI-Powered Chatbot Solutions",/ai-powered-chatbot-solutions/,/solutions/ai-chatbot-solutions,YES,Solution page
+8964,why-choose-last-apple-pioneering-ai-driven-digital-marketing,"Why Choose Last Apple: Pioneering AI-Driven Digital Marketing",/why-choose-last-apple-pioneering-ai-driven-digital-marketing/,/about,YES,About page variant
+8954,ai-powered-content-creation-services-elevate-your-digital-presence,"AI-Powered Content Creation Services",/ai-powered-content-creation-services-elevate-your-digital-presence/,/solutions/content-creation,YES,Solution page
+8944,wordpress-resurrection-breathing-new-life-into-aging-websites,"WordPress Resurrection: Breathing New Life into Aging Websites",/wordpress-resurrection-breathing-new-life-into-aging-websites/,/services/wordpress-resurrection,YES,Service page
+8940,about,About,/about/,/about,NO,Same path
+8937,augmentive-services,"Augmentive Services",/augmentive-services/,/solutions,YES,Services overview
+8925,wordpress-performance-optimization-seo-services,"WordPress Performance Optimization & SEO Services",/wordpress-performance-optimization-seo-services/,/services/wordpress-performance,YES,Service page
+8792,blog,Blog,/blog/,/stream,YES,Blog archive
+31,seo-guide-for-solopreneurs,"Mastering SEO: A Comprehensive Guide for Solopreneurs",/seo-guide-for-solopreneurs/,/solutions/seo-guide,YES,Solution page
+4406,wordpress-maintenance,"WordPress Maintenance",/wordpress-maintenance/,/services/wordpress-maintenance,YES,Service page
+1263,partners,Partners,/partners/,/about,YES,Partner page → about
+1042,terms-use,"Terms of Use",/terms-use/,/terms,YES,Legal page
+1040,privacy,Privacy,/privacy/,/privacy,NO,Same path
+695,consultation,Consultation,/consultation/,/contact,YES,Contact variant
+396,audio-scapes,Audio-scapes,/audio-scapes/,/solutions/audio-scapes,YES,Solution page
+30,home,Home,/home/,/,YES,Homepage redirect
+32,services,Services,/services/,/services,NO,Same path
+33,contact,Contact,/contact/,/contact,NO,Same path

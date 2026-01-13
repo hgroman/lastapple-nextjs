@@ -1,0 +1,547 @@
+# Plugin Inventory - Last Apple WordPress → Next.js Migration
+# Generated: 2026-01-12
+# Purpose: Track plugins and extract settings needed for Next.js implementation
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+summary:
+  total_plugins: 40
+  active_plugins: 26
+  inactive_plugins: 12
+  must_use_plugins: 2
+  by_category:
+    migrate_settings: 8
+    migrate_data: 2
+    not_needed: 18
+    security: 4
+    performance: 3
+    unknown: 5
+
+# =============================================================================
+# PLUGINS BY MIGRATION CATEGORY
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# MIGRATE_SETTINGS - Settings needed in Next.js
+# -----------------------------------------------------------------------------
+migrate_settings:
+  google-site-kit:
+    name: "Google Site Kit"
+    status: active
+    version: "1.168.0"
+    migration_action: "Extract GA4 measurement ID, implement in layout.tsx"
+    settings_extracted: true
+    priority: P0
+
+  microsoft-clarity:
+    name: "Microsoft Clarity"
+    status: active
+    version: "0.10.15"
+    migration_action: "Extract site ID, implement in layout.tsx"
+    settings_extracted: true
+    priority: P0
+
+  wp-seopress:
+    name: "SEOPress"
+    status: active
+    version: "9.3.0.4"
+    migration_action: "Extract title templates, social settings → Next.js Metadata API"
+    settings_extracted: true
+    priority: P1
+
+  wp-seopress-pro:
+    name: "SEOPress PRO"
+    status: active
+    version: "8.8.1"
+    migration_action: "Extract schema settings, instant indexing config"
+    settings_extracted: true
+    priority: P1
+    note: "Contains Google Search Console API key and Bing API key"
+
+  forminator:
+    name: "Forminator"
+    status: active
+    version: "1.49.2"
+    migration_action: "Document form fields → implement with React + Resend"
+    settings_extracted: true
+    priority: P1
+
+  301-redirects:
+    name: "301 Redirects"
+    status: active
+    version: "6.22"
+    migration_action: "Export redirects → add to next.config.ts"
+    settings_extracted: true
+    priority: P0
+    note: "Already incorporated into next.config.ts"
+
+  insert-headers-and-footers:
+    name: "WPCode (Headers & Footers)"
+    status: active
+    version: "2.3.1"
+    migration_action: "Check for custom scripts → add to layout.tsx"
+    settings_extracted: false
+    priority: P2
+
+  jetpack:
+    name: "Jetpack"
+    status: active
+    version: "15.4"
+    migration_action: "Check for site stats, social sharing settings"
+    settings_extracted: false
+    priority: P3
+    note: "Mostly WordPress-specific features, may have social settings"
+
+# -----------------------------------------------------------------------------
+# MIGRATE_DATA - Data/content to preserve
+# -----------------------------------------------------------------------------
+migrate_data:
+  broken-link-checker:
+    name: "Broken Link Checker"
+    status: active
+    version: "2.4.7"
+    migration_action: "Run scan before migration, fix broken links"
+    settings_extracted: false
+    priority: P2
+
+  updraftplus:
+    name: "UpdraftPlus"
+    status: active
+    version: "2.25.9.26"
+    migration_action: "Ensure backup exists before migration"
+    settings_extracted: false
+    priority: P0
+    note: "Backup, don't migrate"
+
+# -----------------------------------------------------------------------------
+# NOT_NEEDED - WordPress-specific, replaced by Next.js
+# -----------------------------------------------------------------------------
+not_needed:
+  elementor:
+    name: "Elementor"
+    status: active
+    version: "3.33.2"
+    reason: "Page builder → React components"
+
+  elementor-pro:
+    name: "Elementor Pro"
+    status: active
+    version: "3.29.1"
+    reason: "Page builder → React components"
+
+  elementskit-lite:
+    name: "ElementsKit Lite"
+    status: active
+    version: "3.7.6"
+    reason: "Elementor addon → React components"
+
+  header-footer-elementor:
+    name: "Elementor Header & Footer Builder"
+    status: active
+    version: "2.8.0"
+    reason: "→ Next.js layout components"
+
+  ultimate-elementor:
+    name: "Ultimate Addons for Elementor"
+    status: active
+    version: "1.42.2"
+    reason: "Elementor addon → React components"
+
+  astra-addon:
+    name: "Astra Pro"
+    status: active
+    version: "4.12.0"
+    reason: "Theme addon → Tailwind CSS"
+
+  astra-pro-sites:
+    name: "Starter Templates"
+    status: active
+    version: "4.4.46"
+    reason: "Theme templates → custom Next.js templates"
+
+  astra-portfolio:
+    name: "Starter Templates Portfolio"
+    status: active
+    version: "1.13.3"
+    reason: "Portfolio CPT → MDX content"
+
+  go_pricing:
+    name: "Go Pricing"
+    status: active
+    version: "3.4"
+    reason: "Pricing tables → PricingSection component"
+
+  admin-site-enhancements:
+    name: "Admin Site Enhancements"
+    status: active
+    version: "8.1.2"
+    reason: "WordPress admin only"
+
+  string-locator:
+    name: "String Locator"
+    status: active
+    version: "2.6.7"
+    reason: "WordPress admin tool"
+
+  syntaxhighlighter:
+    name: "SyntaxHighlighter Evolved"
+    status: active
+    version: "3.7.2"
+    reason: "→ CodeBlock component with Prism/Shiki"
+
+  merpress:
+    name: "Merpress"
+    status: active
+    version: "1.1.11"
+    reason: "WordPress-specific"
+
+  wpmudev-updates:
+    name: "WPMU DEV Dashboard"
+    status: active
+    version: "4.11.29"
+    reason: "Plugin management → not needed"
+
+  # Inactive plugins
+  code-snippet-dm:
+    name: "Code Snippets"
+    status: inactive
+    reason: "→ Custom code in Next.js"
+
+  db-version-control:
+    name: "DB Version Control"
+    status: inactive
+    reason: "→ Git for version control"
+
+  pro-elements:
+    name: "Pro Elements"
+    status: inactive
+    reason: "Elementor addon"
+
+  safe-svg:
+    name: "Safe SVG"
+    status: inactive
+    reason: "→ Next.js handles SVGs"
+
+# -----------------------------------------------------------------------------
+# SECURITY - Handled by Vercel/hosting
+# -----------------------------------------------------------------------------
+security:
+  wp-defender:
+    name: "Defender Security"
+    status: inactive
+    version: "5.7.1"
+    reason: "→ Vercel security features"
+
+  sg-security:
+    name: "SiteGround Security"
+    status: inactive
+    version: "1.5.7"
+    reason: "Hosting-specific → Vercel"
+
+  aaa-wp-cerber:
+    name: "WP Cerber"
+    status: must-use
+    version: "1.0"
+    reason: "→ Vercel security, rate limiting"
+
+  elementor-safe-mode:
+    name: "Elementor Safe Mode"
+    status: must-use
+    version: "1.0.0"
+    reason: "Elementor-specific"
+
+# -----------------------------------------------------------------------------
+# PERFORMANCE - Handled by Vercel Edge
+# -----------------------------------------------------------------------------
+performance:
+  sg-cachepress:
+    name: "SiteGround Optimizer"
+    status: active
+    version: "7.7.4"
+    reason: "→ Vercel Edge caching"
+
+  wp-smush-pro:
+    name: "Smush Pro"
+    status: inactive
+    version: "3.23.1"
+    reason: "→ Next.js Image optimization"
+
+  snapshot-backups:
+    name: "Snapshot Pro"
+    status: inactive
+    version: "4.38.0"
+    reason: "→ Git + Vercel deployments"
+
+# -----------------------------------------------------------------------------
+# OTHER - Various plugins
+# -----------------------------------------------------------------------------
+other:
+  official-facebook-pixel:
+    name: "Facebook Pixel"
+    status: inactive
+    version: "4.1.5"
+    migration_action: "Check if pixel ID exists"
+    settings_extracted: true
+    note: "No pixel ID found"
+
+  fluent-smtp:
+    name: "Fluent SMTP"
+    status: inactive
+    version: "2.2.92"
+    migration_action: "→ Resend for transactional email"
+    note: "Not configured, using default"
+
+  ics-calendar:
+    name: "ICS Calendar"
+    status: inactive
+    version: "12.0.1"
+    note: "Calendar integration - check if needed"
+
+  wp-file-manager:
+    name: "WP File Manager"
+    status: inactive
+    version: "8.0.2"
+    note: "Admin tool - not needed"
+
+  wpcore:
+    name: "WPCore"
+    status: inactive
+    version: "1.9.2"
+    note: "Plugin installer - not needed"
+
+# =============================================================================
+# EXTRACTED SETTINGS
+# =============================================================================
+settings:
+  # ---------------------------------------------------------------------------
+  # ANALYTICS
+  # ---------------------------------------------------------------------------
+  analytics:
+    google_analytics:
+      measurement_id: "G-FZS6N6JB5Z"
+      property_id: "309035327"
+      account_id: "72912843"
+      web_data_stream_id: "3377145148"
+      tracking_disabled:
+        - "loggedinUsers"
+      use_snippet: true
+      env_var: "NEXT_PUBLIC_GA_MEASUREMENT_ID"
+
+    microsoft_clarity:
+      site_id: "5e11a7a1-bade-49fa-b226-2f095afd0146"
+      env_var: "NEXT_PUBLIC_CLARITY_PROJECT_ID"
+
+    facebook_pixel:
+      pixel_id: null
+      status: "Not configured"
+
+  # ---------------------------------------------------------------------------
+  # SEO SETTINGS
+  # ---------------------------------------------------------------------------
+  seo:
+    title_templates:
+      homepage: "%%sitetitle%%"
+      single_post: "%%post_title%% %%sep%% %%sitetitle%%"
+      single_page: "%%post_title%% %%sep%% %%sitetitle%%"
+      archive: "%%cpt_plural%% %%current_pagination%% %%sep%%"
+      author: "%%post_author%% %%sep%% %%sitetitle%%"
+      search: "%%search_keywords%% %%sep%% %%sitetitle%%"
+      404: "404 - Page not found %%sep%% %%sitetitle%%"
+    separator: "-"
+    noindex_settings:
+      author_archives: true
+      date_archives: true
+      search_results: true
+      attachments: true
+      categories: true
+      tags: true
+
+    organization_schema:
+      type: "Organization"
+      name: "Last Apple"
+      logo: "https://lastapple.com/wp-content/uploads/2023/03/Original-on-Transparent.png"
+      phone: "+17148139973"
+      email: null
+
+    features_enabled:
+      open_graph: true
+      twitter_cards: true
+      xml_sitemap: true
+      dublin_core: true
+      local_business: true
+      rich_snippets: true
+      breadcrumbs: true
+      instant_indexing: true
+
+  # ---------------------------------------------------------------------------
+  # SOCIAL ACCOUNTS
+  # ---------------------------------------------------------------------------
+  social_accounts:
+    facebook: "https://www.facebook.com/LastAppleConsulting"
+    twitter: "https://x.com/lastappledma"
+    instagram: "https://www.instagram.com/hank_groman/"
+    youtube: "https://www.youtube.com/@lastappleai"
+    linkedin: "https://linkedin.com/company/lastapple"
+    messenger: "https://m.me/hank.groman"
+    whatsapp: "https://wa.me/17148139973"
+
+  # ---------------------------------------------------------------------------
+  # EXISTING REDIRECTS (from WordPress)
+  # ---------------------------------------------------------------------------
+  existing_redirects:
+    from_yoast_premium:
+      - from: "/schedule-time-with-me"
+        to: "/consultation"
+        type: 301
+      - from: "/terms-of-use"
+        to: "/terms-use"
+        type: 301
+
+    from_seopress_suggestions:
+      - from: "/building-a-brain-not-just-another-marketing-tool-2/"
+        to: null
+        status: "deleted_post"
+        note: "Post deleted - needs redirect decision"
+      - from: "/java/"
+        to: "/java-seo-technical-audits-coffee-shops/"
+        type: 301
+        note: "Slug changed"
+      - from: "/seo-for-entrepreneurs/"
+        to: "/seo-guide-for-solopreneurs/"
+        type: 301
+        note: "Slug changed"
+
+  # ---------------------------------------------------------------------------
+  # FORMS
+  # ---------------------------------------------------------------------------
+  forms:
+    - id: 1407
+      name: "lastapple-com-contact-form"
+      wp_shortcode: "[forminator_form id='1407']"
+      nextjs_implementation: "/contact - ContactForm component"
+      destination_email: "hank@lastapple.com"
+
+    - id: 9127
+      name: "last-apple-signup-blog-archive"
+      wp_shortcode: "[forminator_form id='9127']"
+      nextjs_implementation: "Newsletter signup - to be implemented"
+      note: "Blog archive signup form"
+
+    - id: 9706
+      name: "free-seo-audit-contact-form"
+      wp_shortcode: "[forminator_form id='9706']"
+      nextjs_implementation: "/contact?type=seo-review"
+      destination_email: "hank@lastapple.com"
+
+    - id: 10496
+      name: "wordpress-quote-request"
+      wp_shortcode: "[forminator_form id='10496']"
+      nextjs_implementation: "/contact?type=maintenance"
+      destination_email: "hank@lastapple.com"
+
+  # ---------------------------------------------------------------------------
+  # SITE IDENTITY
+  # ---------------------------------------------------------------------------
+  site_identity:
+    site_name: "Last Apple Business Solutions"
+    tagline: "Where no question is too small... or too Big!"
+    admin_email: "hank@lastapple.com"
+    siteurl: "https://lastapple.com"
+    home: "https://lastapple.com"
+
+  # ---------------------------------------------------------------------------
+  # EMAIL CONFIGURATION
+  # ---------------------------------------------------------------------------
+  email:
+    current_method: "Default WordPress mail"
+    smtp_configured: false
+    nextjs_replacement: "Resend API"
+    env_var: "RESEND_API_KEY"
+    from_email: "noreply@lastapple.com"
+    reply_to: "hank@lastapple.com"
+
+# =============================================================================
+# SECRETS/API KEYS (document existence, NOT values)
+# =============================================================================
+secrets_documentation:
+  extracted:
+    - name: "Google Analytics Measurement ID"
+      env_var: "NEXT_PUBLIC_GA_MEASUREMENT_ID"
+      value_location: "settings.analytics.google_analytics.measurement_id"
+      status: "Added to .env.example"
+
+    - name: "Microsoft Clarity Site ID"
+      env_var: "NEXT_PUBLIC_CLARITY_PROJECT_ID"
+      value_location: "settings.analytics.microsoft_clarity.site_id"
+      status: "Added to .env.example"
+
+  found_but_not_extracted:
+    - name: "Google Search Console API Key"
+      plugin: "SEOPress Pro"
+      option: "seopress_instant_indexing_option_name"
+      note: "Service account JSON for instant indexing"
+      action: "Create new service account for Next.js if needed"
+
+    - name: "Bing Webmaster API Key"
+      plugin: "SEOPress Pro"
+      option: "seopress_instant_indexing_option_name"
+      note: "Base64 encoded key"
+      action: "Generate new key for Next.js if needed"
+
+    - name: "OpenAI API Key"
+      plugin: "SEOPress Pro"
+      option: "seopress_pro_option_name"
+      note: "Used for AI-generated alt text"
+      action: "Not needed - using Claude for content"
+
+  needs_creation:
+    - name: "Resend API Key"
+      env_var: "RESEND_API_KEY"
+      action: "Create in Resend dashboard"
+      status: "Pending"
+
+# =============================================================================
+# MIGRATION CHECKLIST
+# =============================================================================
+migration_checklist:
+  p0_immediate:
+    - "[x] GA4 measurement ID extracted"
+    - "[x] Clarity site ID extracted"
+    - "[x] Existing redirects documented"
+    - "[ ] Add redirects from seopress_suggestions to next.config.ts"
+
+  p1_before_content:
+    - "[x] Form configurations documented"
+    - "[ ] Implement contact form with Resend"
+    - "[ ] Add social accounts to footer component"
+    - "[ ] Verify SEO metadata templates match Next.js"
+
+  p2_during_migration:
+    - "[ ] Run broken link checker scan"
+    - "[ ] Update internal links per URL mapping"
+    - "[ ] Verify all forms have Next.js equivalents"
+
+  p3_post_migration:
+    - "[ ] Verify analytics firing"
+    - "[ ] Test all form submissions"
+    - "[ ] Check Search Console for issues"
+
+# =============================================================================
+# NOTES
+# =============================================================================
+notes:
+  instant_indexing: |
+    SEOPress has Google Instant Indexing configured with a service account.
+    If we want this functionality in Next.js, we need to:
+    1. Use the existing service account OR create a new one
+    2. Implement API call after content publishes
+    3. Consider using Vercel webhook for auto-submission
+
+  ai_features: |
+    SEOPress Pro has OpenAI integration for generating alt text.
+    We're using Claude instead, so this API key is not needed.
+
+  woocommerce: |
+    Several WooCommerce-related settings found but WooCommerce is not
+    being migrated. Shop functionality was minimal/unused.

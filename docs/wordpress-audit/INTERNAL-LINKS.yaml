@@ -1,0 +1,316 @@
+# Internal Links Inventory - Last Apple WordPress → Next.js Migration
+# Generated: 2026-01-11
+# Purpose: Map all internal links for URL rewriting during content migration
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+summary:
+  total_content_links: 23  # Links embedded in page content (excluding images)
+  total_navigation_links: 22  # Links in main navigation menu
+  unique_destinations: 12  # Unique internal pages linked to
+  image_references: 163  # References to wp-content/uploads (handled separately)
+
+# =============================================================================
+# URL MAPPING TABLE
+# Use this for search-replace during MDX content migration
+# =============================================================================
+url_mapping:
+  # Format: "wordpress_url": "nextjs_path"
+
+  # Homepage
+  "https://lastapple.com/": "/"
+  "https://lastapple.com": "/"
+
+  # Services (P1)
+  "https://lastapple.com/wordpress-maintenance/": "/services/wordpress-maintenance"
+  "https://lastapple.com/services/": "/services"
+
+  # Services (P2)
+  "https://lastapple.com/wordpress-performance-optimization-seo-services/": "/services/wordpress-performance"
+  "https://lastapple.com/wordpress-resurrection-breathing-new-life-into-aging-websites/": "/services/wordpress-resurrection"
+  "https://lastapple.com/website-renaissance-transforming-digital-presence/": "/services/website-renaissance"
+  "https://lastapple.com/augmentive-services/": "/services/augmentive"
+  "https://lastapple.com/audio-scapes/": "/services/audio-scapes"
+  "https://lastapple.com/ai-powered-content-creation-services-elevate-your-digital-presence/": "/services/content-creation"
+  "https://lastapple.com/elevate-your-social-presence-with-ai-driven-strategies/": "/services/social-strategies"
+
+  # Solutions (P1)
+  "https://lastapple.com/ai-powered-chatbot-solutions/": "/solutions/ai-chatbot"
+  "https://lastapple.com/ai-powered-b2b-email-list-services/": "/solutions/b2b-email-lists"
+  "https://lastapple.com/ai-driven-data-integration-and-process-optimization/": "/solutions/data-integration"
+
+  # Solutions (P2)
+  "https://lastapple.com/unleash-hubspots-full-potential-with-last-apple/": "/solutions/hubspot-integration"
+
+  # SEO/Guides
+  "https://lastapple.com/seo-guide-for-solopreneurs/": "/guides/seo-solopreneurs"
+  "https://lastapple.com/java-seo-technical-audits-coffee-shops/": "/guides/coffee-shop-seo"
+
+  # Consultation/Forms
+  "https://lastapple.com/consultation/": "/contact"
+  "https://lastapple.com/consultation": "/contact"
+  "https://lastapple.com/contact/": "/contact"
+  "https://lastapple.com/contact": "/contact"
+  "https://lastapple.com/wordpress-strategy-consultation/": "/contact?type=strategy"
+  "https://lastapple.com/social-media-consultation/": "/contact?type=social"
+  "https://lastapple.com/maintenance-plan-quote-request/": "/contact?type=maintenance"
+  "https://lastapple.com/zoom/": "/contact?type=meeting"
+  "https://lastapple.com/meeting-demo": "/contact?type=demo"
+  "https://lastapple.com/schedule-free-seo-report-review/": "/contact?type=seo-review"
+
+  # Static Pages
+  "https://lastapple.com/about/": "/about"
+  "https://lastapple.com/about": "/about"
+  "https://lastapple.com/why-choose-last-apple-pioneering-ai-driven-digital-marketing/": "/about#why-choose-us"
+  "https://lastapple.com/partners/": "/about#partners"
+  "https://lastapple.com/blog/": "/stream"
+  "https://lastapple.com/terms-use/": "/terms"
+  "https://lastapple.com/privacy/": "/privacy"
+
+  # Maintenance/Support Pages
+  "https://lastapple.com/wordpress-maintenance-plans/": "/services/wordpress-maintenance#plans"
+  "https://lastapple.com/last-apple-wordpress-maintenance-onboarding-process/": "/services/wordpress-maintenance#onboarding"
+
+# =============================================================================
+# CONTENT LINKS (by source page)
+# Links found embedded in page content
+# =============================================================================
+content_links:
+  wordpress-maintenance:
+    wp_id: 4406
+    links_found:
+      - url: "https://lastapple.com/maintenance-plan-quote-request/"
+        target: "/contact?type=maintenance"
+        context: "CTA button"
+      - url: "https://lastapple.com/wordpress-maintenance-plans/"
+        target: "/services/wordpress-maintenance#plans"
+        context: "Link to plans section"
+      - url: "https://lastapple.com/wordpress-strategy-consultation/"
+        target: "/contact?type=strategy"
+        context: "CTA to consultation"
+
+  wordpress-maintenance-plans:
+    wp_id: 9816
+    links_found:
+      - url: "https://lastapple.com/last-apple-wordpress-maintenance-onboarding-process/"
+        target: "/services/wordpress-maintenance#onboarding"
+        context: "Link to onboarding process"
+
+  services:
+    wp_id: 32
+    links_found:
+      - url: "https://lastapple.com/seo-guide-for-solopreneurs/"
+        target: "/guides/seo-solopreneurs"
+        context: "SEO guide reference"
+
+  content-creation:
+    wp_id: 8954
+    links_found:
+      - url: "https://lastapple.com/wordpress-strategy-consultation/"
+        target: "/contact?type=strategy"
+        context: "CTA to consultation"
+
+  wordpress-performance:
+    wp_id: 8925
+    links_found:
+      - url: "https://lastapple.com/wordpress-strategy-consultation/"
+        target: "/contact?type=strategy"
+        context: "CTA to consultation"
+
+  social-strategies:
+    wp_id: 10159
+    links_found:
+      - url: "https://lastapple.com/social-media-consultation/"
+        target: "/contact?type=social"
+        context: "CTA to social consultation"
+
+  website-renaissance:
+    wp_id: 9046
+    links_found:
+      - url: "https://lastapple.com/wordpress-strategy-consultation/"
+        target: "/contact?type=strategy"
+        context: "CTA to consultation"
+
+  # Pages with no internal content links
+  ai-chatbot:
+    wp_id: 8970
+    links_found: []
+
+  data-integration:
+    wp_id: 9131
+    links_found: []
+
+  consultation:
+    wp_id: 695
+    links_found: []
+
+  contact:
+    wp_id: 33
+    links_found: []
+
+  about:
+    wp_id: 8940
+    links_found: []
+
+# =============================================================================
+# NAVIGATION MENU LINKS
+# Links from WordPress main navigation
+# =============================================================================
+navigation_links:
+  menu_name: "Navigation"
+  menu_id: 4
+  item_count: 22
+  items:
+    - title: "Home"
+      wp_url: "https://lastapple.com/"
+      nextjs_path: "/"
+
+    - title: "WordPress Services"
+      wp_url: "https://lastapple.com/services/"
+      nextjs_path: "/services"
+      children:
+        - title: "WordPress Maintenance"
+          wp_url: "https://lastapple.com/wordpress-maintenance/"
+          nextjs_path: "/services/wordpress-maintenance"
+
+        - title: "Website Renaissance"
+          wp_url: "https://lastapple.com/website-renaissance-transforming-digital-presence/"
+          nextjs_path: "/services/website-renaissance"
+
+        - title: "WordPress Performance Optimization"
+          wp_url: "https://lastapple.com/wordpress-performance-optimization-seo-services/"
+          nextjs_path: "/services/wordpress-performance"
+
+        - title: "WordPress Resurrection"
+          wp_url: "https://lastapple.com/wordpress-resurrection-breathing-new-life-into-aging-websites/"
+          nextjs_path: "/services/wordpress-resurrection"
+
+    - title: "Augmentive Services"
+      wp_url: "https://lastapple.com/augmentive-services/"
+      nextjs_path: "/services/augmentive"
+      children:
+        - title: "SEO Guide"
+          wp_url: "https://lastapple.com/seo-guide-for-solopreneurs/"
+          nextjs_path: "/guides/seo-solopreneurs"
+
+        - title: "AI-Powered Chatbot"
+          wp_url: "https://lastapple.com/ai-powered-chatbot-solutions/"
+          nextjs_path: "/solutions/ai-chatbot"
+
+        - title: "B2B Email List Services"
+          wp_url: "https://lastapple.com/ai-powered-b2b-email-list-services/"
+          nextjs_path: "/solutions/b2b-email-lists"
+
+        - title: "Data Integration"
+          wp_url: "https://lastapple.com/ai-driven-data-integration-and-process-optimization/"
+          nextjs_path: "/solutions/data-integration"
+
+        - title: "HubSpot Integration"
+          wp_url: "https://lastapple.com/unleash-hubspots-full-potential-with-last-apple/"
+          nextjs_path: "/solutions/hubspot-integration"
+
+        - title: "Content Creation"
+          wp_url: "https://lastapple.com/ai-powered-content-creation-services-elevate-your-digital-presence/"
+          nextjs_path: "/services/content-creation"
+
+        - title: "Social Strategies"
+          wp_url: "https://lastapple.com/elevate-your-social-presence-with-ai-driven-strategies/"
+          nextjs_path: "/services/social-strategies"
+
+        - title: "Audio Scapes"
+          wp_url: "https://lastapple.com/audio-scapes/"
+          nextjs_path: "/services/audio-scapes"
+
+    - title: "About"
+      wp_url: "https://lastapple.com/about/"
+      nextjs_path: "/about"
+      children:
+        - title: "Why Choose Last Apple"
+          wp_url: "https://lastapple.com/why-choose-last-apple-pioneering-ai-driven-digital-marketing/"
+          nextjs_path: "/about#why-choose-us"
+
+        - title: "Request Free SEO Audit"
+          wp_url: "https://lastapple.com/java-seo-technical-audits-coffee-shops/"
+          nextjs_path: "/guides/coffee-shop-seo"
+
+        - title: "Schedule Audit Review"
+          wp_url: "https://lastapple.com/zoom/"
+          nextjs_path: "/contact?type=meeting"
+
+        - title: "Our Partners"
+          wp_url: "https://lastapple.com/partners/"
+          nextjs_path: "/about#partners"
+
+    - title: "Our Blog"
+      wp_url: "https://lastapple.com/blog/"
+      nextjs_path: "/stream"
+
+    - title: "Contact"
+      wp_url: "https://lastapple.com/contact/"
+      nextjs_path: "/contact"
+
+# =============================================================================
+# LINK REWRITING NOTES
+# =============================================================================
+notes:
+  strategy: |
+    During MDX content migration:
+    1. Use url_mapping table for direct search-replace
+    2. Replace all "https://lastapple.com/..." with relative paths
+    3. Consolidate multiple consultation pages to /contact with query params
+    4. Image URLs will be handled separately (rewrite to /images/...)
+
+  consultation_consolidation: |
+    WordPress has 7 separate consultation/form pages:
+    - /consultation/
+    - /wordpress-strategy-consultation/
+    - /social-media-consultation/
+    - /maintenance-plan-quote-request/
+    - /zoom/
+    - /meeting-demo/
+    - /schedule-free-seo-report-review/
+
+    Next.js consolidates to single /contact page with ?type= parameter.
+    Form can display different fields based on type.
+
+  pages_to_consolidate:
+    - slug: "why-choose-last-apple-pioneering-ai-driven-digital-marketing"
+      action: "Merge into /about as a section"
+    - slug: "partners"
+      action: "Merge into /about as a section"
+    - slug: "wordpress-maintenance-plans"
+      action: "Merge into /services/wordpress-maintenance as anchor section"
+    - slug: "last-apple-wordpress-maintenance-onboarding-process"
+      action: "Merge into /services/wordpress-maintenance as anchor section"
+
+  orphan_pages:
+    - slug: "shop"
+      status: "WooCommerce - not migrating"
+    - slug: "cart"
+      status: "WooCommerce - not migrating"
+    - slug: "checkout"
+      status: "WooCommerce - not migrating"
+    - slug: "my-account"
+      status: "WooCommerce - not migrating"
+
+# =============================================================================
+# MIGRATION CHECKLIST
+# =============================================================================
+checklist:
+  before_migration:
+    - "[ ] Verify all redirects in next.config.ts cover url_mapping entries"
+    - "[ ] Create /contact page with type parameter handling"
+    - "[ ] Create anchor sections in /about for why-choose-us and partners"
+    - "[ ] Create anchor sections in /services/wordpress-maintenance for plans and onboarding"
+
+  during_migration:
+    - "[ ] Search-replace WordPress URLs with Next.js paths"
+    - "[ ] Convert absolute URLs to relative paths"
+    - "[ ] Update image references to /images/... paths"
+    - "[ ] Test all internal links after migration"
+
+  after_migration:
+    - "[ ] Crawl site for broken links"
+    - "[ ] Verify 301 redirects work for all old URLs"
+    - "[ ] Check Search Console for 404 errors"

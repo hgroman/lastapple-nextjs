@@ -1,0 +1,632 @@
+# Image Inventory - Last Apple WordPress → Next.js Migration
+# Generated: 2026-01-11
+# Purpose: Track image assets for systematic migration
+#
+# CATEGORY VALUES:
+#   hero      - Large header/banner images
+#   featured  - Post thumbnails, OG images
+#   inline    - Images within content
+#   icon      - Small UI elements
+#   logo      - Brand assets
+#   screenshot- Client work screenshots
+#   ai_generated - AI-created marketing images
+#
+# ALT STATUS VALUES:
+#   OK                - Has good descriptive alt text
+#   MISSING           - No alt text
+#   NEEDS_IMPROVEMENT - Generic or poor alt text
+
+summary:
+  total_media_library: 174
+  by_category:
+    ai_generated: 12
+    blog_featured: 13
+    screenshots: 10
+    logos_icons: 15
+    stock_adobe: 5
+    other: 119
+  featured_images_mapped: 13
+  priority_images: 20  # Images needed for P1 pages
+  alt_text_status:
+    verified: 0  # Need to audit
+    missing: "TBD"
+    needs_review: "TBD"
+  action_needed:
+    - "Download AI-generated webp images for services/solutions"
+    - "Rename with semantic names"
+    - "Verify/create alt text for all"
+
+# ============================================================
+# KEY AI-GENERATED IMAGES (Priority - needed for templates)
+# These are the "2050 AI-infused bliss" images referenced in WORK-ORDER
+# ============================================================
+ai_generated:
+
+  last-apple-digital-heartbeat:
+    wp_id: 4603
+    filename: "last-apple-digital-heartbeat-of-business.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/last-apple-digital-heartbeat-of-business.webp"
+    wp_title: "The Digital Heartbeat of Your Business - Last Apple's WordPress Maintenance"
+    category: hero
+    dimensions: "1024x1024"
+    used_on: []  # To be determined
+    alt_text: "The Digital Heartbeat of Your Business - Last Apple's WordPress Maintenance"
+    alt_status: OK
+    target_path: "/images/heroes/digital-heartbeat-hero.webp"
+    target_alt: "Digital heartbeat visualization representing WordPress maintenance services"
+    notes: "Main hero image for wordpress-maintenance page"
+    priority: P1
+    downloaded: false
+
+  advanced-maintenance-command-center:
+    wp_id: 4469
+    filename: "advanced-wordpress-maintenance-command-center.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/advanced-wordpress-maintenance-command-center.webp"
+    wp_title: "Advanced WordPress Maintenance - Command Center View"
+    category: hero
+    dimensions: "1024x1024"
+    used_on:
+      - 9336  # From Manual Drudgery blog post
+      - 8805  # Revolutionizing Digital Marketing blog post
+    alt_text: "Advanced WordPress Maintenance - Command Center View"
+    alt_status: OK
+    target_path: "/images/services/maintenance-command-center.webp"
+    target_alt: "Futuristic command center representing advanced WordPress maintenance capabilities"
+    notes: "Key visual for business tier / enterprise services"
+    priority: P1
+    downloaded: false
+
+  starter-plan-toolbox:
+    wp_id: 4465
+    filename: "wordpress-starter-plan-maintenance-tool-box.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/wordpress-starter-plan-maintenance-tool-box.webp"
+    wp_title: "WordPress Maintenance Starter Plan Toolbox"
+    category: inline
+    dimensions: "1024x1024"
+    used_on: []
+    alt_text: "WordPress Maintenance Starter Plan Toolbox"
+    alt_status: OK
+    target_path: "/images/services/starter-toolbox.webp"
+    target_alt: "Toolbox visualization for WordPress Essentials maintenance plan"
+    notes: "Pricing tier image - Essentials plan"
+    priority: P1
+    downloaded: false
+
+  intermediate-plan-optimization:
+    wp_id: 4463
+    filename: "wordpress-intermediate-plan-performance-optimization.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/wordpress-intermediate-plan-performance-optimization.webp"
+    wp_title: "WordPress Site Performance Optimization - Intermediate Plan"
+    category: inline
+    dimensions: "1024x1024"
+    used_on: []
+    alt_text: "WordPress Site Performance Optimization - Intermediate Plan"
+    alt_status: OK
+    target_path: "/images/services/growth-optimization.webp"
+    target_alt: "Performance optimization visualization for WordPress Growth plan"
+    notes: "Pricing tier image - Growth plan"
+    priority: P1
+    downloaded: false
+
+  advanced-plan-luxury:
+    wp_id: 4466
+    filename: "wordpress-advanced-plan-luxury-service.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/wordpress-advanced-plan-luxury-service.webp"
+    wp_title: "WordPress Advanced Plan Concierge Service"
+    category: inline
+    dimensions: "1024x1024"
+    used_on: []
+    alt_text: "WordPress Advanced Plan Concierge Service"
+    alt_status: OK
+    target_path: "/images/services/business-concierge.webp"
+    target_alt: "Luxury concierge service visualization for WordPress Business plan"
+    notes: "Pricing tier image - Business plan"
+    priority: P1
+    downloaded: false
+
+  digital-navigation-tools:
+    wp_id: 4467
+    filename: "futuristic-digital-navigation-charting-tools.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/futuristic-digital-navigation-charting-tools.webp"
+    wp_title: "Advanced Web Maintenance and Development Tools"
+    category: hero
+    dimensions: "1024x1024"
+    used_on: []
+    alt_text: "Advanced Web Maintenance and Development Tools"
+    alt_status: OK
+    target_path: "/images/solutions/digital-navigation.webp"
+    target_alt: "Futuristic navigation tools representing strategic digital planning"
+    notes: "Hero image candidate for solutions overview"
+    priority: P1
+    downloaded: false
+
+  marketing-archer:
+    wp_id: 4468
+    filename: "futuristic-digital-archer-targeting-marketing-goals.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/04/futuristic-digital-archer-targeting-marketing-goals.webp"
+    wp_title: "Strategic Marketing Goals Visualization"
+    category: hero
+    dimensions: "1024x1024"
+    used_on: []
+    alt_text: "Strategic Marketing Goals Visualization"
+    alt_status: OK
+    target_path: "/images/solutions/marketing-archer.webp"
+    target_alt: "Digital archer targeting marketing goals, representing precision AI strategies"
+    notes: "Hero image for marketing/content services"
+    priority: P1
+    downloaded: false
+
+# ============================================================
+# BLOG POST FEATURED IMAGES
+# ============================================================
+blog_featured:
+
+  coffee-shop-seo:
+    wp_id: 11211
+    post_id: 11206
+    filename: "coffee-shop-seo-digital-marketing-analytics-hero-image.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/06/coffee-shop-seo-digital-marketing-analytics-hero-image.jpg"
+    wp_title: "Coffee Shop SEO and Digital Marketing Analytics - JavaSEO Initiative"
+    category: featured
+    used_on: [11206]
+    alt_text: "Coffee Shop SEO and Digital Marketing Analytics - JavaSEO Initiative"
+    alt_status: OK
+    target_path: "/images/stream/coffee-shop-seo-featured.jpg"
+    target_alt: "Coffee shop SEO analytics dashboard representing local business digital marketing"
+    notes: "Featured image for coffee-shop-seo blog post"
+    priority: P3
+    downloaded: false
+
+  from-chaos-to-symphony:
+    wp_id: 11191
+    post_id: 11189
+    filename: "ai-chaos-to-symphony-orchestration-hero.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/06/ai-chaos-to-symphony-orchestration-hero.jpg"
+    wp_title: "From Chaos to Symphony: How AI Cognitive Overload Led to Multi-Persona Marketing Automation Breakthrough"
+    category: featured
+    used_on: [11189]
+    alt_text: "From Chaos to Symphony: How AI Cognitive Overload Led to Multi-Persona Marketing Automation Breakthrough"
+    alt_status: NEEDS_IMPROVEMENT  # Too long for alt text
+    target_path: "/images/stream/chaos-to-symphony-featured.jpg"
+    target_alt: "AI orchestration visualization showing transition from chaos to harmonized automation"
+    notes: "Featured image for from-chaos-to-symphony blog post"
+    priority: P3
+    downloaded: false
+
+  mautic-enrichment:
+    wp_id: 11140
+    post_id: 11129
+    filename: "mautic-ai-data-enrichment-lighthouse-2.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/02/mautic-ai-data-enrichment-lighthouse-2.jpg"
+    wp_title: "Navigating AI Chaos: Building a Mautic Data Enrichment Tool"
+    category: featured
+    used_on: [11129]
+    alt_text: "Navigating AI Chaos: Building a Mautic Data Enrichment Tool"
+    alt_status: OK
+    target_path: "/images/stream/mautic-enrichment-featured.jpg"
+    target_alt: "Lighthouse metaphor for navigating AI-powered data enrichment"
+    notes: "Featured image for cursor-claude-chaos blog post"
+    priority: P3
+    downloaded: false
+
+  building-a-brain:
+    wp_id: 11099
+    post_id: 11097
+    filename: "building-an-ai-marketing-brain-intelligent-automation.jpg.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/01/building-an-ai-marketing-brain-intelligent-automation.jpg.webp"
+    wp_title: "Building an AI Marketing Brain: Intelligent Automation That Learns"
+    category: featured
+    used_on: [11097]
+    alt_text: "Building an AI Marketing Brain: Intelligent Automation That Learns"
+    alt_status: OK
+    target_path: "/images/stream/building-brain-featured.webp"
+    target_alt: "AI brain visualization representing intelligent marketing automation"
+    notes: "Featured image for building-a-brain blog post"
+    priority: P3
+    downloaded: false
+
+  beyond-blueprint:
+    wp_id: 11090
+    post_id: 11088
+    filename: "ai-symphony-marketing-automation-success.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/01/ai-symphony-marketing-automation-success.jpg"
+    wp_title: "AI Symphony: How Multiple AIs Drove Marketing Automation Success"
+    category: featured
+    used_on: [11088]
+    alt_text: "AI Symphony: How Multiple AIs Drove Marketing Automation Success"
+    alt_status: OK
+    target_path: "/images/stream/beyond-blueprint-featured.jpg"
+    target_alt: "Symphony visualization representing coordinated AI marketing automation"
+    notes: "Featured image for beyond-the-blueprint blog post"
+    priority: P3
+    downloaded: false
+
+  orchestrating-ensemble:
+    wp_id: 11080
+    post_id: 11074
+    filename: "123456.jpg"  # NOTE: Poorly named!
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/01/123456.jpg"
+    wp_title: "123456"  # NOTE: No title!
+    category: featured
+    used_on: [11074]
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/stream/orchestrating-ensemble-featured.jpg"
+    target_alt: "AI ensemble collaboration visualization"
+    notes: "NEEDS RENAME - poorly named file (123456.jpg), missing alt text"
+    priority: P3
+    downloaded: false
+
+  symphony-ai-marketing:
+    wp_id: 10993
+    post_id: 11066
+    filename: "ai-driven-marketing-automation-hero-image.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2025/01/ai-driven-marketing-automation-hero-image.webp"
+    wp_title: "AI-Driven Marketing Automation Hero Image 2025"
+    category: featured
+    used_on: [11066, 10988]  # Shared between two posts
+    alt_text: "AI-Driven Marketing Automation Hero Image 2025"
+    alt_status: NEEDS_IMPROVEMENT  # Generic title
+    target_path: "/images/stream/ai-marketing-automation-featured.webp"
+    target_alt: "Futuristic AI-powered marketing automation dashboard"
+    notes: "Shared featured image for symphony-ai-marketing and from-sketches-to-systems"
+    priority: P3
+    downloaded: false
+
+  context-anchoring:
+    wp_id: 10934
+    post_id: 10923
+    filename: "ai-context-anchoring-troubleshooting.jpg.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/12/ai-context-anchoring-troubleshooting.jpg.webp"
+    wp_title: "Precision in Partnership: Fine-Tuning AI Collaboration"
+    category: featured
+    used_on: [10923]
+    alt_text: "Precision in Partnership: Fine-Tuning AI Collaboration"
+    alt_status: OK
+    target_path: "/images/stream/context-anchoring-featured.webp"
+    target_alt: "AI troubleshooting visualization showing context anchoring process"
+    notes: "Featured image for context-anchoring-ai blog post"
+    priority: P3
+    downloaded: false
+
+  ai-meeting-analysis:
+    wp_id: 10953
+    post_id: 10903
+    filename: "ai-driven-workflow-system-gears-efficiency.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/12/ai-driven-workflow-system-gears-efficiency.webp"
+    wp_title: "AI-Driven Workflow System: Automating Meeting Management"
+    category: featured
+    used_on: [10903]
+    alt_text: "AI-Driven Workflow System: Automating Meeting Management"
+    alt_status: OK
+    target_path: "/images/stream/meeting-analysis-featured.webp"
+    target_alt: "Interconnected gears representing AI-driven meeting workflow automation"
+    notes: "Featured image for ai-meeting-analysis blog post"
+    priority: P3
+    downloaded: false
+
+  company-needs-brain:
+    wp_id: 10955
+    post_id: 10878
+    filename: "ai-powered-company-brain-knowledge-engine.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/12/ai-powered-company-brain-knowledge-engine.webp"
+    wp_title: "AI-Powered Company Brain: Transforming Knowledge Management"
+    category: featured
+    used_on: [10878]
+    alt_text: "AI-Powered Company Brain: Transforming Knowledge Management"
+    alt_status: OK
+    target_path: "/images/stream/company-brain-featured.webp"
+    target_alt: "Neural network visualization representing company knowledge engine"
+    notes: "Featured image for company-needs-brain blog post"
+    priority: P3
+    downloaded: false
+
+# ============================================================
+# LOGO AND BRAND ASSETS
+# ============================================================
+logos:
+
+  original-svg:
+    wp_id: 8995
+    filename: "Original.svg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/09/Original.svg"
+    category: logo
+    used_on: ["global"]
+    alt_text: "Last Apple logo"
+    alt_status: OK
+    target_path: "/images/logos/last-apple-logo.svg"
+    notes: "Primary logo - already in public/images/wp/"
+    priority: P1
+    downloaded: true  # Already exists locally
+
+  linkedin-profile-01:
+    wp_id: 3238
+    filename: "Last_Apple_Linkedin_Profilepics-01.png"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/03/Last_Apple_Linkedin_Profilepics-01.png"
+    category: logo
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/logos/linkedin-profile-01.png"
+    notes: "LinkedIn profile picture variant"
+    priority: P4
+    downloaded: false
+
+  linkedin-profile-02:
+    wp_id: 3239
+    filename: "Last_Apple_Linkedin_Profilepics-02.png"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/03/Last_Apple_Linkedin_Profilepics-02.png"
+    category: logo
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/logos/linkedin-profile-02.png"
+    notes: "LinkedIn profile picture variant"
+    priority: P4
+    downloaded: false
+
+  favicon:
+    wp_id: null
+    filename: "Last_Apple_favicon.png"
+    wp_url: "https://lastapple.com/wp-content/uploads/2023/03/Last_Apple_favicon.png"
+    category: logo
+    used_on: ["global"]
+    alt_text: "Last Apple favicon"
+    alt_status: OK
+    target_path: "/favicon.ico"
+    notes: "Site favicon - may already be configured in Next.js"
+    priority: P2
+    downloaded: false
+
+# ============================================================
+# CLIENT SCREENSHOTS (Portfolio)
+# ============================================================
+screenshots:
+
+  daxexpress:
+    wp_id: 3094
+    filename: "FireShot-Capture-025-Welcome-to-DaxExpress.AI-daxcopilot.ai-2.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-025-Welcome-to-DaxExpress.AI-daxcopilot.ai-2.webp"
+    wp_title: "FireShot Capture 025 - Welcome to DaxExpress.AI - daxcopilot.ai-2"
+    category: screenshot
+    used_on: []  # Portfolio section
+    alt_text: "FireShot Capture 025 - Welcome to DaxExpress.AI"
+    alt_status: NEEDS_IMPROVEMENT  # Technical capture name
+    target_path: "/images/portfolio/daxexpress-screenshot.webp"
+    target_alt: "DaxExpress.AI website screenshot - AI copilot solution"
+    notes: "Client portfolio screenshot"
+    priority: P2
+    downloaded: false
+
+  carrier-advisors:
+    wp_id: 3092
+    filename: "FireShot-Capture-024-Business-Phones-Carrier-Solutions-Managed-IT-Services_-carrier-advisors.com_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-024-Business-Phones-Carrier-Solutions-Managed-IT-Services_-carrier-advisors.com_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: "Business Phones, Carrier Solutions & Managed IT Services"
+    alt_status: OK
+    target_path: "/images/portfolio/carrier-advisors-screenshot.webp"
+    target_alt: "Carrier Advisors website screenshot - business telecom solutions"
+    notes: "Client portfolio screenshot"
+    priority: P2
+    downloaded: false
+
+  sage-exterior:
+    wp_id: 3090
+    filename: "FireShot-Capture-021-Sage-Exterior-Cleaning-sagexteriorcleaning.com_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-021-Sage-Exterior-Cleaning-sagexteriorcleaning.com_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: "Sage Exterior Cleaning"
+    alt_status: OK
+    target_path: "/images/portfolio/sage-exterior-screenshot.webp"
+    target_alt: "Sage Exterior Cleaning website screenshot"
+    notes: "Client portfolio screenshot"
+    priority: P2
+    downloaded: false
+
+  trust-and-obey:
+    wp_id: 3089
+    filename: "FireShot-Capture-019-trustandobey.live_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-019-trustandobey.live_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/portfolio/trust-obey-screenshot.webp"
+    target_alt: "Trust and Obey website screenshot"
+    notes: "Client portfolio screenshot - needs alt text"
+    priority: P2
+    downloaded: false
+
+  duke-multimedia:
+    wp_id: 3087
+    filename: "FireShot-Capture-018-Duke-Multimedia-Strategies-DMS-www.duke-multimedia.com_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-018-Duke-Multimedia-Strategies-DMS-www.duke-multimedia.com_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: "Duke Multimedia Strategies - DMS"
+    alt_status: OK
+    target_path: "/images/portfolio/duke-multimedia-screenshot.webp"
+    target_alt: "Duke Multimedia Strategies website screenshot"
+    notes: "Client portfolio screenshot"
+    priority: P2
+    downloaded: false
+
+  advanbio:
+    wp_id: 3085
+    filename: "FireShot-Capture-017-AdvanBio-–-Accelerating-the-advancement-of-biotechnological-research_-advan-bio.com_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-017-AdvanBio-–-Accelerating-the-advancement-of-biotechnological-research_-advan-bio.com_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: "AdvanBio – Accelerating the advancement of biotechnological research"
+    alt_status: OK
+    target_path: "/images/portfolio/advanbio-screenshot.webp"
+    target_alt: "AdvanBio website screenshot - biotechnology research solutions"
+    notes: "Client portfolio screenshot"
+    priority: P2
+    downloaded: false
+
+  idyll-awhile:
+    wp_id: 3055
+    filename: "FireShot-Capture-015-idyll-awhile.com_.webp"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/02/FireShot-Capture-015-idyll-awhile.com_.webp"
+    category: screenshot
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/portfolio/idyll-awhile-screenshot.webp"
+    target_alt: "Idyll Awhile website screenshot"
+    notes: "Client portfolio screenshot - needs alt text"
+    priority: P2
+    downloaded: false
+
+# ============================================================
+# STOCK IMAGES (Adobe Stock)
+# ============================================================
+stock:
+
+  digital-marketing:
+    wp_id: null
+    filename: "digital-marketing-AdobeStock_252760983.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2021/02/digital-marketing-AdobeStock_252760983.jpg"
+    category: stock
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/stock/digital-marketing.jpg"
+    notes: "Adobe Stock image - check license for migration"
+    priority: P3
+    downloaded: false
+
+  contact-center:
+    wp_id: null
+    filename: "contact-center-2-AdobeStock_153160005.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2021/02/contact-center-2-AdobeStock_153160005.jpg"
+    category: stock
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/stock/contact-center.jpg"
+    notes: "Adobe Stock image - check license for migration"
+    priority: P3
+    downloaded: false
+
+  back-office:
+    wp_id: null
+    filename: "back-office-AdobeStock_125581183.jpg"
+    wp_url: "https://lastapple.com/wp-content/uploads/2021/02/back-office-AdobeStock_125581183.jpg"
+    category: stock
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/stock/back-office.jpg"
+    notes: "Adobe Stock image - check license for migration"
+    priority: P3
+    downloaded: false
+
+# ============================================================
+# CERTIFICATION BADGES
+# ============================================================
+badges:
+
+  seo-certification:
+    wp_id: 8702
+    filename: "ultimate-guide-search-engine-optimization-seo-certification-badge-last-apple-2022.png"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/06/ultimate-guide-search-engine-optimization-seo-certification-badge-last-apple-2022.png"
+    wp_title: "Search Engine Optimization (SEO) Certification Badge"
+    category: badge
+    used_on: []
+    alt_text: "Search Engine Optimization (SEO) Certification Badge"
+    alt_status: OK
+    target_path: "/images/badges/seo-certification.png"
+    notes: "HubSpot SEO certification badge"
+    priority: P4
+    downloaded: false
+
+  seo-fundamentals:
+    wp_id: 8701
+    filename: "seo-fundamentals-certification-badge-last-apple-2022.png"
+    wp_url: "https://lastapple.com/wp-content/uploads/2024/06/seo-fundamentals-certification-badge-last-apple-2022.png"
+    category: badge
+    used_on: []
+    alt_text: null
+    alt_status: MISSING
+    target_path: "/images/badges/seo-fundamentals.png"
+    notes: "SEO fundamentals certification badge"
+    priority: P4
+    downloaded: false
+
+# ============================================================
+# IMAGES NEEDING ATTENTION
+# ============================================================
+needs_attention:
+  missing_alt:
+    - 11080  # 123456.jpg - orchestrating ensemble featured
+    - 3238   # LinkedIn profile 01
+    - 3239   # LinkedIn profile 02
+    - 3089   # trust-and-obey screenshot
+    - 3055   # idyll-awhile screenshot
+    - 8701   # SEO fundamentals badge
+    - "stock images (3)"
+
+  needs_rename:
+    - 11080  # 123456.jpg → orchestrating-ensemble-featured.jpg
+    - "Mask group" files (26+)
+    - "Group" files (10+)
+    - "image" generic names (10+)
+
+  duplicate_usage:
+    - 10993  # Used on both 11066 and 10988 (acceptable - shared hero)
+    - 4469   # Used on both 9336 and 8805 (acceptable - shared hero)
+
+# ============================================================
+# DOWNLOAD COMMANDS (for execution)
+# ============================================================
+download_commands:
+  ai_generated: |
+    # Priority P1 - AI-generated images for service pages
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/last-apple-digital-heartbeat-of-business.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/advanced-wordpress-maintenance-command-center.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/wordpress-starter-plan-maintenance-tool-box.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/wordpress-intermediate-plan-performance-optimization.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/wordpress-advanced-plan-luxury-service.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/futuristic-digital-navigation-charting-tools.webp
+    curl -O https://lastapple.com/wp-content/uploads/2024/04/futuristic-digital-archer-targeting-marketing-goals.webp
+
+  blog_featured: |
+    # Priority P3 - Blog featured images
+    # (Run after content migration priorities)
+
+# ============================================================
+# TARGET DIRECTORY STRUCTURE
+# ============================================================
+target_structure: |
+  public/images/
+  ├── heroes/
+  │   ├── digital-heartbeat-hero.webp
+  │   ├── maintenance-command-center.webp
+  │   ├── digital-navigation.webp
+  │   └── marketing-archer.webp
+  ├── services/
+  │   ├── starter-toolbox.webp
+  │   ├── growth-optimization.webp
+  │   └── business-concierge.webp
+  ├── solutions/
+  │   └── [to be populated]
+  ├── stream/
+  │   ├── coffee-shop-seo-featured.jpg
+  │   ├── chaos-to-symphony-featured.jpg
+  │   └── [other blog featured images]
+  ├── portfolio/
+  │   ├── daxexpress-screenshot.webp
+  │   ├── carrier-advisors-screenshot.webp
+  │   └── [other client screenshots]
+  ├── logos/
+  │   └── last-apple-logo.svg
+  ├── badges/
+  │   ├── seo-certification.png
+  │   └── seo-fundamentals.png
+  └── stock/
+      └── [Adobe Stock images if license permits]

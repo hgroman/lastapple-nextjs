@@ -1,0 +1,1021 @@
+# SEO Inventory - WordPress → Next.js Migration
+# Generated: 2026-01-11
+# Purpose: Track SEO state for systematic migration
+#
+# STATUS VALUES:
+#   READY      - WordPress data correct, can migrate as-is
+#   WRONG      - WordPress data exists but incorrect (copy-paste error)
+#   EMPTY      - No WordPress data, needs creation
+#   SKIP       - Not migrating (WooCommerce, utility pages)
+#
+# PRIORITY VALUES:
+#   P1 - Core business pages (services, solutions)
+#   P2 - Supporting pages (about, contact)
+#   P3 - Blog posts
+#   P4 - Legal/utility pages
+
+# ============================================================
+# SCHEMA DEFINITION (for reference)
+# ============================================================
+# Each page entry follows this structure:
+#
+# page_slug:
+#   wp_id: <WordPress post ID>
+#   wp_title: <Original WordPress title>
+#   nextjs_path: <Target Next.js URL>
+#   type: <page|post>
+#   category: <service|solution|stream|static>
+#   priority: <P1|P2|P3|P4>
+#   dates:
+#     published: <YYYY-MM-DD>
+#     modified: <YYYY-MM-DD>
+#   seo:
+#     status: <READY|WRONG|EMPTY|SKIP>
+#     wp_title: <Current WordPress SEO title or null>
+#     wp_description: <Current WordPress SEO description or null>
+#     wp_keywords: <Current WordPress keywords or null>
+#     target_title: <Final title for Next.js - max 60 chars>
+#     target_description: <Final description for Next.js - max 160 chars>
+#     target_keywords: <Comma-separated keywords>
+#     notes: <What needs to be done>
+#   images:
+#     hero: <path or null>
+#     og_image: <path or null>
+#   migration:
+#     status: <NOT_STARTED|IN_PROGRESS|COMPLETE>
+#     content_migrated: <boolean>
+#     seo_verified: <boolean>
+
+# ============================================================
+# SUMMARY STATISTICS
+# ============================================================
+summary:
+  total_pages: 50
+  seo_status:
+    ready: 10
+    wrong: 4
+    empty: 32
+    skip: 4
+  by_priority:
+    p1: 12  # Core services/solutions
+    p2: 4   # Supporting pages
+    p3: 14  # Blog posts
+    p4: 4   # Legal/utility
+    skip: 16 # WooCommerce, consultation variants
+  migration_status:
+    complete: 0
+    in_progress: 0
+    not_started: 50
+
+# ============================================================
+# P1: CORE SERVICE PAGES
+# ============================================================
+services:
+
+  wordpress-maintenance:
+    wp_id: 4406
+    wp_title: "WordPress Maintenance"
+    nextjs_path: /services/wordpress-maintenance
+    type: page
+    category: service
+    priority: P1
+    dates:
+      published: "2024-04-23"
+      modified: "2024-10-28"
+    seo:
+      status: READY
+      wp_title: "Comprehensive WordPress Maintenance Services | Last Apple"
+      wp_description: "Focus on your business while Last Apple ensures your WordPress site is secure, up-to-date, and performing optimally. Explore our tailored maintenance plans."
+      wp_keywords: "maintenance,premium,essentials,growth,business"
+      target_title: "WordPress Maintenance Services | Last Apple"
+      target_description: "Focus on your business while Last Apple ensures your WordPress site is secure, up-to-date, and performing optimally. Explore our tailored maintenance plans."
+      target_keywords: "wordpress maintenance, website maintenance, wordpress support"
+      notes: "SEO data complete. Ready for migration."
+    images:
+      hero: null  # To be identified in image audit
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  maintenance-plans:
+    wp_id: 9816
+    wp_title: "Maintenance Plans"
+    nextjs_path: /services/maintenance-plans
+    type: page
+    category: service
+    priority: P1
+    dates:
+      published: "2024-05-15"
+      modified: "2024-10-28"
+    seo:
+      status: READY
+      wp_title: "Comprehensive WordPress Maintenance Services | Last Apple"
+      wp_description: "Focus on your business while Last Apple ensures your WordPress site is secure, up-to-date, and performing optimally. Explore our tailored maintenance plans."
+      wp_keywords: null
+      target_title: "WordPress Maintenance Plans & Pricing | Last Apple"
+      target_description: "Choose from Essentials, Growth, or Business maintenance plans. Focus on your business while Last Apple keeps your WordPress site secure and optimized."
+      target_keywords: "wordpress maintenance plans, wordpress pricing, website support plans"
+      notes: "Same SEO as wordpress-maintenance. Differentiate target title."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  wordpress-performance:
+    wp_id: 8925
+    wp_title: "WordPress Performance Optimization & SEO Services"
+    nextjs_path: /services/wordpress-performance
+    type: page
+    category: service
+    priority: P1
+    dates:
+      published: "2024-04-15"
+      modified: "2024-10-15"
+    seo:
+      status: READY
+      wp_title: "WordPress Optimization & SEO Services | Last Apple"
+      wp_description: "Improve your site's speed and SEO with Last Apple's WordPress optimization services, using advanced tools for better performance and rankings."
+      wp_keywords: null
+      target_title: "WordPress Performance & SEO Optimization | Last Apple"
+      target_description: "Improve your site's speed and SEO with Last Apple's WordPress optimization services, using advanced tools for better performance and rankings."
+      target_keywords: "wordpress optimization, wordpress seo, website speed optimization"
+      notes: "SEO data complete. Ready for migration."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  wordpress-resurrection:
+    wp_id: 8944
+    wp_title: "WordPress Resurrection: Breathing New Life into Aging Websites"
+    nextjs_path: /services/wordpress-resurrection
+    type: page
+    category: service
+    priority: P1
+    dates:
+      published: "2024-04-15"
+      modified: "2024-10-15"
+    seo:
+      status: READY
+      wp_title: "WordPress Resurrection | Optimize Aging Websites"
+      wp_description: "Revive and optimize your WordPress site with Last Apple's expert services."
+      wp_keywords: null
+      target_title: "WordPress Resurrection | Revive Aging Websites"
+      target_description: "Breathe new life into your aging WordPress site. Last Apple's resurrection service modernizes, optimizes, and secures outdated websites."
+      target_keywords: "wordpress resurrection, fix old wordpress, update wordpress site"
+      notes: "SEO present but description is short (64 chars). Expand for migration."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  website-renaissance:
+    wp_id: 9046
+    wp_title: "Website Renaissance: Transforming Digital Presence"
+    nextjs_path: /services/website-renaissance
+    type: page
+    category: service
+    priority: P1
+    dates:
+      published: "2024-04-20"
+      modified: "2024-10-15"
+    seo:
+      status: READY
+      wp_title: "Website Renaissance | AI-Powered Digital Transformation"
+      wp_description: "Transform your website with Last Apple's AI-driven services, offering SEO, optimization, and future-proof solutions."
+      wp_keywords: null
+      target_title: "Website Renaissance | AI-Powered Transformation"
+      target_description: "Transform your website with Last Apple's AI-driven services. SEO, optimization, and future-proof solutions for modern digital presence."
+      target_keywords: "website transformation, digital transformation, website redesign"
+      notes: "SEO data complete. Ready for migration."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+# ============================================================
+# P1: CORE SOLUTION PAGES
+# ============================================================
+solutions:
+
+  ai-chatbot-solutions:
+    wp_id: 8970
+    wp_title: "AI-Powered Chatbot Solutions"
+    nextjs_path: /solutions/ai-chatbot-solutions
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-04-15"
+      modified: "2024-10-15"
+    seo:
+      status: WRONG
+      wp_title: "AI-Driven Social Media Strategies | Last Apple"
+      wp_description: "Boost engagement with AI-powered social media solutions from Last Apple. Tailored strategies for businesses to drive measurable results."
+      wp_keywords: "maintenance,services,plan"
+      target_title: "AI-Powered Chatbot Solutions | Last Apple"
+      target_description: "Deploy intelligent AI chatbots for your business. Last Apple's chatbot solutions provide 24/7 customer support, lead qualification, and seamless automation."
+      target_keywords: "ai chatbot, business chatbot, ai customer support, chatbot solutions"
+      notes: "WRONG DATA - Has social media SEO instead of chatbot. Must create correct SEO."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  b2b-email-list:
+    wp_id: 10833
+    wp_title: "AI-Powered B2B Email List Services"
+    nextjs_path: /solutions/b2b-email-list
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-06-01"
+      modified: "2024-10-15"
+    seo:
+      status: READY
+      wp_title: "AI-Powered B2B Email List Services | Last Apple"
+      wp_description: "Transform your business contact data into a strategic asset with Last Apple's AI-powered B2B email list services. Enhance, validate, and secure your contact lists for optimal results."
+      wp_keywords: null
+      target_title: "AI-Powered B2B Email List Services | Last Apple"
+      target_description: "Transform your business contact data into a strategic asset with Last Apple's AI-powered B2B email list services. Enhance, validate, and secure your contact lists."
+      target_keywords: "b2b email lists, email list services, contact data enrichment"
+      notes: "SEO data complete. Ready for migration."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  data-integration:
+    wp_id: 9131
+    wp_title: "AI-Driven Data Integration and Process Optimization"
+    nextjs_path: /solutions/data-integration
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-05-01"
+      modified: "2024-10-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "AI-Driven Data Integration | Last Apple"
+      target_description: "Streamline your business with AI-powered data integration and process optimization. Last Apple connects your systems for seamless workflow automation."
+      target_keywords: "data integration, process optimization, ai automation, workflow automation"
+      notes: "NO SEO DATA - Must create from page content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  hubspot-integration:
+    wp_id: 9320
+    wp_title: "Unleash HubSpot's Full Potential with Last Apple"
+    nextjs_path: /solutions/hubspot-integration
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-05-10"
+      modified: "2024-10-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "HubSpot Integration Services | Last Apple"
+      target_description: "Unleash HubSpot's full potential with Last Apple's integration services. CRM setup, workflow automation, and custom solutions for your business."
+      target_keywords: "hubspot integration, hubspot services, crm integration, hubspot setup"
+      notes: "NO SEO DATA - Must create from page content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  content-creation:
+    wp_id: 8954
+    wp_title: "AI-Powered Content Creation Services: Elevate Your Digital Presence"
+    nextjs_path: /solutions/content-creation
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-04-15"
+      modified: "2024-10-15"
+    seo:
+      status: WRONG
+      wp_title: "AI-Driven Social Media Strategies | Last Apple"
+      wp_description: "Boost engagement with AI-powered social media solutions from Last Apple. Tailored strategies for businesses to drive measurable results."
+      wp_keywords: null
+      target_title: "AI-Powered Content Creation | Last Apple"
+      target_description: "Elevate your digital presence with AI-powered content creation. Last Apple delivers blog posts, social content, and marketing copy at scale."
+      target_keywords: "ai content creation, content marketing, ai copywriting, digital content"
+      notes: "WRONG DATA - Has social media SEO instead of content creation. Must create correct SEO."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  social-strategies:
+    wp_id: 10159
+    wp_title: "Elevate Your Social Presence with AI-Driven Strategies"
+    nextjs_path: /solutions/social-strategies
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-05-20"
+      modified: "2024-10-15"
+    seo:
+      status: WRONG
+      wp_title: "WordPress Resurrection | Optimize Aging Websites"
+      wp_description: "Revive and optimize your WordPress site with Last Apple's expert services."
+      wp_keywords: null
+      target_title: "AI-Driven Social Media Strategies | Last Apple"
+      target_description: "Boost engagement with AI-powered social media solutions from Last Apple. Tailored strategies for businesses to drive measurable results."
+      target_keywords: "social media marketing, ai social media, social strategy, engagement"
+      notes: "WRONG DATA - Has WordPress Resurrection SEO instead of social strategies. Must create correct SEO."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  seo-guide:
+    wp_id: 31
+    wp_title: "Mastering Search Engine Optimization (SEO): A Comprehensive Guide for Solopreneurs"
+    nextjs_path: /solutions/seo-guide
+    type: page
+    category: solution
+    priority: P1
+    dates:
+      published: "2024-01-01"
+      modified: "2024-10-15"
+    seo:
+      status: READY
+      wp_title: "SEO Guide for Solopreneurs: Boost Your Online Visibility"
+      wp_description: "Boost your online presence with this SEO guide for solopreneurs. Learn SEO basics, keyword strategies, white hat techniques, and tools to drive traffic."
+      wp_keywords: null
+      target_title: "SEO Guide for Solopreneurs | Last Apple"
+      target_description: "Boost your online presence with this SEO guide for solopreneurs. Learn SEO basics, keyword strategies, white hat techniques, and tools to drive traffic."
+      target_keywords: "seo guide, solopreneur seo, seo basics, seo for small business"
+      notes: "SEO data complete. Ready for migration."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  audio-scapes:
+    wp_id: 396
+    wp_title: "Audio-scapes"
+    nextjs_path: /solutions/audio-scapes
+    type: page
+    category: solution
+    priority: P2
+    dates:
+      published: "2024-01-01"
+      modified: "2024-10-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Audio-scapes | Ambient Sound Design | Last Apple"
+      target_description: "Immersive audio experiences for your business. Last Apple creates custom audio-scapes for retail, hospitality, and digital environments."
+      target_keywords: "audio scapes, ambient sound, business audio, sound design"
+      notes: "NO SEO DATA - Must create from page content. Lower priority."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+# ============================================================
+# P2: SUPPORTING PAGES
+# ============================================================
+static:
+
+  home:
+    wp_id: 30
+    wp_title: "Home"
+    nextjs_path: /
+    type: page
+    category: static
+    priority: P2
+    dates:
+      published: "2024-01-01"
+      modified: "2024-10-28"
+    seo:
+      status: READY
+      wp_title: "Digital Marketing for AI-Driven Growth | Last Apple"
+      wp_description: "Empower your business with AI-driven digital marketing strategies and cutting-edge technology from Last Apple."
+      wp_keywords: null
+      target_title: "Last Apple | AI-Driven Digital Marketing & WordPress Services"
+      target_description: "Empower your business with AI-driven digital marketing strategies and cutting-edge technology from Last Apple."
+      target_keywords: "digital marketing, ai marketing, wordpress services, last apple"
+      notes: "Homepage SEO is set. Already migrated to Next.js."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: COMPLETE
+      content_migrated: true
+      seo_verified: false
+
+  about:
+    wp_id: 8940
+    wp_title: "About"
+    nextjs_path: /about
+    type: page
+    category: static
+    priority: P2
+    dates:
+      published: "2024-04-15"
+      modified: "2024-09-05"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "About Last Apple | Hank Groman | AI & WordPress Expert"
+      target_description: "Meet Hank Groman, founder of Last Apple. 30+ years of system integration expertise powering AI-driven digital marketing and WordPress solutions."
+      target_keywords: "about last apple, hank groman, wordpress expert, ai marketing"
+      notes: "NO SEO DATA - Must create. Include founder bio and expertise."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  contact:
+    wp_id: 33
+    wp_title: "Contact"
+    nextjs_path: /contact
+    type: page
+    category: static
+    priority: P2
+    dates:
+      published: "2024-01-01"
+      modified: "2024-10-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Contact Last Apple | Get in Touch"
+      target_description: "Ready to transform your digital presence? Contact Last Apple for WordPress maintenance, AI solutions, and digital marketing services. Call 714-813-9973."
+      target_keywords: "contact last apple, wordpress consultation, digital marketing contact"
+      notes: "NO SEO DATA - Must create. Include phone and email."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  services-overview:
+    wp_id: 32
+    wp_title: "Services"
+    nextjs_path: /services
+    type: page
+    category: static
+    priority: P2
+    dates:
+      published: "2024-01-01"
+      modified: "2024-10-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "WordPress & Digital Marketing Services | Last Apple"
+      target_description: "Professional WordPress maintenance, performance optimization, and digital marketing services. Last Apple keeps your site secure, fast, and growing."
+      target_keywords: "wordpress services, digital marketing services, website maintenance"
+      notes: "NO SEO DATA - Services overview page. Must create."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+# ============================================================
+# P3: BLOG POSTS (ALL EMPTY - Need semantic analysis)
+# ============================================================
+stream:
+
+  coffee-shop-seo:
+    wp_id: 11206
+    wp_title: "Coffee Shop SEO: How Local Businesses Can Brew Better Search Rankings"
+    nextjs_path: /stream/coffee-shop-seo
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-06-20"
+      modified: "2025-06-20"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Coffee Shop SEO: Local Business Search Rankings Guide"
+      target_description: "Learn how coffee shops and local businesses can brew better search rankings. Practical SEO tips for brick-and-mortar stores to attract local customers."
+      target_keywords: "coffee shop seo, local seo, local business seo, small business seo"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  from-chaos-to-symphony:
+    wp_id: 11189
+    wp_title: "From Chaos to Symphony: When AI Cognitive Overload Led to Multi-Persona Breakthrough"
+    nextjs_path: /stream/from-chaos-to-symphony
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-06-15"
+      modified: "2025-06-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "From Chaos to Symphony: AI Multi-Persona Breakthrough"
+      target_description: "Discover how cognitive overload in AI led to a breakthrough in multi-persona collaboration. A journey from chaos to orchestrated AI symphony."
+      target_keywords: "ai personas, ai collaboration, multi-llm, ai breakthrough"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  cursor-claude-chaos:
+    wp_id: 11129
+    wp_title: "Cursor, Claude, and Chaos: Building a Mautic Data Enrichment Tool with AI"
+    nextjs_path: /stream/cursor-claude-chaos
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-06-10"
+      modified: "2025-06-10"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Building a Mautic Data Enrichment Tool with AI"
+      target_description: "How Cursor IDE and Claude AI helped build a Mautic data enrichment tool. Real-world AI-assisted development from chaos to working solution."
+      target_keywords: "mautic, cursor ide, claude ai, data enrichment, ai development"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  building-a-brain:
+    wp_id: 11097
+    wp_title: "Building a Brain (Not Just Another Marketing Tool)"
+    nextjs_path: /stream/building-a-brain
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-06-05"
+      modified: "2025-06-05"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Building a Brain: Beyond Marketing Automation Tools"
+      target_description: "Why we built a brain instead of another marketing tool. The philosophy behind AI-powered knowledge engines for business intelligence."
+      target_keywords: "ai brain, knowledge engine, marketing automation, business intelligence"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  beyond-the-blueprint:
+    wp_id: 11088
+    wp_title: "Beyond the Blueprint: How Multiple AIs and One Vision Drove Our Marketing Automation Success"
+    nextjs_path: /stream/beyond-the-blueprint
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-06-01"
+      modified: "2025-06-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Beyond the Blueprint: Multi-AI Marketing Automation"
+      target_description: "How multiple AIs and one vision drove marketing automation success. The story of coordinating AI tools for a unified business outcome."
+      target_keywords: "multi-ai, marketing automation, ai coordination, business automation"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  orchestrating-ai-ensemble:
+    wp_id: 11074
+    wp_title: "Orchestrating the AI Ensemble: A Five-Movement Technical Symphony of Multi-LLM Collaboration"
+    nextjs_path: /stream/orchestrating-ai-ensemble
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-28"
+      modified: "2025-05-28"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Orchestrating the AI Ensemble: Multi-LLM Collaboration"
+      target_description: "A five-movement technical symphony of multi-LLM collaboration. How to orchestrate multiple AI models for complex business tasks."
+      target_keywords: "multi-llm, ai orchestration, llm collaboration, ai ensemble"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  symphony-ai-marketing:
+    wp_id: 11066
+    wp_title: "The Symphony of AI-Powered Marketing Automation: Gemini-Chat's Vision Unveiled"
+    nextjs_path: /stream/symphony-ai-marketing
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-25"
+      modified: "2025-05-25"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "AI-Powered Marketing Automation Symphony"
+      target_description: "Gemini-Chat's vision for AI-powered marketing automation unveiled. The symphony of coordinated AI tools transforming marketing workflows."
+      target_keywords: "gemini ai, marketing automation, ai marketing, automated marketing"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  from-sketches-to-systems:
+    wp_id: 10988
+    wp_title: "From Sketches to Systems: Four Months of Transformative Marketing Automation"
+    nextjs_path: /stream/from-sketches-to-systems
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-20"
+      modified: "2025-05-20"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "From Sketches to Systems: Marketing Automation Journey"
+      target_description: "Four months of transformative marketing automation development. From initial sketches to fully operational AI-powered marketing systems."
+      target_keywords: "marketing automation, ai systems, automation development, marketing tech"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  context-anchoring-ai:
+    wp_id: 10923
+    wp_title: "Context Anchoring in AI Troubleshooting: A Real-World Problem in Workflow Efficiency"
+    nextjs_path: /stream/context-anchoring-ai
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-15"
+      modified: "2025-05-15"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Context Anchoring in AI: Troubleshooting Workflows"
+      target_description: "Real-world problem solving with context anchoring in AI troubleshooting. How to maintain context across AI-assisted workflow efficiency."
+      target_keywords: "context anchoring, ai troubleshooting, workflow efficiency, ai context"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  ai-meeting-analysis:
+    wp_id: 10903
+    wp_title: "Kickstart Your Productivity: How We're Transforming Meeting Management with AI Today"
+    nextjs_path: /stream/ai-meeting-analysis
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-10"
+      modified: "2025-05-10"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "AI Meeting Management: Transform Your Productivity"
+      target_description: "How we're transforming meeting management with AI. Practical approaches to AI-powered meeting analysis and task extraction."
+      target_keywords: "ai meetings, meeting management, productivity ai, meeting analysis"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  company-needs-brain:
+    wp_id: 10878
+    wp_title: "Why Your Company Needs a Brain: Building an AI-Powered Knowledge Engine"
+    nextjs_path: /stream/company-needs-brain
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-05"
+      modified: "2025-05-05"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Why Your Company Needs an AI-Powered Knowledge Engine"
+      target_description: "Building an AI-powered knowledge engine for your business. Why every company needs a brain for institutional knowledge and decision support."
+      target_keywords: "knowledge engine, ai brain, business intelligence, knowledge management"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  technical-debt-ai:
+    wp_id: 10849
+    wp_title: "Technical Debt in the Age of AI: A Journey from Rigid Systems to Living Knowledge"
+    nextjs_path: /stream/technical-debt-ai
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2025-05-01"
+      modified: "2025-05-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Technical Debt in the Age of AI: From Rigid to Living"
+      target_description: "A journey from rigid systems to living knowledge in the age of AI. How AI transforms technical debt into adaptive, evolving solutions."
+      target_keywords: "technical debt, ai systems, living knowledge, system evolution"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  manual-to-ai-efficiency:
+    wp_id: 9336
+    wp_title: "From Manual Drudgery to AI-Driven Efficiency: A Journey in Data Integration"
+    nextjs_path: /stream/manual-to-ai-efficiency
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2024-06-01"
+      modified: "2024-06-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "From Manual Drudgery to AI-Driven Efficiency"
+      target_description: "A journey in data integration from manual processes to AI-driven efficiency. How automation transformed repetitive tasks into intelligent workflows."
+      target_keywords: "data integration, ai efficiency, process automation, manual to ai"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  revolutionizing-digital-marketing:
+    wp_id: 8805
+    wp_title: "Revolutionizing Digital Marketing: The Power of AI in SEO"
+    nextjs_path: /stream/revolutionizing-digital-marketing
+    type: post
+    category: stream
+    priority: P3
+    dates:
+      published: "2024-04-01"
+      modified: "2024-04-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Revolutionizing Digital Marketing: AI in SEO"
+      target_description: "The power of AI in SEO and digital marketing. How artificial intelligence is revolutionizing search optimization and marketing strategies."
+      target_keywords: "ai seo, digital marketing ai, ai marketing, seo automation"
+      notes: "NO SEO DATA - Blog post. Generate from content."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+# ============================================================
+# P4: LEGAL PAGES
+# ============================================================
+legal:
+
+  privacy:
+    wp_id: 1040
+    wp_title: "Privacy"
+    nextjs_path: /privacy
+    type: page
+    category: legal
+    priority: P4
+    dates:
+      published: "2024-01-01"
+      modified: "2024-01-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Privacy Policy | Last Apple"
+      target_description: "Last Apple privacy policy. How we collect, use, and protect your personal information when using our website and services."
+      target_keywords: "privacy policy, data protection, last apple privacy"
+      notes: "Standard legal page. Low SEO priority."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+  terms:
+    wp_id: 1042
+    wp_title: "Terms of Use"
+    nextjs_path: /terms
+    type: page
+    category: legal
+    priority: P4
+    dates:
+      published: "2024-01-01"
+      modified: "2024-01-01"
+    seo:
+      status: EMPTY
+      wp_title: null
+      wp_description: null
+      wp_keywords: null
+      target_title: "Terms of Use | Last Apple"
+      target_description: "Last Apple terms of use. Terms and conditions governing the use of our website and services."
+      target_keywords: "terms of use, terms and conditions, last apple terms"
+      notes: "Standard legal page. Low SEO priority."
+    images:
+      hero: null
+      og_image: null
+    migration:
+      status: NOT_STARTED
+      content_migrated: false
+      seo_verified: false
+
+# ============================================================
+# SKIP: Pages not being migrated (redirects only)
+# ============================================================
+skip:
+  - wp_id: 10780
+    reason: "WooCommerce - my-account"
+  - wp_id: 10779
+    reason: "WooCommerce - checkout"
+  - wp_id: 10778
+    reason: "WooCommerce - cart"
+  - wp_id: 10777
+    reason: "WooCommerce - shop"
+  - wp_id: 10605
+    reason: "Consultation variant - redirects to /contact"
+  - wp_id: 10592
+    reason: "Consultation variant - redirects to /contact"
+  - wp_id: 10494
+    reason: "Quote request - redirects to /services/maintenance-plans"
+  - wp_id: 10481
+    reason: "Zoom scheduling - redirects to /contact"
+  - wp_id: 9853
+    reason: "Onboarding process - redirects to /services/wordpress-maintenance"
+  - wp_id: 9697
+    reason: "Thank you page - redirects to /contact"
+  - wp_id: 9628
+    reason: "Coffee shop landing - redirects to /stream/coffee-shop-seo"
+  - wp_id: 8964
+    reason: "Why choose us - redirects to /about"
+  - wp_id: 8937
+    reason: "Augmentive services - redirects to /solutions"
+  - wp_id: 8792
+    reason: "Blog archive - redirects to /stream"
+  - wp_id: 1263
+    reason: "Partners - redirects to /about"
+  - wp_id: 695
+    reason: "Consultation - redirects to /contact"

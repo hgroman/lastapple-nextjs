@@ -1,0 +1,152 @@
+# WordPress → Next.js Redirect Map
+# Generated: 2026-01-11
+# Total redirects: 45
+# Note: Using /:path* pattern to handle trailing slashes
+
+# ============================================================
+# ANALYTICS IDS (Extracted from WordPress)
+# ============================================================
+analytics:
+  google_analytics_4:
+    measurement_id: "G-FZS6N6JB5Z"
+    property_id: "309035327"
+    account_id: "72912843"
+    web_data_stream_id: "3377145148"
+    source: "googlesitekit_analytics-4_settings"
+  microsoft_clarity:
+    site_id: "5e11a7a1-bade-49fa-b226-2f095afd0146"
+    source: "clarity_wordpress_site_id"
+    note: "clarity_project_id was empty, using site_id"
+
+# ============================================================
+# REDIRECT CATEGORIES
+# ============================================================
+
+services:
+  # WordPress service pages → /services/[slug]
+  - from: "/wordpress-maintenance"
+    to: "/services/wordpress-maintenance"
+  - from: "/wordpress-maintenance-plans"
+    to: "/services/maintenance-plans"
+  - from: "/wordpress-performance-optimization-seo-services"
+    to: "/services/wordpress-performance"
+  - from: "/wordpress-resurrection-breathing-new-life-into-aging-websites"
+    to: "/services/wordpress-resurrection"
+  - from: "/website-renaissance-transforming-digital-presence"
+    to: "/services/website-renaissance"
+  - from: "/last-apple-wordpress-maintenance-onboarding-process"
+    to: "/services/wordpress-maintenance"
+
+solutions:
+  # WordPress AI solution pages → /solutions/[slug]
+  - from: "/ai-powered-chatbot-solutions"
+    to: "/solutions/ai-chatbot-solutions"
+  - from: "/ai-powered-b2b-email-list-services"
+    to: "/solutions/b2b-email-list"
+  - from: "/ai-driven-data-integration-and-process-optimization"
+    to: "/solutions/data-integration"
+  - from: "/unleash-hubspots-full-potential-with-last-apple"
+    to: "/solutions/hubspot-integration"
+  - from: "/ai-powered-content-creation-services-elevate-your-digital-presence"
+    to: "/solutions/content-creation"
+  - from: "/elevate-your-social-presence-with-ai-driven-strategies"
+    to: "/solutions/social-strategies"
+  - from: "/seo-guide-for-solopreneurs"
+    to: "/solutions/seo-guide"
+  - from: "/audio-scapes"
+    to: "/solutions/audio-scapes"
+
+blog_posts:
+  # WordPress blog posts → /stream/[slug]
+  - from: "/coffee-shop-seo-how-local-businesses-can-brew-better-search-rankings"
+    to: "/stream/coffee-shop-seo"
+  - from: "/from-chaos-to-symphony-when-ai-cognitive-overload-led-to-multi-persona-breakthrough"
+    to: "/stream/from-chaos-to-symphony"
+  - from: "/cursor-claude-and-chaos-building-a-mautic-data-enrichment-tool-with-ai"
+    to: "/stream/cursor-claude-chaos"
+  - from: "/building-a-brain-not-just-another-marketing-tool"
+    to: "/stream/building-a-brain"
+  - from: "/beyond-the-blueprint-how-multiple-ais-and-one-vision-drove-our-marketing-automation-success"
+    to: "/stream/beyond-the-blueprint"
+  - from: "/orchestrating-the-ai-ensemble-a-five-movement-technical-symphony-of-multi-llm-collaboration"
+    to: "/stream/orchestrating-ai-ensemble"
+  - from: "/the-symphony-of-ai-powered-marketing-automation-gemini-chats-vision-unveiled"
+    to: "/stream/symphony-ai-marketing"
+  - from: "/from-sketches-to-systems-four-months-of-transformative-marketing-automation"
+    to: "/stream/from-sketches-to-systems"
+  - from: "/context-anchoring-in-ai-troubleshooting-a-real-world-problem-in-workflow-efficiency"
+    to: "/stream/context-anchoring-ai"
+  - from: "/ai-for-meeting-analysis-task-management"
+    to: "/stream/ai-meeting-analysis"
+  - from: "/why-your-company-needs-a-brain-building-an-ai-powered-knowledge-engine"
+    to: "/stream/company-needs-brain"
+  - from: "/technical-debt-in-the-age-of-ai-a-journey-from-rigid-systems-to-living-knowledge"
+    to: "/stream/technical-debt-ai"
+  - from: "/from-manual-drudgery-to-ai-driven-efficiency-a-journey-in-data-integration"
+    to: "/stream/manual-to-ai-efficiency"
+  - from: "/revolutionizing-digital-marketing-the-power-of-ai-in-seo"
+    to: "/stream/revolutionizing-digital-marketing"
+  # Blog archive
+  - from: "/blog"
+    to: "/stream"
+
+consultation_pages:
+  # Various consultation/contact pages → /contact
+  - from: "/consultation"
+    to: "/contact"
+  - from: "/zoom"
+    to: "/contact"
+  - from: "/wordpress-strategy-consultation"
+    to: "/contact"
+  - from: "/social-media-consultation"
+    to: "/contact"
+  - from: "/maintenance-plan-quote-request"
+    to: "/services/maintenance-plans"
+  - from: "/schedule-free-seo-report-review"
+    to: "/contact"
+  - from: "/java-seo-technical-audits-coffee-shops"
+    to: "/stream/coffee-shop-seo"
+
+other_pages:
+  # Miscellaneous redirects
+  - from: "/home"
+    to: "/"
+  - from: "/partners"
+    to: "/about"
+  - from: "/augmentive-services"
+    to: "/solutions"
+  - from: "/why-choose-last-apple-pioneering-ai-driven-digital-marketing"
+    to: "/about"
+  - from: "/terms-use"
+    to: "/terms"
+
+woocommerce:
+  # WooCommerce pages (no longer needed)
+  - from: "/shop"
+    to: "/services"
+  - from: "/cart"
+    to: "/services"
+  - from: "/checkout"
+    to: "/contact"
+  - from: "/my-account"
+    to: "/"
+
+# ============================================================
+# PAGES WITH SAME PATH (No redirect needed)
+# ============================================================
+same_path:
+  - "/about"
+  - "/contact"
+  - "/privacy"
+  - "/services"
+
+# ============================================================
+# SUMMARY
+# ============================================================
+summary:
+  total_wordpress_pages: 36
+  total_wordpress_posts: 14
+  total_urls: 50
+  redirects_needed: 45
+  same_path: 5
+  trailing_slash_handling: "Using /:path* pattern in next.config.ts"
