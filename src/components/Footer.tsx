@@ -1,9 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+
+// Social links from WordPress (PLUGIN-INVENTORY.yaml)
+const socialLinks = [
+  { name: 'Facebook', href: 'https://www.facebook.com/LastAppleConsulting', icon: Facebook },
+  { name: 'Instagram', href: 'https://www.instagram.com/hank_groman/', icon: Instagram },
+  { name: 'LinkedIn', href: 'https://linkedin.com/company/lastapple', icon: Linkedin },
+  { name: 'YouTube', href: 'https://www.youtube.com/@lastappleai', icon: Youtube },
+];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -84,12 +92,12 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold mb-4">Solutions</h4>
+            <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/services/wordpress-care" className="hover:text-foreground transition-colors">WordPress Care</Link></li>
-              <li><Link href="/services/ai-marketing" className="hover:text-foreground transition-colors">AI Marketing</Link></li>
-              <li><Link href="/services/system-integration" className="hover:text-foreground transition-colors">System Integration</Link></li>
-              <li><Link href="/services" className="hover:text-foreground transition-colors">Full-Stack Development</Link></li>
+              <li><Link href="/services/wordpress-maintenance" className="hover:text-foreground transition-colors">WordPress Maintenance</Link></li>
+              <li><Link href="/services/ai-chatbot" className="hover:text-foreground transition-colors">AI Chatbots</Link></li>
+              <li><Link href="/solutions/data-integration" className="hover:text-foreground transition-colors">Data Integration</Link></li>
+              <li><Link href="/services" className="hover:text-foreground transition-colors">All Services</Link></li>
             </ul>
           </div>
 
@@ -98,18 +106,49 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/about" className="hover:text-foreground transition-colors">About</Link></li>
               <li><Link href="/stream" className="hover:text-foreground transition-colors">The Stream</Link></li>
-              <li><Link href="/portfolio" className="hover:text-foreground transition-colors">Portfolio</Link></li>
+              <li><Link href="/solutions" className="hover:text-foreground transition-colors">Solutions</Link></li>
               <li><Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Last Apple Business Solutions. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+        <div className="pt-8 border-t border-border">
+          {/* Social Links */}
+          <div className="flex justify-center gap-4 mb-6">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-muted/50 hover:bg-primary/20 text-muted-foreground hover:text-primary transition-colors"
+                aria-label={social.name}
+              >
+                <social.icon className="h-5 w-5" />
+              </a>
+            ))}
+            {/* X/Twitter - custom SVG since lucide uses old Twitter icon */}
+            <a
+              href="https://x.com/lastappledma"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-muted/50 hover:bg-primary/20 text-muted-foreground hover:text-primary transition-colors"
+              aria-label="X (Twitter)"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Copyright and Legal */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+            <p>&copy; {currentYear} Last Apple Business Solutions. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            </div>
           </div>
         </div>
       </div>

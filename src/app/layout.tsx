@@ -53,10 +53,11 @@ const jsonLd = {
         availableLanguage: "English",
       },
       sameAs: [
-        "https://www.linkedin.com/in/hankgroman/",
         "https://www.facebook.com/LastAppleConsulting",
-        "https://www.instagram.com/hjgroman/",
-        "https://www.youtube.com/channel/UC3OPbkyTemkxPwFNvIhHu2g",
+        "https://x.com/lastappledma",
+        "https://www.instagram.com/hank_groman/",
+        "https://www.youtube.com/@lastappleai",
+        "https://linkedin.com/company/lastapple",
       ],
       founder: {
         "@type": "Person",
