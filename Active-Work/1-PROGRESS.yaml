@@ -1,5 +1,5 @@
 # Project Progress Tracker
-# Last Updated: 2026-01-13 Session 6o (Visual verification - Step 10.10 COMPLETE)
+# Last Updated: 2026-01-13 Session 6p (Content migration - 2 nav-linked pages added)
 
 # ============================================================
 # INSTRUCTIONS FOR AI - READ THIS FIRST
@@ -18,7 +18,10 @@ current:
   step_name: "Rich Page Templates"
   substep: "10.11"
   substep_name: "Migrate P3 Content"
-  status: NOT_STARTED
+  status: IN_PROGRESS
+  pages_migrated_this_session:
+    - "/services/performance-seo (nav-linked)"
+    - "/solutions/hubspot (nav-linked)"
   previous_substeps:
     - "10.1 Download WordPress Images - COMPLETE"
     - "10.2 Rename Images - COMPLETE (done during download)"
@@ -732,7 +735,7 @@ stats:
   infrastructure_steps: 10  # Added Step 10: Rich Page Templates
   infrastructure_complete: 9  # Steps 1-9 done, Step 10 IN_PROGRESS
   content_pages_total: 50  # 36 pages + 14 posts (updated from WordPress inventory)
-  content_pages_migrated: 0  # Reset - 4 P1 pages need proper re-migration with audit data
+  content_pages_migrated: 6  # 4 P1 re-migrated + 2 nav-linked pages (performance-seo, hubspot)
   step_10_substeps: 15  # 10.0a (P0), 10.0 (audit), 10.0b (P2), 10.0c (foundation), 10.1-10.10 (assets/templates), 10.11 (P3)
   step_10_complete: 14  # 10.0a-c, 10.1-10.10 (all except P3 migration)
   step_10_0c_foundation:
@@ -1676,3 +1679,31 @@ session_notes:
       percentage: "93%"
     next_action: "Step 10.11 - P3 content migration (optional, 46 remaining pages)"
     milestone: "Rich Page Templates infrastructure COMPLETE - ready for content migration"
+
+  - date: 2026-01-13
+    session: 6p
+    duration: "~15 min"
+    what_happened:
+      - Created 2 navigation-linked content pages (Step 10.11 incremental)
+      - /services/performance-seo - Core Web Vitals, caching, SEO services
+      - /solutions/hubspot - CRM setup, workflow automation, integrations
+      - Both use existing P1 hero images
+      - Build passes, pages rendering correctly
+      - Used git-curator workflow for commit
+    pages_created:
+      performance_seo:
+        path: "/services/performance-seo"
+        nav_link: "Portfolios → Services → Performance & SEO"
+        heroImage: "/images/solutions/digital-navigation.webp"
+        pricing: "$497 - $1,497 project-based"
+      hubspot:
+        path: "/solutions/hubspot"
+        nav_link: "Portfolios → Solutions → HubSpot Setup"
+        heroImage: "/images/services/maintenance-command-center.webp"
+        pricing: "$1,997 - custom"
+    content_migration_progress:
+      total_pages: 50
+      migrated: 6
+      remaining: 44
+      percentage: "12%"
+    next_action: "User review of performance-seo and hubspot pages, then continue migration"
