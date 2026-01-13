@@ -121,36 +121,13 @@ high:
 # MEDIUM (P2) - Should fix during migration
 # =============================================================================
 medium:
-  newsletter_signup_not_implemented:
-    status: NOT_IMPLEMENTED
-    priority: P2
-    description: "Blog signup form exists in WordPress, not in Next.js"
-    wordpress_form:
-      id: 9127
-      name: "last-apple-signup-blog-archive"
-    options:
-      - "Integrate with email service (Resend, Mailchimp, ConvertKit)"
-      - "Add to /stream page or sidebar"
-      - "Consider using same Resend setup as contact form"
-
-  multiple_form_types_not_implemented:
-    status: NOT_IMPLEMENTED
-    priority: P2
-    description: "WordPress has 4 forms, Next.js has 1"
-    wordpress_forms:
-      - "1407: Main contact form (IMPLEMENTED)"
-      - "9127: Newsletter signup (NOT IMPLEMENTED)"
-      - "9706: SEO audit request (NOT IMPLEMENTED - should be /contact?type=seo-review)"
-      - "10496: WordPress quote (NOT IMPLEMENTED - should be /contact?type=maintenance)"
-    fix_approach:
-      - "Enhance ContactForm to accept 'type' prop"
-      - "Show different fields based on type"
-      - "URL: /contact?type=maintenance shows maintenance-specific fields"
-
   og_image_missing:
-    status: MISSING
+    status: POSTPONED
     priority: P2
+    postponed_date: "2026-01-13"
+    postponed_until: "Step 10.1 - After downloading WordPress images"
     description: "No default Open Graph image"
+    rationale: "Can create OG image using downloaded WordPress assets for consistency"
     issues:
       - "No og-image.png in public/"
       - "Social shares won't have image"
@@ -158,22 +135,65 @@ medium:
       - "Create 1200x630 image with branding"
       - "Add to public/og-image.png"
       - "Reference in layout.tsx metadata"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
+
+  newsletter_signup_not_implemented:
+    status: POSTPONED
+    priority: P2
+    postponed_date: "2026-01-13"
+    postponed_until: "During content migration - when /stream page is fully built"
+    description: "Blog signup form exists in WordPress, not in Next.js"
+    rationale: "Newsletter signup belongs on /stream page - migrate page first, then add form"
+    wordpress_form:
+      id: 9127
+      name: "last-apple-signup-blog-archive"
+    options:
+      - "Integrate with email service (AWS SES, Mailchimp, ConvertKit)"
+      - "Add to /stream page or sidebar"
+      - "Consider using same AWS SES setup as contact form"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
+
+  multiple_form_types_not_implemented:
+    status: POSTPONED
+    priority: P2
+    postponed_date: "2026-01-13"
+    postponed_until: "During content migration - when service pages are migrated"
+    description: "WordPress has 4 forms, Next.js has 1"
+    rationale: "Form variants needed for specific service pages - migrate pages first"
+    wordpress_forms:
+      - "1407: Main contact form (IMPLEMENTED)"
+      - "9127: Newsletter signup (POSTPONED)"
+      - "9706: SEO audit request (POSTPONED - should be /contact?type=seo-review)"
+      - "10496: WordPress quote (POSTPONED - should be /contact?type=maintenance)"
+    fix_approach:
+      - "Enhance ContactForm to accept 'type' prop"
+      - "Show different fields based on type"
+      - "URL: /contact?type=maintenance shows maintenance-specific fields"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
 
 # =============================================================================
 # LOW (P3) - Nice to have
 # =============================================================================
 low:
   error_boundary_missing:
-    status: MISSING
+    status: POSTPONED
     priority: P3
+    postponed_date: "2026-01-13"
+    postponed_until: "Pre-launch polish phase"
     description: "No error boundary for graceful error handling"
+    rationale: "Low priority - default Next.js error handling works, custom version is polish"
     fix: "Create src/app/error.tsx"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
 
   loading_states_missing:
-    status: MISSING
+    status: POSTPONED
     priority: P3
+    postponed_date: "2026-01-13"
+    postponed_until: "Pre-launch polish phase"
     description: "No loading.tsx files for Suspense"
+    rationale: "Low priority - site loads fast, loading states are UX polish"
     fix: "Create src/app/loading.tsx and per-route loading states"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
 
   pwa_manifest_missing:
     status: FIXED
@@ -189,10 +209,14 @@ low:
         - "192x192 and 512x512 icons"
 
   robots_txt_basic:
-    status: EXISTS_BUT_BASIC
+    status: POSTPONED
     priority: P3
+    postponed_date: "2026-01-13"
+    postponed_until: "Pre-launch polish phase"
     description: "robots.ts exists but may need refinement"
+    rationale: "Current robots.ts is functional - refinement is optimization"
     file: "src/app/robots.ts"
+    work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
 
 # =============================================================================
 # ENVIRONMENT VARIABLES STATUS
@@ -239,13 +263,18 @@ fix_order:
 
   immediate:
     - "[x] 8. Generate and add favicon files (DONE 2026-01-13)"
-    - "[ ] 9. Create og-image.png"
 
-  during_migration:
-    - "[ ] 10. Enhance ContactForm for multiple types"
-    - "[ ] 11. Add newsletter signup component"
-    - "[ ] 12. Add loading states"
-    - "[ ] 13. Add error boundary"
+  postponed_to_step_10_1:
+    - "[POSTPONED] 9. Create og-image.png → After downloading WordPress images"
+
+  postponed_to_content_migration:
+    - "[POSTPONED] 10. Enhance ContactForm for multiple types → When service pages migrated"
+    - "[POSTPONED] 11. Add newsletter signup component → When /stream page fully built"
+
+  postponed_to_pre_launch:
+    - "[POSTPONED] 12. Add loading states → Pre-launch polish"
+    - "[POSTPONED] 13. Add error boundary → Pre-launch polish"
+    - "[POSTPONED] 14. Refine robots.txt → Pre-launch polish"
 
 # =============================================================================
 # VERIFICATION CHECKLIST

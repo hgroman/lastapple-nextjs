@@ -16,18 +16,28 @@
 current:
   step: 10
   step_name: "Rich Page Templates"
-  substep: "10.0c"
-  substep_name: "Foundation Fixes"
-  status: IN_PROGRESS
-  completed_items:
+  substep: "10.1"
+  substep_name: "Download WordPress Images"
+  status: NOT_STARTED
+  foundation_status: "P0/P1 COMPLETE - P2/P3 POSTPONED"
+  foundation_complete:
     - "email_infrastructure (AWS SES - tested and working)"
     - "not_found_page (custom 404 with design system)"
     - "footer_fixes (links corrected, social icons added)"
     - "schema_updates (JSON-LD sameAs updated)"
     - "favicon_suite (generated via sharp, manifest created)"
-  remaining:
-    - "og_image (1200x630 branding image)"
-  next_action: "Create OG image or continue to Step 10.1 (download images)"
+  foundation_postponed:
+    step_10_1:
+      - "og_image → After downloading WordPress images"
+    content_migration:
+      - "newsletter_signup → When /stream page migrated"
+      - "multiple_form_types → When service pages migrated"
+    pre_launch:
+      - "error_boundary → Pre-launch polish"
+      - "loading_states → Pre-launch polish"
+      - "robots_refinement → Pre-launch polish"
+  postponed_work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
+  next_action: "Execute Step 10.1 - Download priority images from WordPress"
   work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
   peer_review: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md"
   rationale: "Foundation gaps discovered - must fix before content migration."
@@ -418,8 +428,10 @@ steps:
       # ============================================================
       10.0c_foundation_fixes:
         description: "Fix foundation infrastructure gaps in Next.js implementation"
-        status: IN_PROGRESS
+        status: COMPLETE
+        completed_date: "2026-01-13"
         rationale: "Contact form broken, no favicon, missing 404 page, footer issues"
+        outcome: "All P0/P1 items FIXED. P2/P3 items POSTPONED with work order."
         work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
         process_doc: "docs/processes/FOUNDATION-AUDIT-PROCESS.md"
         gap_analysis: "docs/FOUNDATION-GAPS.yaml"
@@ -482,8 +494,12 @@ steps:
           og_image:
             description: "Create default Open Graph image for social shares"
             priority: P2
-            status: NOT_STARTED
+            status: POSTPONED
+            postponed_date: "2026-01-13"
+            postponed_until: "Step 10.1 - After downloading WordPress images"
+            rationale: "Use WordPress assets for visual consistency"
             deliverable: "public/og-image.png"
+            work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
       # ============================================================
       # PHASE B: ASSET PREPARATION (After foundation fixes)
       # ============================================================
@@ -621,12 +637,13 @@ stats:
   content_pages_total: 50  # 36 pages + 14 posts (updated from WordPress inventory)
   content_pages_migrated: 0  # Reset - 4 P1 pages need proper re-migration with audit data
   step_10_substeps: 15  # 10.0a (P0), 10.0 (audit), 10.0b (P2), 10.0c (foundation), 10.1-10.10 (assets/templates), 10.11 (P3)
-  step_10_complete: 3  # 10.0a P0, 10.0 Audit, 10.0b P2 - all COMPLETE
+  step_10_complete: 4  # 10.0a P0, 10.0 Audit, 10.0b P2, 10.0c Foundation - all COMPLETE
   step_10_0c_foundation:
     total_items: 6
-    complete: 5  # email, 404, footer, schema, favicon
-    remaining: 1  # og_image
-  estimated_hours_remaining: 5  # Reduced from 7 after foundation work
+    p0_p1_complete: 5  # email, 404, footer, schema, favicon
+    p2_p3_postponed: 1  # og_image (will be done after Step 10.1)
+    status: "COMPLETE - P2/P3 items formally postponed"
+  estimated_hours_remaining: 4  # Foundation complete, ready for asset work
   peer_review_incorporated: true  # All P0/P1/P2/P3 items now tracked
   redirects_configured: 45  # Complete redirect coverage (was 16)
   analytics_ids_extracted: true  # GA4 and Clarity IDs captured
