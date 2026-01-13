@@ -127,10 +127,8 @@ This message was sent from the contact form at lastapple.com
     );
   } catch (error) {
     console.error('Contact form error:', error);
-    // Return actual error in development/debug
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'An unexpected error occurred', debug: errorMessage },
+      { error: 'An unexpected error occurred' },
       { status: 500 }
     );
   }
