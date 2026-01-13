@@ -1,5 +1,5 @@
 # Project Progress Tracker
-# Last Updated: 2026-01-13 Session 6k (P1 images downloaded - Steps 10.1-10.3 COMPLETE)
+# Last Updated: 2026-01-13 Session 6k (Schema image fields added - Step 10.4 COMPLETE)
 
 # ============================================================
 # INSTRUCTIONS FOR AI - READ THIS FIRST
@@ -16,13 +16,14 @@
 current:
   step: 10
   step_name: "Rich Page Templates"
-  substep: "10.4"
-  substep_name: "Update Schemas (Add Image Fields)"
+  substep: "10.5"
+  substep_name: "Create ServiceTemplate Component"
   status: NOT_STARTED
   previous_substeps:
     - "10.1 Download WordPress Images - COMPLETE"
     - "10.2 Rename Images - COMPLETE (done during download)"
     - "10.3 Image Manifest - COMPLETE (merged into IMAGE-INVENTORY.yaml)"
+    - "10.4 Update Schemas - COMPLETE (heroImage, images, tierImages added)"
   foundation_status: "P0/P1 COMPLETE - P2/P3 POSTPONED"
   foundation_complete:
     - "email_infrastructure (AWS SES - tested and working)"
@@ -41,7 +42,7 @@ current:
       - "loading_states → Pre-launch polish"
       - "robots_refinement → Pre-launch polish"
   postponed_work_order: "Active-Work/WORK-ORDER-FOUNDATION-P2P3.md"
-  next_action: "Execute Step 10.4 - Add heroImage and images fields to content schemas"
+  next_action: "Execute Step 10.5 - Redesign ServiceLayout with hero image, animated cards"
   work_order: "Active-Work/WORK-ORDER-FOUNDATION.md"
   peer_review: "Active-Work/peer-reviews/PEER-REVIEW-RESPONSE-2026-01-11.md"
   rationale: "Foundation gaps discovered - must fix before content migration."
@@ -540,7 +541,13 @@ steps:
           - content/schema/service.ts
           - content/schema/solution.ts
           - content/schema/stream.ts
-        status: NOT_STARTED
+        status: COMPLETE
+        completed_date: "2026-01-13"
+        fields_added:
+          ImageSchema: "{ src, alt, width?, height? }"
+          service: "heroImage, images, tierImages (starter/growth/business)"
+          solution: "heroImage, images, caseStudy.image"
+          stream: "featuredImage, images (kept legacy 'image' for backwards compat)"
       10.5_redesign_service_layout:
         description: "Redesign ServiceLayout with hero image, animated cards, pricing tiers"
         file: src/components/content/layouts/ServiceLayout.tsx
@@ -656,7 +663,7 @@ stats:
   content_pages_total: 50  # 36 pages + 14 posts (updated from WordPress inventory)
   content_pages_migrated: 0  # Reset - 4 P1 pages need proper re-migration with audit data
   step_10_substeps: 15  # 10.0a (P0), 10.0 (audit), 10.0b (P2), 10.0c (foundation), 10.1-10.10 (assets/templates), 10.11 (P3)
-  step_10_complete: 7  # 10.0a P0, 10.0 Audit, 10.0b P2, 10.0c Foundation, 10.1 Images, 10.2 Rename, 10.3 Manifest
+  step_10_complete: 8  # 10.0a P0, 10.0 Audit, 10.0b P2, 10.0c Foundation, 10.1 Images, 10.2 Rename, 10.3 Manifest, 10.4 Schemas
   step_10_0c_foundation:
     total_items: 6
     p0_p1_complete: 5  # email, 404, footer, schema, favicon
@@ -1457,4 +1464,4 @@ session_notes:
       complete: 7
       total: 15
       percentage: "47%"
-    next_action: "Execute Step 10.4 - Add heroImage and images fields to content schemas"
+    next_action: "Execute Step 10.5 - Redesign ServiceLayout with hero image, animated cards"
