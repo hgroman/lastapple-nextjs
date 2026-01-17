@@ -714,7 +714,7 @@ content_migration:
     - maintenance_plans: MERGED_INTO_MAINTENANCE
     - ai_chatbot_solutions: COMPLETE
     - b2b_email_list: COMPLETE
-    - data_integration: NOT_STARTED
+    - data_integration: COMPLETE
     - contact_page: NOT_STARTED
   priority_2:
     - wordpress_performance: NOT_STARTED
