@@ -713,7 +713,7 @@ content_migration:
     - wordpress_resurrection: COMPLETE
     - maintenance_plans: MERGED_INTO_MAINTENANCE
     - ai_chatbot_solutions: COMPLETE
-    - b2b_email_list: NOT_STARTED
+    - b2b_email_list: COMPLETE
     - data_integration: NOT_STARTED
     - contact_page: NOT_STARTED
   priority_2:
