@@ -710,6 +710,7 @@ content_migration:
   status: IN_PROGRESS
   priority_1:
     - wordpress_maintenance: COMPLETE
+    - wordpress_resurrection: COMPLETE
     - maintenance_plans: MERGED_INTO_MAINTENANCE
     - ai_chatbot_solutions: NOT_STARTED
     - b2b_email_list: NOT_STARTED
