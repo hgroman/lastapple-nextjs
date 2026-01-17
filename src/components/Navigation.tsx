@@ -7,14 +7,15 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import { ChevronDown } from 'lucide-react';
 
 const services = [
-  { title: 'WordPress Care', href: '/services/wordpress-care', description: 'Maintenance, optimization, and support' },
+  { title: 'WordPress Maintenance', href: '/services/wordpress-maintenance', description: 'Premium care, security, and optimization' },
+  { title: 'WordPress Resurrection', href: '/services/wordpress-resurrection', description: 'Revive and modernization aging sites' },
   { title: 'Performance & SEO', href: '/services/performance-seo', description: 'Speed optimization and search rankings' },
   { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'Content, social, and campaigns' },
 ];
 
 const solutions = [
-  { title: 'ScraperSky', href: '/solutions/scrapersky', description: 'AI-powered data collection' },
-  { title: 'AI Chatbots', href: '/solutions/ai-chatbots', description: 'Intelligent customer service' },
+  { title: 'AI Chatbots', href: '/solutions/ai-chatbot', description: 'Intelligent customer service' },
+  { title: 'B2B Email Lists', href: '/solutions/b2b-email-lists', description: 'AI-verified contact data' },
   { title: 'Data Integration', href: '/solutions/data-integration', description: 'Connect your systems' },
   { title: 'HubSpot Setup', href: '/solutions/hubspot', description: 'CRM implementation' },
 ];
