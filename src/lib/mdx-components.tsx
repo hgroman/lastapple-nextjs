@@ -15,6 +15,8 @@ import {
   ContentGallery,
   ContentCompare,
 } from '@/components/content/ContentImage';
+import { CaseStudy } from '@/components/content/blocks/CaseStudy';
+import { ProcessSteps } from '@/components/content/blocks/ProcessSteps';
 
 // Type-safe component mappings for MDX
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
@@ -173,6 +175,8 @@ export const mdxComponents = {
   ContentImage,
   ContentGallery,
   ContentCompare,
+  CaseStudy,
+  ProcessSteps,
 };
 
 export type MDXComponents = typeof mdxComponents;
