@@ -715,7 +715,7 @@ content_migration:
     - ai_chatbot_solutions: COMPLETE
     - b2b_email_list: COMPLETE
     - data_integration: COMPLETE
-    - contact_page: NOT_STARTED
+    - contact_page: COMPLETE
   priority_2:
     - wordpress_performance: NOT_STARTED
     - wordpress_resurrection: NOT_STARTED

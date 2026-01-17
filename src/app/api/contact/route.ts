@@ -23,6 +23,7 @@ const ContactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   phone: z.string().optional(),
+  subject: z.string().optional(),
   message: z.string().min(10, 'Message must be at least 10 characters'),
   website: z.string().optional(), // Honeypot field
 });
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, phone, message, website } = result.data;
+    const { name, email, phone, subject, message, website } = result.data;
 
     // Honeypot check - if filled, it's likely a bot
     if (website && website.length > 0) {
@@ -66,6 +67,7 @@ export async function POST(request: Request) {
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safePhone = phone ? escapeHtml(phone) : '';
+    const safeSubject = subject ? escapeHtml(subject) : 'General Inquiry';
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
 
     const fromEmail = process.env.SES_FROM_EMAIL || 'noreply@lastapple.com';
@@ -79,7 +81,7 @@ export async function POST(request: Request) {
       ReplyToAddresses: [email],
       Message: {
         Subject: {
-          Data: `New Contact Form Submission from ${safeName}`,
+          Data: `New Inquiry: ${safeSubject} - ${safeName}`,
           Charset: 'UTF-8',
         },
         Body: {
@@ -89,6 +91,7 @@ export async function POST(request: Request) {
               <p><strong>Name:</strong> ${safeName}</p>
               <p><strong>Email:</strong> ${safeEmail}</p>
               ${safePhone ? `<p><strong>Phone:</strong> ${safePhone}</p>` : ''}
+              <p><strong>Subject:</strong> ${safeSubject}</p>
               <hr />
               <h3>Message:</h3>
               <p>${safeMessage}</p>
@@ -106,6 +109,7 @@ New Contact Form Submission
 Name: ${name}
 Email: ${email}
 ${phone ? `Phone: ${phone}` : ''}
+Subject: ${subject || 'General Inquiry'}
 
 Message:
 ${message}

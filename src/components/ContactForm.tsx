@@ -8,6 +8,7 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  subject: string;
   message: string;
   website: string; // Honeypot field - should remain empty
 }
@@ -15,6 +16,7 @@ interface FormData {
 interface FormErrors {
   name?: string;
   email?: string;
+  subject?: string;
   message?: string;
 }
 
@@ -25,6 +27,7 @@ export function ContactForm() {
     name: '',
     email: '',
     phone: '',
+    subject: '',
     message: '',
     website: '', // Honeypot - bots will fill this
   });
@@ -47,6 +50,10 @@ export function ContactForm() {
       newErrors.email = 'Please enter a valid email address';
     }
 
+    if (!formData.subject) {
+      newErrors.subject = 'Please select a topic';
+    }
+
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
@@ -58,7 +65,7 @@ export function ContactForm() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -92,7 +99,7 @@ export function ContactForm() {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '', website: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '', website: '' });
     } catch (error) {
       setStatus('error');
       setErrorMessage(
@@ -184,6 +191,35 @@ export function ContactForm() {
           className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
           placeholder="(555) 123-4567"
         />
+      </div>
+
+      {/* Subject Field */}
+      <div>
+        <label htmlFor="subject" className="block text-sm font-medium mb-2">
+          How can I help you?
+        </label>
+        <select
+          id="subject"
+          name="subject"
+          value={formData.subject}
+          onChange={handleChange}
+          disabled={status === 'submitting'}
+          className={`w-full px-4 py-3 rounded-lg bg-muted border transition-colors appearance-none
+            ${errors.subject ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-primary'}
+            focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50`}
+        >
+          <option value="" disabled>Select a topic...</option>
+          <option value="General Inquiry">General Inquiry</option>
+          <option value="WordPress Maintenance">WordPress Maintenance</option>
+          <option value="Strategy Consultation">Strategy Consultation</option>
+          <option value="Social Media Strategy">Social Media Strategy</option>
+          <option value="SEO Audit">SEO Audit</option>
+          <option value="B2B Email Lists">B2B Email Lists</option>
+          <option value="Other">Other</option>
+        </select>
+        {errors.subject && (
+          <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
+        )}
       </div>
 
       {/* Honeypot field - hidden from real users, bots will fill it */}
