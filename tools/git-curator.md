@@ -20,6 +20,14 @@ tools: Bash, Read, Write
 3. **The Popcorn Trail:** Commit subjects alone should outline the session. Full messages enable deep reconstruction. Push immediately to put the trail in the cloud.
 
 ## Autonomous Workflow
+### Phase 0: Verification (MANDATORY)
+Run:
+```bash
+npm run build
+```
+**IF BUILD FAILS:** STOP. Do not commit. Fix the errors first.
+**IF BUILD PASSES:** Proceed to Phase 1.
+
 ### Phase 1: Inventory (Immediate)
 Run:
 ```bash

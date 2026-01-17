@@ -70,6 +70,12 @@ The design lives. The architecture is correct.
 - **This project accumulates context.** Session notes, decisions, backstory — these have value. Never summarize or condense historical documentation.
 - **The Active-Work/ directory is sacred.** These files track project history across sessions. Edit surgically.
 
+### Deployment Safety — THE "RED LIGHT" RULE
+- **NEVER push to git without building locally first.**
+- Run `npm run build` before EVERY push that modifies code or content.
+- If the build fails, fix it immediately. Do not push broken code.
+- Do not say "it is live" until you have verified the Vercel deployment status.
+
 ---
 
 ## The Culture
