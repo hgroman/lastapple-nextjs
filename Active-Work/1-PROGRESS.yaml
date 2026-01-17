@@ -707,10 +707,10 @@ steps:
     test: "Service/solution pages have visual richness matching homepage"
 
 content_migration:
-  status: NOT_STARTED  # Only start after steps 1-9 complete
+  status: IN_PROGRESS
   priority_1:
-    - wordpress_maintenance: NOT_STARTED
-    - maintenance_plans: NOT_STARTED
+    - wordpress_maintenance: COMPLETE
+    - maintenance_plans: MERGED_INTO_MAINTENANCE
     - ai_chatbot_solutions: NOT_STARTED
     - b2b_email_list: NOT_STARTED
     - data_integration: NOT_STARTED
