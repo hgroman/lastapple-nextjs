@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getStreamPosts, getStreamPost } from '@/lib/content';
-import { sanitizeContent } from '@/lib/sanitize';
 import { StreamLayout } from '@/components/content/layouts/StreamLayout';
+import { mdxComponents } from '@/lib/mdx-components';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -60,9 +61,9 @@ export default async function StreamPostPage({ params }: PageProps) {
       tags={post.tags}
       category={post.category}
       readingTime={readingTime}
+      featuredImage={post.featuredImage}
     >
-      {/* Sanitized content - XSS protected */}
-      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(post.body) }} />
+      <MDXRemote source={post.body} components={mdxComponents} />
     </StreamLayout>
   );
 }

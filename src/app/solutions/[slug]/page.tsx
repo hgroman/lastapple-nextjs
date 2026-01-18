@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getSolutions, getSolution } from '@/lib/content';
-import { sanitizeContent } from '@/lib/sanitize';
 import { SolutionLayout } from '@/components/content/layouts/SolutionLayout';
+import { mdxComponents } from '@/lib/mdx-components';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -52,9 +53,9 @@ export default async function SolutionPage({ params }: PageProps) {
       category={solution.category}
       outcomes={solution.outcomes}
       caseStudy={solution.caseStudy}
+      heroImage={solution.heroImage}
     >
-      {/* Sanitized content - XSS protected */}
-      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(solution.body) }} />
+      <MDXRemote source={solution.body} components={mdxComponents} />
     </SolutionLayout>
   );
 }

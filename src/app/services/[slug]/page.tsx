@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getServices, getService } from '@/lib/content';
-import { sanitizeContent } from '@/lib/sanitize';
 import { ServiceLayout } from '@/components/content/layouts/ServiceLayout';
+import { mdxComponents } from '@/lib/mdx-components';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -53,9 +54,10 @@ export default async function ServicePage({ params }: PageProps) {
       features={service.features}
       pricing={service.pricing}
       cta={service.cta}
+      heroImage={service.heroImage}
+      tierImages={service.tierImages}
     >
-      {/* Sanitized content - XSS protected */}
-      <div dangerouslySetInnerHTML={{ __html: sanitizeContent(service.body) }} />
+      <MDXRemote source={service.body} components={mdxComponents} />
     </ServiceLayout>
   );
 }
