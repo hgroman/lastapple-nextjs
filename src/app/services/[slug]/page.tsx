@@ -57,7 +57,7 @@ export default async function ServicePage({ params }: PageProps) {
       heroImage={service.heroImage}
       tierImages={service.tierImages}
     >
-      <MDXRemote source={service.body} components={mdxComponents} />
+      <MDXRemote source={service.body} components={mdxComponents} options={{ blockJS: false }} />
     </ServiceLayout>
   );
 }

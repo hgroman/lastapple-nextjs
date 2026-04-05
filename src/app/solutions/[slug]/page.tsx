@@ -55,7 +55,7 @@ export default async function SolutionPage({ params }: PageProps) {
       caseStudy={solution.caseStudy}
       heroImage={solution.heroImage}
     >
-      <MDXRemote source={solution.body} components={mdxComponents} />
+      <MDXRemote source={solution.body} components={mdxComponents} options={{ blockJS: false }} />
     </SolutionLayout>
   );
 }

@@ -63,7 +63,7 @@ export default async function StreamPostPage({ params }: PageProps) {
       readingTime={readingTime}
       featuredImage={post.featuredImage}
     >
-      <MDXRemote source={post.body} components={mdxComponents} />
+      <MDXRemote source={post.body} components={mdxComponents} options={{ blockJS: false }} />
     </StreamLayout>
   );
 }
