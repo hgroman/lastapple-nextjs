@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+set -eu
+# Portable credential guard + optional repo-specific checks
+BLOCKED_PATTERNS='\.pickle$|oauth.*\.json$|service-account.*\.json$|\.pem$|\.key$|\.credentials/|0-foundation|(^|/)\.env(\.|$)'
+STAGED_SECRETS=$(git diff --cached --name-only --diff-filter=ACR | grep -iE "$BLOCKED_PATTERNS" || true)
+if [ -n "$STAGED_SECRETS" ]; then
+  echo ""
+  echo "========================================================"
+  echo "  COMMIT BLOCKED: Credential files detected in staging"
+  echo "========================================================"
+  echo ""
+  echo "$STAGED_SECRETS" | while read -r f; do [ -n "$f" ] && echo "  - $f"; done
+  echo ""
+  echo "Unstage secrets before commit."
+  exit 1
+fi
+if [ -f scripts/check_work_orders.py ]; then
+  echo "Running work-order integrity checks..."
+  python3 scripts/check_work_orders.py
+fi
+if [ -f scripts/check_traceability_contract.py ]; then
+  echo "Running traceability contract checks..."
+  python3 scripts/check_traceability_contract.py
+fi

@@ -1,0 +1,1 @@
+{"mcpServers":{"persona-db":{"type":"stdio","command":"bash","args":["src/mcp/connect.sh","cxm_lastapple"]}}}

@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+set -eu
+echo "Running pre-push quality checks..."
+if [ -f pyproject.toml ]; then
+  if command -v ruff >/dev/null 2>&1; then
+    ruff check . || exit 1
+  elif [ -x .venv/bin/ruff ]; then
+    .venv/bin/ruff check . || exit 1
+  fi
+  if command -v pytest >/dev/null 2>&1; then
+    pytest -q -m "not live" || exit 1
+  elif [ -x .venv/bin/pytest ]; then
+    .venv/bin/pytest -q -m "not live" || exit 1
+  fi
+fi
+echo "Pre-push checks passed."

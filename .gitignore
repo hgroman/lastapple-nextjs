@@ -43,3 +43,8 @@ next-env.d.ts
 # Sensitive WordPress exports with OAuth tokens
 TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/options.json
 .env*.local
+
+# Persona-db infrastructure (WO-2026-152)
+skyradar.yaml
+.venv/
+src/mcp/node_modules/
