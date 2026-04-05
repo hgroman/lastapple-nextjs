@@ -1710,7 +1710,23 @@ session_notes:
         pricing: "$1,997 - custom"
     content_migration_progress:
       total_pages: 50
-      migrated: 6
-      remaining: 44
-      percentage: "12%"
+      migrated: 10
+      remaining: 40
+      percentage: "20%"
     next_action: "User review of performance-seo and hubspot pages, then continue migration"
+
+  - date: 2026-01-17
+    session: "Rich Template Rollout & Infrastructure Fix"
+    what_happened:
+      - Fixed MDX rendering engine by switching from marked/dangerouslySetInnerHTML to next-mdx-remote/rsc
+      - Codified 'Build Before Push' rule in CLAUDE.md and git-curator.md
+      - Upgraded P1 pages (Maintenance, Resurrection, Chatbots, B2B Lists, Data Integration, Digital Marketing) to rich layouts
+      - Synchronized navigation menu with actual file system structure
+      - Enhanced contact form with topic routing
+    files_modified:
+      - src/lib/content.ts
+      - src/app/(services|solutions|stream)/[slug]/page.tsx
+      - CLAUDE.md
+      - tools/git-curator.md
+      - src/components/Navigation.tsx
+    next_action: "Proceed to P2 Content Migration"

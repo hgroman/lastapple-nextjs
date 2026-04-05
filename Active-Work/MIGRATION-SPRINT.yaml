@@ -1,0 +1,686 @@
+# ============================================================
+# MIGRATION SPRINT — lastapple.com Content Migration
+# ============================================================
+# Created: 2026-04-04 by CXM_LASTAPPLE (Genesis 1)
+# Session ID: 7f572db5-1ab7-47ea-b79c-2dbbaea184fd
+#
+# Authority: CEO + CMO session 2026-04-03, v2 Debate 020 (7/7 unanimous)
+# radar_decisions: d5c2cf82, 79633af4, 47f89be0
+# Content decisions: .claude/skills/lastapple-migration/references/content-decisions.yaml
+#
+# Prior work: Steps 1-10 COMPLETE (1-PROGRESS.yaml)
+#   - Build pipeline, layouts, schemas, routes, SEO, redirects, analytics
+#   - 4 services + 4 solutions migrated with rich templates
+#   - 52 WordPress images downloaded
+#   - 45 redirects configured
+#
+# What remains: Content truth. The engineering is done.
+# This sprint transforms the site from "beautiful shell" to "living workshop."
+# ============================================================
+
+# ============================================================
+# PHILOSOPHY
+# ============================================================
+# Context unfolds like a flower.
+#
+# Phase 1 removes the lie (fabricated clients).
+# Phase 2 plants the truth (real client gallery).
+# Phase 3 gives it a heartbeat (14 Stream posts).
+# Phase 4 sharpens the voice (content polish).
+# Phase 5 proves it works (quality gate).
+# Phase 6 opens the door (DNS cutover).
+#
+# Each phase creates the soil for the next.
+# Do not skip. Do not reorder. The context matters.
+# ============================================================
+
+current:
+  phase: 1
+  phase_name: "Integrity First"
+  substep: "1.4"
+  status: IN_PROGRESS
+  notes: "1.1 + 1.2 done (fabricated clients removed, teaser CTA to /portfolio). 1.3 build passes. 1.4 visual check next."
+
+# ============================================================
+# PHASE 1: INTEGRITY FIRST
+# ============================================================
+# The homepage currently lies. Four fabricated clients with
+# invented metrics sit in the "Client Success Stories" section.
+# Before we add anything real, we remove what's false.
+# This is not cleanup. This is credibility.
+# ============================================================
+phase_1:
+  name: "Integrity First"
+  purpose: "Remove fabricated content. The site tells the truth or tells nothing."
+  depends_on: null
+  estimated_duration: "30 minutes"
+  status: NOT_STARTED
+
+  substeps:
+    1.1_remove_fabricated_clients:
+      description: "Strip the 4 fabricated client entries from ClientsPortfolio.tsx"
+      file: "src/components/ClientsPortfolio.tsx"
+      action: "Remove TechFlow Solutions, Green Earth Co., Nexus Financial, Bright Academy from the clients array"
+      status: COMPLETE
+      notes: "Entire clients array removed. Star/ExternalLink icons replaced with Globe/ArrowRight."
+
+    1.2_replace_with_coming_soon:
+      description: "Temporary state — section shows 'Our Work' with a teaser pointing to /portfolio"
+      file: "src/components/ClientsPortfolio.tsx"
+      action: "Replace client grid with a clean message and CTA to the portfolio page (built in Phase 2)"
+      status: COMPLETE
+      notes: "Glass card with Globe icon, 'Real Clients. Real Work.' header, arrow CTA to /portfolio."
+
+    1.3_verify_build:
+      description: "Confirm the build still passes with fabricated content removed"
+      command: "npm run build"
+      status: COMPLETE
+
+    1.4_visual_check:
+      description: "Dev server — confirm homepage renders cleanly without fabricated section"
+      command: "npm run dev"
+      status: NOT_STARTED
+
+  success_criteria:
+    - "Zero fabricated client names anywhere in the codebase"
+    - "npm run build passes"
+    - "Homepage renders without broken layout"
+
+  files_touched:
+    - "src/components/ClientsPortfolio.tsx"
+
+# ============================================================
+# PHASE 2: BUILD THE GALLERY REGION
+# ============================================================
+# The nav already links to /portfolio — it 404s today.
+# This phase creates that page as the dedicated home for
+# real client work. Then backfills the homepage component
+# with a curated preview (3-4 featured clients).
+#
+# No invented metrics. Public URLs anyone can verify.
+# Screenshots captured live. The evidence speaks.
+# ============================================================
+phase_2:
+  name: "Build the Gallery Region"
+  purpose: "Create /portfolio with real client work. Backfill homepage with featured preview."
+  depends_on: "phase_1"
+  estimated_duration: "2 hours"
+  status: NOT_STARTED
+
+  substeps:
+    2.1_client_research:
+      description: "Verify each client site is live and accessible"
+      action: "Hit each URL, confirm status. Note any that are down or redirecting."
+      status: NOT_STARTED
+      clients:
+        - url: "https://daxcopilot.ai"
+          type: "HJM Technologies division"
+        - url: "https://carrier-advisors.com"
+          type: "Active client"
+        - url: "https://duke-multimedia.com"
+          type: "Portfolio client"
+        - url: "https://advan-bio.com"
+          type: "Active client (Marin Bio)"
+        - url: "https://trustandobey.live"
+          type: "Portfolio client"
+        - url: "https://idyll-awhile.com"
+          type: "Portfolio client"
+        - url: "https://sagexteriorcleaning.com"
+          type: "Active client"
+        - url: "https://thrivingnumbers.com"
+          type: "Active client — Agency OS early adopter"
+        - url: "https://scrapersky.com"
+          type: "Internal product"
+        - url: "https://harmonytechconsulting.com"
+          type: "Portfolio client"
+        - url: "https://improvemyrankings.com"
+          type: "Portfolio client"
+      notes: "Idaho Telecom Experts excluded — no public URL confirmed. HarmonyTech.io may redirect to harmonytechconsulting.com — verify."
+
+    2.2_capture_screenshots:
+      description: "Capture homepage screenshots for each verified live site"
+      action: "Use PageSpeed API or headless capture for consistent viewport screenshots"
+      destination: "public/images/portfolio/"
+      status: NOT_STARTED
+      notes: "Desktop viewport (1280x800). Optimize to WebP. Max 200KB each."
+
+    2.3_create_portfolio_page:
+      description: "Build the /portfolio page"
+      files:
+        - "src/app/portfolio/page.tsx"
+      action: "Create gallery page matching design system. Grid layout with screenshots, client name, URL, service tags. No invented metrics."
+      status: NOT_STARTED
+      design_notes:
+        - "Glass card treatment matching existing component style"
+        - "Framer Motion stagger animation on scroll"
+        - "External link icon for each client URL"
+        - "Service tags (WordPress, AI, Integration, etc.)"
+        - "No performance claims — public URLs are the proof"
+
+    2.4_create_client_data:
+      description: "Create structured client data for the gallery"
+      file: "src/data/clients.ts"
+      action: "Centralized client data used by both /portfolio page and homepage preview"
+      status: NOT_STARTED
+      notes: "Single source of truth. Both the full gallery and homepage teaser pull from this."
+
+    2.5_backfill_homepage_preview:
+      description: "Update ClientsPortfolio.tsx to show 3-4 featured clients from real data"
+      file: "src/components/ClientsPortfolio.tsx"
+      action: "Import from clients.ts. Show featured subset. 'View Full Portfolio' links to /portfolio."
+      status: NOT_STARTED
+      notes: "The homepage teaser is a window into the gallery, not a duplicate."
+
+    2.6_verify_build:
+      description: "Build passes with new portfolio page and updated homepage"
+      command: "npm run build"
+      status: NOT_STARTED
+
+    2.7_visual_verification:
+      description: "Check /portfolio page and homepage preview in dev"
+      command: "npm run dev"
+      status: NOT_STARTED
+      checks:
+        - "/portfolio returns 200 with client grid"
+        - "Homepage ClientsPortfolio shows real clients"
+        - "'View Full Portfolio' navigates to /portfolio"
+        - "All screenshots load"
+        - "Mobile responsive"
+
+  success_criteria:
+    - "/portfolio page exists with 8+ real client sites"
+    - "Homepage shows 3-4 featured real clients"
+    - "Zero fabricated content remains"
+    - "All client URLs are live and verified"
+    - "npm run build passes"
+
+  files_touched:
+    - "src/app/portfolio/page.tsx (NEW)"
+    - "src/data/clients.ts (NEW)"
+    - "src/components/ClientsPortfolio.tsx (MODIFIED)"
+    - "public/images/portfolio/ (NEW — screenshots)"
+
+  consent_boundary:
+    rule: "No named performance metrics without explicit client consent"
+    owner: "CXM_LASTAPPLE"
+    timeline: "2-4 weeks post-launch"
+    current_approach: "Gallery shows sites and service tags. Public URLs are proof. Metrics come after consent conversations."
+
+# ============================================================
+# PHASE 3: SEED THE STREAM
+# ============================================================
+# The Stream is the heartbeat. Without it, the site is a
+# brochure. With it, the site is a living workshop.
+#
+# 14 WordPress blog posts spanning June 2024 to June 2025.
+# AI integration, multi-persona breakthroughs, data enrichment,
+# meeting analysis, knowledge engines. This is the origin story.
+#
+# These posts prove the workshop existed before the workshop
+# had a name. They are the foundation of credibility.
+# ============================================================
+phase_3:
+  name: "Seed the Stream"
+  purpose: "Import 14 WordPress blog posts as MDX. The workshop gets its history."
+  depends_on: "phase_1"  # Can run parallel with phase_2
+  estimated_duration: "3 hours"
+  status: NOT_STARTED
+  parallel_with: "phase_2"
+
+  substeps:
+    3.1_export_wordpress_content:
+      description: "Pull all 14 post bodies and metadata from WordPress via SSH"
+      action: "For each post ID, extract title, content, date, excerpt, SEO meta via WP-CLI"
+      status: NOT_STARTED
+      source: "docs/wordpress-audit/POST-INVENTORY.csv"
+      posts:
+        - id: 11206
+          slug: "coffee-shop-seo"
+          title: "Coffee Shop SEO: How Local Businesses Can Brew Better Search Rankings"
+          date: "2025-06-20"
+          tags: [seo, local-business, content-marketing]
+          category: seo
+          notes: "Excellent — has tables and code examples"
+
+        - id: 11189
+          slug: "from-chaos-to-symphony"
+          title: "From Chaos to Symphony: When AI Cognitive Overload Led to Multi-Persona Breakthrough"
+          date: "2025-06-17"
+          tags: [ai, multi-persona, architecture]
+          category: ai
+          notes: "Origin story of the VPOS team. High strategic value."
+
+        - id: 11129
+          slug: "cursor-claude-chaos"
+          title: "Cursor, Claude, and Chaos: Building a Mautic Data Enrichment Tool with AI"
+          date: "2025-02-03"
+          tags: [ai, mautic, data-enrichment, tools]
+          category: ai
+          notes: "Hands-on technical build story"
+
+        - id: 11097
+          slug: "building-a-brain"
+          title: "Building a Brain (Not Just Another Marketing Tool)"
+          date: "2025-01-29"
+          tags: [ai, knowledge-engine, architecture]
+          category: ai
+          notes: "Precursor to the conscience brain concept"
+
+        - id: 11088
+          slug: "beyond-the-blueprint"
+          title: "Beyond the Blueprint: How Multiple AIs and One Vision Drove Our Marketing Automation Success"
+          date: "2025-01-23"
+          tags: [ai, automation, multi-llm]
+          category: ai
+
+        - id: 11074
+          slug: "orchestrating-ai-ensemble"
+          title: "Orchestrating the AI Ensemble: A Five-Movement Technical Symphony"
+          date: "2025-01-16"
+          tags: [ai, multi-llm, architecture]
+          category: ai
+
+        - id: 11066
+          slug: "symphony-ai-marketing"
+          title: "The Symphony of AI-Powered Marketing Automation: Gemini-Chat's Vision Unveiled"
+          date: "2025-01-14"
+          tags: [ai, gemini, automation, marketing]
+          category: ai
+
+        - id: 10988
+          slug: "from-sketches-to-systems"
+          title: "From Sketches to Systems: Four Months of Transformative Marketing Automation"
+          date: "2025-01-06"
+          tags: [automation, marketing, transformation]
+          category: automation
+
+        - id: 10923
+          slug: "context-anchoring-ai"
+          title: "Context Anchoring in AI Troubleshooting: A Real-World Problem in Workflow Efficiency"
+          date: "2024-12-27"
+          tags: [ai, workflow, troubleshooting]
+          category: ai
+
+        - id: 10903
+          slug: "ai-meeting-analysis"
+          title: "Kickstart Your Productivity: How We're Transforming Meeting Management with AI Today"
+          date: "2024-12-27"
+          tags: [ai, meetings, productivity]
+          category: ai
+
+        - id: 10878
+          slug: "company-needs-brain"
+          title: "Why Your Company Needs a Brain: Building an AI-Powered Knowledge Engine"
+          date: "2024-12-18"
+          tags: [ai, knowledge-engine, business]
+          category: ai
+
+        - id: 10849
+          slug: "technical-debt-ai"
+          title: "Technical Debt in the Age of AI: A Journey from Rigid Systems to Living Knowledge"
+          date: "2024-11-19"
+          tags: [ai, technical-debt, architecture]
+          category: ai
+
+        - id: 9336
+          slug: "manual-to-ai-efficiency"
+          title: "From Manual Drudgery to AI-Driven Efficiency: A Journey in Data Integration"
+          date: "2024-09-10"
+          tags: [ai, data-integration, automation]
+          category: automation
+
+        - id: 8805
+          slug: "revolutionizing-digital-marketing"
+          title: "Revolutionizing Digital Marketing: The Power of AI in SEO"
+          date: "2024-06-28"
+          tags: [ai, seo, digital-marketing]
+          category: seo
+          notes: "Oldest post. The beginning of the journey."
+
+    3.2_convert_to_mdx:
+      description: "Transform WordPress HTML to clean MDX with Zod-validated frontmatter"
+      action: "For each post: strip Elementor shortcodes, convert HTML to Markdown, write frontmatter matching StreamPostSchema, extract/reference images"
+      destination: "content/stream/{slug}.mdx"
+      status: NOT_STARTED
+      schema_reference: "content/schema/stream.ts"
+      conversion_rules:
+        - "Strip all Elementor shortcodes and empty divs/spans"
+        - "Convert HTML headings, lists, links, bold/italic to Markdown"
+        - "Remove inline styles and WordPress-specific classes"
+        - "Preserve code blocks with proper syntax highlighting"
+        - "Reference any post images from public/images/stream/"
+        - "SEO meta from docs/wordpress-audit/SEO-INVENTORY.yaml"
+        - "Description max 160 chars (Zod enforced)"
+
+    3.3_extract_post_images:
+      description: "Download featured images and in-content images for blog posts"
+      action: "Pull post-specific images from WordPress, optimize, save to public/images/stream/"
+      destination: "public/images/stream/"
+      status: NOT_STARTED
+      notes: "Some posts may share images already in public/images/wp/. Don't duplicate."
+
+    3.4_validate_frontmatter:
+      description: "Confirm every MDX file passes StreamPostSchema validation"
+      command: "npm run build"
+      status: NOT_STARTED
+      notes: "Zod will catch any schema violations at build time. This is the validation."
+
+    3.5_verify_stream_pages:
+      description: "All 14 posts render at /stream/{slug} and appear on /stream archive"
+      command: "npm run dev"
+      status: NOT_STARTED
+      checks:
+        - "/stream shows all 14 posts sorted by date (newest first)"
+        - "Each /stream/{slug} renders with correct layout"
+        - "Homepage JournalHero shows latest post"
+        - "Homepage JournalStream shows 4 most recent posts"
+        - "Tags render correctly"
+        - "Images load"
+        - "Code blocks have syntax highlighting"
+
+    3.6_verify_redirects:
+      description: "Confirm WordPress slugs redirect to new Stream paths"
+      action: "Cross-reference POST-INVENTORY.csv redirect mappings with next.config.ts"
+      status: NOT_STARTED
+      notes: "All 14 posts should have redirects from old WordPress paths to /stream/{slug}"
+
+    3.7_featured_selection:
+      description: "Mark 2-3 posts as featured for homepage prominence"
+      action: "Set featured: true in frontmatter for the strongest posts"
+      status: NOT_STARTED
+      candidates:
+        - slug: "from-chaos-to-symphony"
+          reason: "Origin story of multi-persona breakthrough — directly proves the workshop"
+        - slug: "coffee-shop-seo"
+          reason: "Practical, accessible, shows real client value"
+        - slug: "building-a-brain"
+          reason: "Precursor to the conscience brain — shows the vision arc"
+
+  success_criteria:
+    - "14 MDX files in content/stream/, all passing Zod validation"
+    - "npm run build passes"
+    - "/stream archive shows all 14 posts"
+    - "Homepage JournalHero and JournalStream populate with real content"
+    - "All 14 old WordPress URLs redirect correctly"
+    - "2-3 posts marked as featured"
+
+  files_touched:
+    - "content/stream/*.mdx (14 NEW files)"
+    - "public/images/stream/ (NEW — post images)"
+
+# ============================================================
+# PHASE 4: CONTENT REFINEMENT
+# ============================================================
+# Now the site has integrity (real gallery) and life (Stream).
+# This phase sharpens what's already there.
+#
+# The body exists. Now we refine the voice.
+# ============================================================
+phase_4:
+  name: "Content Refinement"
+  purpose: "Polish services, about page, and homepage. Sharpen the workshop voice."
+  depends_on: "phase_2, phase_3"
+  estimated_duration: "2 hours"
+  status: NOT_STARTED
+
+  substeps:
+    4.1_digital_marketing_rewrite:
+      description: "Rewrite the 39-line digital-marketing stub into a full service page"
+      file: "content/services/digital-marketing.mdx"
+      action: "Expand to reflect AI-powered approach. Match quality of wordpress-maintenance.mdx."
+      status: NOT_STARTED
+      notes: "Currently the weakest service page. Should highlight AI-driven strategy, not generic 'digital marketing.'"
+
+    4.2_wordpress_resurrection_merge:
+      description: "Fold wordpress-resurrection content into wordpress-maintenance"
+      files:
+        - "content/services/wordpress-maintenance.mdx (MODIFY)"
+        - "content/services/wordpress-resurrection.mdx (DELETE after merge)"
+      action: "Extract key resurrection content (recovery, modernization) into maintenance page as a section or tier. Add redirect from old resurrection path."
+      status: NOT_STARTED
+      notes: "Too niche for standalone. Resurrection is a service within maintenance, not separate."
+
+    4.3_about_page_rewrite:
+      description: "Rewrite About page to reflect workshop identity"
+      file: "src/app/about/page.tsx"
+      action: "30+ years of system integration meeting bleeding-edge AI. Not corporate boilerplate. The story of why this workshop exists."
+      status: NOT_STARTED
+      notes: "Should reference the journey documented in The Stream. The about page points inward to the work."
+
+    4.4_homepage_tuning:
+      description: "Review homepage flow with real content in place"
+      file: "src/app/page.tsx"
+      status: NOT_STARTED
+      checks:
+        - "JournalHero renders the latest featured post compellingly"
+        - "JournalStream shows the 4 most recent entries with real titles"
+        - "SolutionsGrid still makes sense in context"
+        - "PricingSection positioning — does it still fit the workshop story?"
+        - "ClientsPortfolio preview connects smoothly to /portfolio"
+        - "Footer CTA is clear and specific"
+
+    4.5_navigation_audit:
+      description: "Verify all navigation links work and hierarchy makes sense"
+      status: NOT_STARTED
+      checks:
+        - "Portfolios mega menu → Services, Solutions, Client Work all resolve"
+        - "/portfolio link works"
+        - "/stream link works with populated content"
+        - "Mobile nav covers all routes"
+        - "No dead links"
+
+    4.6_verify_build:
+      description: "Full build after all content changes"
+      command: "npm run build"
+      status: NOT_STARTED
+
+  success_criteria:
+    - "Digital marketing page is substantive (100+ lines, rich content)"
+    - "WordPress resurrection merged into maintenance"
+    - "About page tells the workshop story"
+    - "All navigation links resolve"
+    - "npm run build passes"
+
+  files_touched:
+    - "content/services/digital-marketing.mdx (REWRITE)"
+    - "content/services/wordpress-maintenance.mdx (MODIFY)"
+    - "content/services/wordpress-resurrection.mdx (DELETE)"
+    - "src/app/about/page.tsx (REWRITE)"
+    - "src/app/page.tsx (POSSIBLE TUNING)"
+
+# ============================================================
+# PHASE 5: QUALITY GATE
+# ============================================================
+# Nothing goes live until it passes. This is not a formality.
+# Every redirect, every image, every build artifact.
+# ============================================================
+phase_5:
+  name: "Quality Gate"
+  purpose: "Prove the site works. No deployment without evidence."
+  depends_on: "phase_4"
+  estimated_duration: "45 minutes"
+  status: NOT_STARTED
+
+  substeps:
+    5.1_production_build:
+      description: "Clean production build with zero errors and zero warnings"
+      command: "npm run build"
+      status: NOT_STARTED
+      notes: "This is the final build before deployment. Must be clean."
+
+    5.2_redirect_verification:
+      description: "Verify all 45 redirects resolve correctly"
+      action: "Cross-check REDIRECT-MAP.yaml against next.config.ts. Test a sample of old WordPress URLs."
+      source: "docs/wordpress-audit/REDIRECT-MAP.yaml"
+      status: NOT_STARTED
+
+    5.3_lighthouse_audit:
+      description: "Run Lighthouse on key pages"
+      status: NOT_STARTED
+      target_score: 90
+      pages:
+        - "/"
+        - "/stream"
+        - "/portfolio"
+        - "/services/wordpress-maintenance"
+        - "/solutions/ai-chatbot"
+        - "/contact"
+
+    5.4_link_audit:
+      description: "Check for broken internal links across all pages"
+      status: NOT_STARTED
+
+    5.5_mobile_responsive_check:
+      description: "Verify all new pages render correctly on mobile viewports"
+      status: NOT_STARTED
+      viewports:
+        - "375px (iPhone SE)"
+        - "390px (iPhone 14)"
+        - "768px (iPad)"
+
+    5.6_seo_verification:
+      description: "Confirm meta tags, JSON-LD, sitemap, and robots.txt"
+      status: NOT_STARTED
+      checks:
+        - "sitemap.xml includes all new /stream/ and /portfolio paths"
+        - "robots.txt allows crawling"
+        - "Each page has unique title and description"
+        - "JSON-LD organization schema present"
+        - "Open Graph tags on key pages"
+
+    5.7_content_review:
+      description: "Read through all migrated content for formatting artifacts"
+      status: NOT_STARTED
+      checks:
+        - "No leftover HTML tags in MDX content"
+        - "No Elementor shortcodes"
+        - "No broken image references"
+        - "No WordPress-specific class names"
+        - "Code blocks render with syntax highlighting"
+
+  success_criteria:
+    - "npm run build: zero errors, zero warnings"
+    - "45/45 redirects verified"
+    - "Lighthouse performance > 90 on all tested pages"
+    - "Zero broken internal links"
+    - "Mobile rendering clean on all viewports"
+    - "SEO infrastructure complete"
+    - "No WordPress artifacts in content"
+
+# ============================================================
+# PHASE 6: DNS CUTOVER
+# ============================================================
+# This phase requires explicit operator approval at every step.
+# It is irreversible in the sense that the world sees the change.
+# Rollback plan documented.
+# ============================================================
+phase_6:
+  name: "DNS Cutover"
+  purpose: "Make it live. lastapple.com serves the Next.js site."
+  depends_on: "phase_5"
+  estimated_duration: "1 hour"
+  status: NOT_STARTED
+  requires_operator_approval: true
+
+  substeps:
+    6.1_vercel_preview:
+      description: "Deploy preview build on Vercel and verify"
+      status: NOT_STARTED
+      notes: "Push to main triggers auto-deploy. Verify at preview URL before DNS change."
+
+    6.2_old_site_archive:
+      description: "Move current WordPress lastapple.com to old.lastapple.com"
+      action: "Configure subdomain in Cloudflare + SiteGround. Add noindex meta to WordPress."
+      status: NOT_STARTED
+      requires_operator_approval: true
+
+    6.3_dns_update:
+      description: "Point lastapple.com DNS to Vercel"
+      action: "Update A/CNAME records in Cloudflare to Vercel deployment"
+      status: NOT_STARTED
+      requires_operator_approval: true
+      rollback: "Point DNS back to SiteGround IP. old.lastapple.com stays live as backup."
+
+    6.4_ssl_verification:
+      description: "Confirm HTTPS works on the new lastapple.com"
+      status: NOT_STARTED
+
+    6.5_propagation_check:
+      description: "Verify DNS propagation (allow up to 48 hours)"
+      status: NOT_STARTED
+
+    6.6_gsc_notification:
+      description: "Submit new sitemap to Google Search Console"
+      action: "Property: lastapple.com. Submit sitemap.xml. Request re-index of key pages."
+      status: NOT_STARTED
+
+    6.7_smoke_test:
+      description: "Full site walkthrough on production"
+      status: NOT_STARTED
+      checks:
+        - "Homepage loads with real content"
+        - "/stream shows all 14 posts"
+        - "/portfolio shows real client gallery"
+        - "All services and solutions render"
+        - "Contact form submits"
+        - "Redirects work from old URLs"
+        - "Analytics tracking fires"
+
+  success_criteria:
+    - "lastapple.com serves Next.js site"
+    - "old.lastapple.com serves WordPress archive with noindex"
+    - "SSL valid"
+    - "GSC notified with new sitemap"
+    - "Smoke test passes"
+    - "Rollback plan documented and tested"
+
+  rollback_plan:
+    trigger: "Critical rendering failure or data loss on production"
+    steps:
+      - "Revert Cloudflare DNS A/CNAME to SiteGround IP"
+      - "Verify old.lastapple.com still serves WordPress"
+      - "Swap old.lastapple.com back to lastapple.com"
+    estimated_recovery: "15 minutes (DNS TTL dependent)"
+
+# ============================================================
+# POST-SPRINT: NOT THIS SESSION
+# ============================================================
+# These are real tasks but they follow the sprint, not gate it.
+# Documented here so nothing is forgotten.
+# ============================================================
+post_sprint:
+  description: "After DNS cutover. Tracked separately."
+  items:
+    - task: "Client consent conversations"
+      owner: "CXM_LASTAPPLE"
+      timeline: "2-4 weeks post-launch"
+      details: "Voice Automated first (healthcare sensitivity). Then Marin Bio, others. Permission to use named metrics in gallery."
+
+    - task: "First original Stream entry"
+      owner: "CEO"
+      details: "The first post written FOR the new site, not imported from WordPress. The workshop starts producing new work."
+
+    - task: "scrapersky.com messaging rewrite"
+      owner: "SCRAPERSKY"
+      details: "Match earned positioning. Anti-hype, strategy machine not contact machine. Separate workstream."
+
+    - task: "Newsletter signup"
+      details: "Deferred from P2/P3 foundation. Wire up when Stream has audience."
+
+    - task: "Error boundary and loading states"
+      details: "Pre-launch polish items deferred from 1-PROGRESS.yaml"
+
+    - task: "OG images for Stream posts"
+      details: "Auto-generated or per-post. Deferred until Stream content is stable."
+
+# ============================================================
+# SESSION LOG
+# ============================================================
+sessions:
+  - date: "2026-04-04"
+    session_id: "7f572db5-1ab7-47ea-b79c-2dbbaea184fd"
+    persona: "CXM_LASTAPPLE"
+    genesis: 1
+    summary: "First CXM_LASTAPPLE session. POST all pass (33/37, 4 skipped). Full codebase exploration. SSH/WP-CLI verified. Sprint plan created."
+    phases_touched: []
+    decisions: []
