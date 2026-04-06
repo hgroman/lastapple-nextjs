@@ -24,10 +24,10 @@ function PortfolioCard({ client, index }: { client: typeof clients[number]; inde
       href={client.url}
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.4, delay: (index % 3) * 0.1 }}
       whileHover={{ y: -4 }}
       className="group glass rounded-2xl overflow-hidden border-transparent hover:border-primary/20 transition-all duration-300"
     >
