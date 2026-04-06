@@ -1,0 +1,116 @@
+---
+title: "We Replaced 838 Lines of Bash with Three Database Tables and a Symlink"
+date: "2026-04-05"
+author: "Last Apple Workshop"
+tags: ["ai-operations", "skill-distribution", "infrastructure", "case-study"]
+summary: "How our AI operations team replaced a growing infrastructure nightmare with a governed skill distribution system — audited it twice, found 140 issues, fixed them all, and migrated 17 AI agents in one sitting."
+---
+
+# We Replaced 838 Lines of Bash with Three Database Tables and a Symlink
+
+There's a script called `sync-skills.sh` that we've been running for months. Every time someone commits code to our master repository, this 838-line bash script fires. It SHA-256 hashes every skill file, diffs them against 36 project directories, and copies the changes. It was the circulatory system for our 17-agent AI operations team.
+
+It was also killing us.
+
+## The Problem Nobody Wanted to Talk About
+
+Skills are instruction files. Each one teaches an AI agent how to do a specific job — process email, run a security audit, commit code with the right format. Our agents started with 10 shared skills. By the time we looked up, we had 31 "universal" skills injected into every session.
+
+The data told the story. We analyzed 37 sessions and 62 skill invocations. Of those 31 universal skills, only 10 actually got used. The other 21 were noise — sitting in every agent's context window, competing for the model's attention, degrading instruction-following quality.
+
+Meanwhile, 43 skills lived in individual project directories, untracked, ungoverned. Nobody knew the full inventory. Nobody could answer "what skills does CTO have?" without grepping three directories.
+
+## What We Built
+
+Three Supabase tables.
+
+`asset_agency_personas` — the 17 agents: who they are, what project they live in, whether they're permanent or work-order-scoped.
+
+`asset_agency_skills` — the catalog: 137 skills, each with a type, a lifecycle state, and a path to its canonical location.
+
+`asset_agency_skill_assignments` — the routing: who gets what, why, and for how long.
+
+That's it. The entire skill distribution system is a normalized many-to-many relationship with some CHECK constraints and RLS policies.
+
+## What Happened Before We Wrote Any DDL
+
+We ran an adversarial audit. Six specialized AI auditors — each with a different hostile perspective — examined the schema in parallel. Security. DevOps. Architecture. Observability. Concurrency. Testability.
+
+They found 73 issues. Eight were fatal.
+
+The UNIQUE constraints weren't tenant-scoped. In a multi-tenant database, that means Tenant A creating a persona called "forge" blocks Tenant B from creating theirs. The foreign keys didn't include tenant_id in their composite, so any code bypassing row-level security could bind Tenant A's skill to Tenant B's persona. The `pg_role_name` column had no constraint — a malicious INSERT could set it to `postgres` and escalate privileges.
+
+We fixed all eight fatals and baked them into the DDL. Then we built the tables.
+
+## The Symlink Revelation
+
+Here's where it gets interesting. Our OPS agent tested something: what happens if you replace a copied skill file with a symlink to a central repository?
+
+Claude Code follows symlinks. Cold boot, session resume — the skill loads from wherever the symlink points. One edit to the source, every agent sees it instantly. No copying. No hashing. No 838-line bash script.
+
+So we designed a new architecture: one git repository holds every skill. Each agent's project directory contains symlinks to that repo. The database says which symlinks to create. An agent boots, checks its assignments, and provisions itself.
+
+The 838-line bash script becomes: `ln -sf`.
+
+## The Migration
+
+We wrote conversion specs for all 17 agents — YAML files with exact commands, exact SQL, exact verification steps. Then we supervised the conversion from a single terminal.
+
+This is where the craft shows.
+
+The first agent we supervised — OPS — declared "done" three times. Each time, we cross-checked and found gaps. 23 skills missing from the repository. 11 skills on disk with no database registration. 27 skills placed in the wrong category. A case-sensitivity mismatch that would have broken on Linux.
+
+We caught every one because we didn't trust the declaration. We verified against the database, verified against the disk, and diffed the two.
+
+After the third round of corrections, we wrote a standard prompt that forced each subsequent agent to follow the spec exactly and report verification numbers. Then we ran all 17 conversions — some in parallel — with the same monitoring pattern.
+
+Every agent converted. Every verification passed. Zero broken symlinks across the fleet.
+
+## The Numbers
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Skills per agent (average) | 42 | 14.5 |
+| Total skill instances | 719 | 246 |
+| Distribution mechanism | 838-line bash script | Database query + symlink |
+| Time to add a skill to an agent | Edit bash array, commit, wait for sync | One SQL INSERT |
+| Time to remove a skill | Edit bash array, but copies remain forever | Remove symlink |
+| Skill inventory visibility | Grep three directories | One SQL query |
+
+66% reduction in context pollution. Every agent is leaner. Every assignment is tracked. Every change is governed.
+
+## How One Person Runs This
+
+A normal company would staff this as a 2-week sprint with 3-4 engineers. Schema design, adversarial audit, provisioning system, migration runbook, execution across 17 targets, verification at every step. We did it in one sitting. One operator. One terminal. AI leverage.
+
+But "AI leverage" undersells what actually happened. Let me be specific about the decisions that made this work.
+
+**We trusted the data over intuition.** The 37-session telemetry showed 21 "universal" skills with zero invocations. Not low usage. Zero. No debate, no committee review, no "but what if someone needs it someday." The numbers said zero, we cut them. That single decision eliminated 60% of the context pollution.
+
+**We refused to accept "done" at face value.** The OPS agent — a capable AI running in its own project with its own identity — declared the migration "done" three times. Each time, we cross-checked its work against the database and the filesystem. Each time, we found gaps: 23 missing skills, 11 unregistered database rows, 27 skills in the wrong category. That verification discipline is the difference between a migration that works and one that silently breaks at 2 AM.
+
+**We pivoted mid-execution without losing the thread.** The day started with "audit a schema for a three-table design." By the end, we had redesigned the entire skill distribution architecture, replaced it with symlinks, built a self-provisioning system, and migrated all 17 agents. The scope expanded 10x. The quality didn't drop because every expansion was followed by a verification step.
+
+**We knew when to design and when to ship.** Three AI subagents brainstormed the architecture — one proposed MCP-served skills, one proposed a dedicated git repo with symlinks, one proposed a minimalist config file. We listened to all three, picked the pragmatic answer (symlinks + database), and moved. Twenty minutes of design, eight hours of execution. The ratio matters.
+
+**We caught the AI rebuilding what already existed.** One of the agents — OPS — proposed building a new `provision-skills.sh` bash script. We had already built a `/skill-provisioner` skill that did the same thing and more. OPS hadn't read the file. We made it read the file. It dropped the redundant script. This is the operator's job: knowing what exists and refusing to let the team duplicate work.
+
+## What the Data Will Show
+
+We've been logging every Claude Code session as JSONL since March. The 37-session telemetry that drove this migration is the baseline. In two weeks, we'll have the comparison data: same agents, same work, 66% fewer skills in context.
+
+The hypothesis: instruction-following quality improves when the model isn't parsing 42 skill descriptions to find the 10 it needs. The context window isn't infinite — every irrelevant skill description is a tax on attention. We just cut the tax by two-thirds.
+
+If the data confirms it, the implication is significant: **the performance ceiling for AI agents isn't the model — it's the context hygiene.** Throwing more skills at an agent doesn't make it more capable. It makes it more confused. The fastest agent is the one carrying exactly what it needs and nothing else.
+
+We'll publish the comparison when we have it.
+
+## The Workshop Window
+
+This is what working with an AI operations team actually looks like. Not a chatbot. Not autocomplete. A federated team of 17 agents, each with its own project, its own identity, its own skill set — governed by three database tables, distributed via symlinks, and managed by an operator who treats "done" as a hypothesis that requires verification.
+
+The fix for skill bloat is boring. Three tables. A symlink. And the discipline to check the numbers.
+
+We're building this infrastructure in the open because the alternative is pretending AI operations is simple. It isn't. But the craft is learnable, and the patterns are transferable. If you're running AI agents at scale and your context windows are getting noisy, the playbook is here.
+
+This is what the workshop looks like today.

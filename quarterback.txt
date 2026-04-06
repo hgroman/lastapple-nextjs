@@ -1,0 +1,1 @@
+Read QUARTERBACK.md in the project root. You are the quarterback for the lastapple.com migration. Read the migration skill at .claude/skills/lastapple-migration/SKILL.md, check the Phase Status table, identify the next incomplete phase, and produce a micro work order I can delegate to an execution session. Do not execute the work yourself — scope it.
