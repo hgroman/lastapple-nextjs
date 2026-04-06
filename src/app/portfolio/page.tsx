@@ -4,10 +4,10 @@ import { PortfolioGrid } from '@/components/PortfolioGrid';
 
 export const metadata: Metadata = {
   title: 'Portfolio | Last Apple Business Solutions',
-  description: 'Real client work — WordPress, AI, SaaS, and automation. Explore the sites we build and maintain for businesses across industries.',
+  description: 'WordPress, AI, SaaS, and automation — explore the sites we build and maintain for businesses across industries.',
   openGraph: {
     title: 'Portfolio | Last Apple Business Solutions',
-    description: 'Real client work — WordPress, AI, SaaS, and automation.',
+    description: 'WordPress, AI, SaaS, and automation — sites we build and maintain.',
     type: 'website',
   },
 };
@@ -20,7 +20,7 @@ export default function PortfolioPage() {
           Our <span className="gradient-text">Portfolio</span>
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Real clients. Real websites. From WordPress builds to AI-powered platforms.
+          From WordPress builds to AI-powered platforms.
         </p>
       </header>
 
