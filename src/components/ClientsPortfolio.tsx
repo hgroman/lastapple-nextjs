@@ -55,7 +55,7 @@ export function ClientsPortfolio() {
                   src={client.screenshot}
                   alt={`${client.name} website`}
                   fill
-                  className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  className="portfolio-screenshot"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
               </div>

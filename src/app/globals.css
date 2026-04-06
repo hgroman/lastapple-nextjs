@@ -471,3 +471,26 @@
 .animate-scale-in {
   animation: scale-in 0.5s ease-out forwards;
 }
+
+/* Portfolio screenshot scroll — desktop: hover, mobile: continuous */
+@keyframes portfolio-scroll {
+  0%, 10% { object-position: center 0%; }
+  90%, 100% { object-position: center 100%; }
+}
+
+.portfolio-screenshot {
+  object-fit: cover;
+  object-position: center 0%;
+  transition: object-position 6s ease-in-out;
+}
+
+.group:hover .portfolio-screenshot {
+  object-position: center 100%;
+}
+
+@media (hover: none) {
+  .portfolio-screenshot {
+    animation: portfolio-scroll 8s ease-in-out infinite alternate;
+    transition: none;
+  }
+}

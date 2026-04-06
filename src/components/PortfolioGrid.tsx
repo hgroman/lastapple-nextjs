@@ -21,13 +21,13 @@ export function PortfolioGrid() {
           whileHover={{ y: -4 }}
           className="group glass rounded-2xl overflow-hidden border-transparent hover:border-primary/20 transition-all duration-300"
         >
-          {/* Screenshot */}
+          {/* Screenshot window — image scrolls top-to-bottom on hover */}
           <div className="relative aspect-[16/10] overflow-hidden bg-muted">
             <Image
               src={client.screenshot}
               alt={`${client.name} website screenshot`}
               fill
-              className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+              className="portfolio-screenshot"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           </div>
@@ -39,7 +39,6 @@ export function PortfolioGrid() {
               <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </div>
 
-            {/* Tags */}
             <div className="flex flex-wrap gap-2">
               {client.tags.map((tag) => (
                 <span
