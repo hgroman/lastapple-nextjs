@@ -48,3 +48,4 @@ TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/options.json
 skyradar.yaml
 .venv/
 src/mcp/node_modules/
+.gemini-clipboard/
