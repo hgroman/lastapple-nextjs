@@ -421,6 +421,17 @@ The `conscience-brain` MCP server is configured at user scope (`~/.claude.json`)
 
 ---
 
+## Skills (managed by /skill-provisioner)
+
+Skills are symlinked from the agency-skills repo at `~/development/python-projects/agency-skills/` and managed via the skill distribution system.
+
+Standing set (loaded at boot):
+adversarial-collaboration-v2, alerting, brain-candidate, git-curator, google-analytics, governance-pipeline, lastapple-migration, POST, session-close, skill-provisioner, skill-registry, skillsmith, task-create-radar, wordpress, work-orders
+
+Additional skills available on demand via `/skill-provisioner load <skill>`.
+
+---
+
 ## Non-Interactive Execution Mode
 
 When invoked via `-p` flag (print mode / non-interactive), execute tools immediately, return results directly, never ask "May I proceed?"
