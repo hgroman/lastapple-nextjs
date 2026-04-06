@@ -72,6 +72,12 @@ export const clients: Client[] = [
     tags: ['WordPress', 'Consulting'],
   },
   {
+    name: 'Idaho Telcom Experts',
+    url: 'https://idahotelcomexperts.com',
+    screenshot: '/images/portfolio/idahotelcomexperts.webp',
+    tags: ['WordPress', 'Telecom'],
+  },
+  {
     name: 'Improve My Rankings',
     url: 'https://improvemyrankings.com',
     screenshot: '/images/portfolio/improvemyrankings.webp',
