@@ -474,18 +474,22 @@
 
 /* Portfolio screenshot scroll — desktop: hover, mobile: continuous */
 @keyframes portfolio-scroll {
-  0%, 10% { object-position: center 0%; }
-  90%, 100% { object-position: center 100%; }
+  0%, 10% { transform: translateY(0); }
+  90%, 100% { transform: translateY(calc(-100% + var(--card-height))); }
 }
 
 .portfolio-screenshot {
-  object-fit: cover;
-  object-position: center 0%;
-  transition: object-position 6s ease-in-out;
+  position: absolute !important;
+  width: 100% !important;
+  height: auto !important;
+  top: 0;
+  left: 0;
+  transition: transform 6s ease-in-out;
+  transform: translateY(0);
 }
 
 .group:hover .portfolio-screenshot {
-  object-position: center 100%;
+  transform: translateY(calc(-100% + var(--card-height)));
 }
 
 @media (hover: none) {
