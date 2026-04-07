@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { clients } from '@/data/clients';
+import { RevealOnScroll } from './RevealOnScroll';
 
 const featured = clients.filter((c) => c.featured);
 
@@ -23,37 +24,34 @@ function FeaturedCard({ client, index }: { client: typeof clients[number]; index
   }, []);
 
   return (
-    <motion.a
-      href={client.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -4 }}
-      className="group glass rounded-2xl overflow-hidden border-transparent hover:border-primary/20 transition-all duration-300"
-    >
-      <div
-        ref={containerRef}
-        className="relative aspect-[16/10] overflow-hidden bg-muted"
-        style={{ '--card-height': `${cardHeight}px` } as React.CSSProperties}
+    <RevealOnScroll delay={index * 80}>
+      <a
+        href={client.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group glass rounded-2xl overflow-hidden border-transparent hover:border-primary/20 transition-all duration-300 block hover:-translate-y-1"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={client.screenshot}
-          alt={`${client.name} website`}
-          className="portfolio-screenshot"
-          loading="lazy"
-        />
-      </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-sm">{client.name}</h3>
-          <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+        <div
+          ref={containerRef}
+          className="relative aspect-[16/10] overflow-hidden bg-muted"
+          style={{ '--card-height': `${cardHeight}px` } as React.CSSProperties}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={client.screenshot}
+            alt={`${client.name} website`}
+            className="portfolio-screenshot"
+            loading="lazy"
+          />
         </div>
-      </div>
-    </motion.a>
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-sm">{client.name}</h3>
+            <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+          </div>
+        </div>
+      </a>
+    </RevealOnScroll>
   );
 }
 

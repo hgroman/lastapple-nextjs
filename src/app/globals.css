@@ -472,6 +472,34 @@
   animation: scale-in 0.5s ease-out forwards;
 }
 
+/* Reveal-on-scroll — pure CSS, no Framer Motion hydration flash */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal[data-revealed='true'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (scripting: none) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Portfolio screenshot scroll — desktop: hover, mobile: continuous */
 @keyframes portfolio-scroll {
   0%, 10% { transform: translateY(0); }
