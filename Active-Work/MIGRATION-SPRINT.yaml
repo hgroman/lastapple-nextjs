@@ -35,11 +35,11 @@
 # ============================================================
 
 current:
-  phase: 1
-  phase_name: "Integrity First"
-  substep: "1.4"
-  status: IN_PROGRESS
-  notes: "1.1 + 1.2 done (fabricated clients removed, teaser CTA to /portfolio). 1.3 build passes. 1.4 visual check next."
+  phase: 3
+  phase_name: "Seed the Stream"
+  substep: "3.1"
+  status: NOT_STARTED
+  notes: "Phases 1+2 COMPLETE. 12 clients in gallery, hover-scroll effect, defensive copy purged. Phase 3 next: FORGE entry + 14 WordPress posts."
 
 # ============================================================
 # PHASE 1: INTEGRITY FIRST
@@ -69,7 +69,7 @@ phase_1:
       file: "src/components/ClientsPortfolio.tsx"
       action: "Replace client grid with a clean message and CTA to the portfolio page (built in Phase 2)"
       status: COMPLETE
-      notes: "Glass card with Globe icon, 'Real Clients. Real Work.' header, arrow CTA to /portfolio."
+      notes: "Glass card with Globe icon, 'Client Work.' header, arrow CTA to /portfolio."
 
     1.3_verify_build:
       description: "Confirm the build still passes with fabricated content removed"
@@ -105,71 +105,38 @@ phase_2:
   purpose: "Create /portfolio with real client work. Backfill homepage with featured preview."
   depends_on: "phase_1"
   estimated_duration: "2 hours"
-  status: NOT_STARTED
+  status: COMPLETE
+  completed_date: "2026-04-06"
+  completed_by: "CXM_LASTAPPLE"
+  completion_notes: "12 clients (Idaho Telcom was the missing 12th — sprint doc had a typo). All screenshots are WordPress FireShot originals. Hover-scroll effect. Defensive 'Real' copy purged per CEO directive."
 
   substeps:
     2.1_client_research:
       description: "Verify each client site is live and accessible"
-      action: "Hit each URL, confirm status. Note any that are down or redirecting."
-      status: NOT_STARTED
-      clients:
-        - url: "https://daxcopilot.ai"
-          type: "HJM Technologies division"
-        - url: "https://carrier-advisors.com"
-          type: "Active client"
-        - url: "https://duke-multimedia.com"
-          type: "Portfolio client"
-        - url: "https://advan-bio.com"
-          type: "Active client (Marin Bio)"
-        - url: "https://trustandobey.live"
-          type: "Portfolio client"
-        - url: "https://idyll-awhile.com"
-          type: "Portfolio client"
-        - url: "https://sagexteriorcleaning.com"
-          type: "Active client"
-        - url: "https://thrivingnumbers.com"
-          type: "Active client — Agency OS early adopter"
-        - url: "https://scrapersky.com"
-          type: "Internal product"
-        - url: "https://harmonytechconsulting.com"
-          type: "Portfolio client"
-        - url: "https://improvemyrankings.com"
-          type: "Portfolio client"
-      notes: "Idaho Telecom Experts excluded — no public URL confirmed. HarmonyTech.io may redirect to harmonytechconsulting.com — verify."
+      status: COMPLETE
+      notes: "All 12 URLs return HTTP 200. Idaho Telcom Experts recovered — sprint doc had typo (idahotelecomexperts vs idahotelcomexperts). HarmonyTech.io is the live domain."
 
     2.2_capture_screenshots:
       description: "Capture homepage screenshots for each verified live site"
-      action: "Use PageSpeed API or headless capture for consistent viewport screenshots"
       destination: "public/images/portfolio/"
-      status: NOT_STARTED
-      notes: "Desktop viewport (1280x800). Optimize to WebP. Max 200KB each."
+      status: COMPLETE
+      notes: "All 12 screenshots sourced from WordPress FireShot originals (wp-content/uploads/2024/02/). Normalized to 800px wide, full page height preserved. All under 200KB WebP."
 
     2.3_create_portfolio_page:
       description: "Build the /portfolio page"
-      files:
-        - "src/app/portfolio/page.tsx"
-      action: "Create gallery page matching design system. Grid layout with screenshots, client name, URL, service tags. No invented metrics."
-      status: NOT_STARTED
-      design_notes:
-        - "Glass card treatment matching existing component style"
-        - "Framer Motion stagger animation on scroll"
-        - "External link icon for each client URL"
-        - "Service tags (WordPress, AI, Integration, etc.)"
-        - "No performance claims — public URLs are the proof"
+      status: COMPLETE
+      notes: "Server Component (Metadata + BaseLayout). PortfolioGrid client component with hover-scroll effect — CSS translateY scrolls full-page screenshot from top to bottom on hover, auto-scrolls on mobile."
 
     2.4_create_client_data:
       description: "Create structured client data for the gallery"
       file: "src/data/clients.ts"
-      action: "Centralized client data used by both /portfolio page and homepage preview"
-      status: NOT_STARTED
-      notes: "Single source of truth. Both the full gallery and homepage teaser pull from this."
+      status: COMPLETE
+      notes: "Single source of truth for both /portfolio and homepage. 12 entries, 4 marked featured."
 
     2.5_backfill_homepage_preview:
-      description: "Update ClientsPortfolio.tsx to show 3-4 featured clients from real data"
-      file: "src/components/ClientsPortfolio.tsx"
-      action: "Import from clients.ts. Show featured subset. 'View Full Portfolio' links to /portfolio."
-      status: NOT_STARTED
-      notes: "The homepage teaser is a window into the gallery, not a duplicate."
+      description: "Update ClientsPortfolio.tsx to show featured clients"
+      status: COMPLETE
+      notes: "4 featured clients with hover-scroll screenshots. 'View Full Portfolio' links to /portfolio."
 
     2.6_verify_build:
       description: "Build passes with new portfolio page and updated homepage"
