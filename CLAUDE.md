@@ -108,7 +108,7 @@ A 24-hour migration sprint is in progress. Before starting work:
 
 - **Two-surface architecture:** lastapple.com = workshop (The Stream). scrapersky.com = showroom (product). Decoupled. Neither gates the other.
 - **Fabricated content dies.** TechFlow Solutions, Green Earth Co., Nexus Financial, Bright Academy — all invented. Remove from ClientsPortfolio.tsx. Replace with real client gallery.
-- **Gallery is non-negotiable.** Real clients: Daxcopilot.ai, Carrier-Advisors.com, Advan-Bio.com, Sagexteriorcleaning.com, ThrivingNumbers.com, ScraperSky.com, and others.
+- **Gallery is non-negotiable.** Gallery clients: Daxcopilot.ai, Carrier-Advisors.com, Advan-Bio.com, Sagexteriorcleaning.com, ThrivingNumbers.com, ScraperSky.com, and others.
 - **No named client metrics without consent.** Gallery shows sites (public URLs), not performance claims.
 - **Stream gets seeded.** Import 14 WordPress blog posts as MDX.
 - **Services stay, don't lead.** Real revenue. Keep findable. The Stream leads the site.

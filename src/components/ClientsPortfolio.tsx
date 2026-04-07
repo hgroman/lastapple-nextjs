@@ -74,7 +74,7 @@ export function ClientsPortfolio() {
             Our Work
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Real Clients. <span className="gradient-text">Real Work.</span>
+            Client <span className="gradient-text">Work.</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             30+ years of system integration expertise meeting bleeding-edge AI.
