@@ -525,6 +525,46 @@ phase_5:
         - "No WordPress-specific class names"
         - "Code blocks render with syntax highlighting"
 
+    5.8_portfolio_image_optimization:
+      description: "Optimize portfolio screenshots for consistent paint and reduced page weight"
+      status: NOT_STARTED
+      task_id: "af3850a1-73c3-4f9e-8c87-1bd9b414d7ae"
+      problem: |
+        12 client screenshots load via native <img loading="lazy"> tags. File sizes range from
+        40KB to 157KB causing visual cascade as cards paint at different times. Native img
+        bypasses Next.js Image Optimization (no srcset, no modern format negotiation, no
+        responsive sizes). Two outliers (idahotelcomexperts 132KB, thrivingnumbers 153KB)
+        are ~3x the median.
+      approach:
+        - "Switch to Next/Image with explicit width/height (NOT fill mode — fill broke top alignment previously)"
+        - "Add blur placeholder via next/image base64"
+        - "Standardize byte budget — re-encode the two outliers"
+        - "Verify .portfolio-screenshot CSS still applies through Next/Image's wrapper"
+      success_criteria:
+        - "All 12 cards paint within the same visual frame"
+        - "Total portfolio image weight under 600KB (currently ~877KB)"
+        - "No regression in hover-scroll effect"
+        - "No regression in blink fix (RevealOnScroll still works)"
+      files_touched:
+        - "src/components/PortfolioGrid.tsx"
+        - "src/components/ClientsPortfolio.tsx"
+        - "public/images/portfolio/*.webp"
+        - "src/data/clients.ts (possibly add intrinsic dimensions)"
+      current_sizes_bytes:
+        harmonytech: 39872
+        advan-bio: 40836
+        improvemyrankings: 41450
+        carrier-advisors: 61184
+        idyll-awhile: 62590
+        daxcopilot: 62636
+        trustandobey: 63716
+        duke-multimedia: 68868
+        scrapersky: 70826
+        sagexteriorcleaning: 72648
+        idahotelcomexperts: 135806
+        thrivingnumbers: 157088
+      total_current_bytes: 877520
+
   success_criteria:
     - "npm run build: zero errors, zero warnings"
     - "45/45 redirects verified"
