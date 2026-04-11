@@ -1,1 +1,9 @@
-{"mcpServers":{"persona-db":{"type":"stdio","command":"bash","args":["src/mcp/connect.sh","cxm_lastapple"]}}}
+{
+  "mcpServers": {
+    "persona-db": {
+      "type": "stdio",
+      "command": "bash",
+      "args": ["/Users/henrygroman/development/python-projects/agency-skills/infrastructure/persona-db/connect.sh"]
+    }
+  }
+}
