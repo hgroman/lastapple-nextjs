@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 set -eu
+
+# ============================================================
+# MCP SECURITY GUARD — Auto-correct settings, block back doors
+# ============================================================
+MCP_GUARD="$HOME/development/python-projects/agency-skills/infrastructure/security/pre-commit-mcp-guard.sh"
+if [ -x "$MCP_GUARD" ]; then
+  "$MCP_GUARD" || exit 1
+fi
+
 # Portable credential guard + optional repo-specific checks
 BLOCKED_PATTERNS='\.pickle$|oauth.*\.json$|service-account.*\.json$|\.pem$|\.key$|\.credentials/|0-foundation|(^|/)\.env(\.|$)'
 STAGED_SECRETS=$(git diff --cached --name-only --diff-filter=ACR | grep -iE "$BLOCKED_PATTERNS" || true)
