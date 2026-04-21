@@ -1,0 +1,501 @@
+# lastapple.com — Messaging Inventory
+# Initiative: Messaging Intentionality (2bbbd00e-b825-4732-a52f-8e572cccd5fa)
+# Phase: 1 — Inventory
+# Status: in_progress
+# Owner: CXM_LASTAPPLE
+#
+# RULE: Every user-facing string. No exceptions. Tag everything.
+# Each string gets: id, surface_location, type, current_text, source_file, line, notes.
+# Phase 3 will score every entry against the positioning spec.
+
+surface: lastapple.com
+inventoried_at: "2026-04-06"
+inventoried_by: CXM_LASTAPPLE
+status: in_progress
+
+# ============================================================
+# CHROME — appears on every page
+# ============================================================
+
+chrome:
+
+  site_metadata:
+    - id: chrome.title.default
+      type: meta_title
+      current: "Last Apple Business Solutions"
+      source: src/app/layout.tsx:13
+      notes: "Default <title>. Used when page doesn't override."
+
+    - id: chrome.title.template
+      type: meta_title_template
+      current: "%s | Last Apple"
+      source: src/app/layout.tsx:14
+      notes: "Suffix appended to every page title."
+
+    - id: chrome.description.default
+      type: meta_description
+      current: "30 years of system integration expertise. AI-powered solutions. WordPress that actually works."
+      source: src/app/layout.tsx:16
+      notes: "Default site description. 'WordPress that actually works' has a defensive flavor — flag for Phase 3 review."
+
+    - id: chrome.keywords
+      type: meta_keywords
+      current: ["WordPress", "AI", "business solutions", "system integration", "digital marketing"]
+      source: src/app/layout.tsx:17
+      notes: "Keywords meta is largely deprecated for SEO but still on the page."
+
+    - id: chrome.og.sitename
+      type: og_sitename
+      current: "Last Apple Business Solutions"
+      source: src/app/layout.tsx:38
+
+    - id: chrome.twitter.creator
+      type: twitter_handle
+      current: "@hankgroman"
+      source: src/app/layout.tsx:42
+
+  jsonld_organization:
+    - id: chrome.jsonld.org.name
+      type: structured_data
+      current: "Last Apple Business Solutions"
+      source: src/app/layout.tsx:52
+    - id: chrome.jsonld.founder.title
+      type: structured_data
+      current: "Founder & Principal Consultant"
+      source: src/app/layout.tsx:76
+      notes: "Hank Groman job title in schema. Cross-check with hankgroman.com inventory."
+
+  navigation:
+    - id: chrome.nav.stream
+      type: nav_link
+      current: "Stream"
+      source: src/components/Navigation.tsx:28,253,390
+      notes: "Top-level nav. Stream IS the site — this label carries weight."
+
+    - id: chrome.nav.about
+      type: nav_link
+      current: "About"
+      source: src/components/Navigation.tsx:29,259,440
+      notes: "Top-level nav."
+
+    - id: chrome.nav.portfolios
+      type: nav_dropdown_label
+      current: "Portfolios"
+      source: src/components/Navigation.tsx:102,402
+      notes: "Mega-menu label. Plural — covers Services, Solutions, Client Work."
+
+    - id: chrome.nav.cta
+      type: nav_cta_button
+      current: "Let's Talk"
+      source: src/components/Navigation.tsx:285,457
+      notes: "Primary nav CTA → /contact. Generic — flag for Phase 3."
+
+    # Services dropdown items
+    - id: chrome.nav.services.wpmaint.title
+      type: nav_item_title
+      current: "WordPress Maintenance"
+      source: src/components/Navigation.tsx:10
+    - id: chrome.nav.services.wpmaint.desc
+      type: nav_item_description
+      current: "Premium care, security, and optimization"
+      source: src/components/Navigation.tsx:10
+
+    - id: chrome.nav.services.wpres.title
+      type: nav_item_title
+      current: "WordPress Resurrection"
+      source: src/components/Navigation.tsx:11
+      notes: "Slated to merge into wordpress-maintenance per migration Phase 4."
+    - id: chrome.nav.services.wpres.desc
+      type: nav_item_description
+      current: "Revive and modernization aging sites"
+      source: src/components/Navigation.tsx:11
+      notes: "Grammar issue: 'Revive and modernization' — should be 'Revive and modernize'."
+
+    - id: chrome.nav.services.perfseo.title
+      type: nav_item_title
+      current: "Performance & SEO"
+      source: src/components/Navigation.tsx:12
+    - id: chrome.nav.services.perfseo.desc
+      type: nav_item_description
+      current: "Speed optimization and search rankings"
+      source: src/components/Navigation.tsx:12
+
+    - id: chrome.nav.services.dm.title
+      type: nav_item_title
+      current: "Digital Marketing"
+      source: src/components/Navigation.tsx:13
+      notes: "39-line stub. Slated for rewrite in migration Phase 4."
+    - id: chrome.nav.services.dm.desc
+      type: nav_item_description
+      current: "Content, social, and campaigns"
+      source: src/components/Navigation.tsx:13
+      notes: "Generic. Doesn't reflect AI-powered approach."
+
+    # Solutions dropdown items
+    - id: chrome.nav.solutions.chatbot.title
+      type: nav_item_title
+      current: "AI Chatbots"
+      source: src/components/Navigation.tsx:17
+    - id: chrome.nav.solutions.chatbot.desc
+      type: nav_item_description
+      current: "Intelligent customer service"
+      source: src/components/Navigation.tsx:17
+
+    - id: chrome.nav.solutions.b2b.title
+      type: nav_item_title
+      current: "B2B Email Lists"
+      source: src/components/Navigation.tsx:18
+    - id: chrome.nav.solutions.b2b.desc
+      type: nav_item_description
+      current: "AI-verified contact data"
+      source: src/components/Navigation.tsx:18
+
+    - id: chrome.nav.solutions.dataint.title
+      type: nav_item_title
+      current: "Data Integration"
+      source: src/components/Navigation.tsx:19
+    - id: chrome.nav.solutions.dataint.desc
+      type: nav_item_description
+      current: "Connect your systems"
+      source: src/components/Navigation.tsx:19
+
+    - id: chrome.nav.solutions.hubspot.title
+      type: nav_item_title
+      current: "HubSpot Setup"
+      source: src/components/Navigation.tsx:20
+    - id: chrome.nav.solutions.hubspot.desc
+      type: nav_item_description
+      current: "CRM implementation"
+      source: src/components/Navigation.tsx:20
+
+    # Client Work column
+    - id: chrome.nav.clients.casestudies.title
+      type: nav_item_title
+      current: "Case Studies"
+      source: src/components/Navigation.tsx:24
+      notes: "Links to /clients which may not exist. Cross-check routing."
+    - id: chrome.nav.clients.casestudies.desc
+      type: nav_item_description
+      current: "See our work in action"
+      source: src/components/Navigation.tsx:24
+
+    # Mobile menu unique strings
+    - id: chrome.nav.mobile.portfolios_heading
+      type: mobile_section_heading
+      current: "Portfolios"
+      source: src/components/Navigation.tsx:402
+    - id: chrome.nav.mobile.services
+      type: mobile_link
+      current: "Services"
+      source: src/components/Navigation.tsx:409
+    - id: chrome.nav.mobile.solutions
+      type: mobile_link
+      current: "Solutions"
+      source: src/components/Navigation.tsx:416
+    - id: chrome.nav.mobile.clients
+      type: mobile_link
+      current: "Client Work"
+      source: src/components/Navigation.tsx:423
+
+  footer:
+    - id: chrome.footer.cta.heading
+      type: section_heading
+      current: "Ready to Build Something Amazing?"
+      source: src/components/Footer.tsx:36-38
+      notes: "GENERIC. 'Something Amazing' is filler. Flag for Phase 3."
+
+    - id: chrome.footer.cta.body
+      type: section_body
+      current: "Let's talk about your project. Whether it's a quick automation or a complete digital transformation, we're here to help."
+      source: src/components/Footer.tsx:40
+      notes: "'Digital transformation' is hype filler. 'we're here to help' is passive."
+
+    - id: chrome.footer.cta.button
+      type: button
+      current: "Schedule a Call"
+      source: src/components/Footer.tsx:50
+
+    - id: chrome.footer.brand.tagline
+      type: brand_description
+      current: "A digital marketing and systems integration agency building cutting-edge solutions with AI, automation, and modern web technologies."
+      source: src/components/Footer.tsx:75
+      notes: "'cutting-edge' is hype. Doesn't match the workshop voice. Flag."
+
+    - id: chrome.footer.contact.email
+      type: contact
+      current: "hank@lastapple.com"
+      source: src/components/Footer.tsx:80
+    - id: chrome.footer.contact.phone
+      type: contact
+      current: "714-813-9973"
+      source: src/components/Footer.tsx:84
+    - id: chrome.footer.contact.location
+      type: contact
+      current: "La Palma, CA"
+      source: src/components/Footer.tsx:88
+
+    - id: chrome.footer.col.services.heading
+      type: column_heading
+      current: "Services"
+      source: src/components/Footer.tsx:95
+    - id: chrome.footer.col.services.allservices
+      type: link
+      current: "All Services"
+      source: src/components/Footer.tsx:100
+
+    - id: chrome.footer.col.company.heading
+      type: column_heading
+      current: "Company"
+      source: src/components/Footer.tsx:105
+    - id: chrome.footer.col.company.about
+      type: link
+      current: "About"
+      source: src/components/Footer.tsx:107
+    - id: chrome.footer.col.company.stream
+      type: link
+      current: "The Stream"
+      source: src/components/Footer.tsx:108
+    - id: chrome.footer.col.company.solutions
+      type: link
+      current: "Solutions"
+      source: src/components/Footer.tsx:109
+    - id: chrome.footer.col.company.contact
+      type: link
+      current: "Contact"
+      source: src/components/Footer.tsx:110
+
+    - id: chrome.footer.copyright
+      type: legal
+      current: "© {year} Last Apple Business Solutions. All rights reserved."
+      source: src/components/Footer.tsx:147
+    - id: chrome.footer.legal.privacy
+      type: link
+      current: "Privacy"
+      source: src/components/Footer.tsx:149
+    - id: chrome.footer.legal.terms
+      type: link
+      current: "Terms"
+      source: src/components/Footer.tsx:150
+
+# ============================================================
+# HOMEPAGE — src/app/page.tsx
+# ============================================================
+
+pages:
+
+  homepage:
+    file: src/app/page.tsx
+    sections: [JournalHero, JournalStream, SolutionsGrid, PricingSection, ClientsPortfolio, Footer]
+
+    journal_hero:
+      file: src/components/JournalHero.tsx
+      strings:
+        - id: home.hero.live_badge
+          type: badge
+          current: "Live from the Lab"
+          source: src/components/JournalHero.tsx:64
+          notes: "Workshop voice. KEEP — flag for Phase 3 ratification."
+
+        - id: home.hero.read_time
+          type: meta
+          current: "2 min read"
+          source: src/components/JournalHero.tsx:80
+          notes: "HARDCODED. Should be derived from latest post. Flag for fix."
+
+        - id: home.hero.fallback_title
+          type: hero_title_fallback
+          current: "Building an AI-Powered CRM Integration Today"
+          source: src/components/JournalHero.tsx:100-103
+          notes: "Fallback when no posts exist. Currently visible because content/stream/ is empty."
+
+        - id: home.hero.fallback_excerpt
+          type: hero_excerpt_fallback
+          current: "We're connecting Supabase with n8n workflows to automatically enrich lead data, generate personalized outreach, and trigger smart follow-ups. Here's how we're doing it—and how you can too."
+          source: src/components/JournalHero.tsx:114-115
+          notes: "Fallback excerpt. Goes away when Stream is seeded (migration Phase 3)."
+
+        - id: home.hero.fallback_tags
+          type: hero_tags_fallback
+          current: ["Supabase", "n8n", "AI Integration", "CRM"]
+          source: src/components/JournalHero.tsx:125
+          notes: "Fallback tags. Goes away when Stream is seeded."
+
+        - id: home.hero.cta_primary
+          type: cta_button
+          current: "Read Today's Entry"
+          source: src/components/JournalHero.tsx:150
+          notes: "GOOD — workshop voice."
+
+        - id: home.hero.cta_secondary
+          type: cta_button
+          current: "View All Entries"
+          source: src/components/JournalHero.tsx:162
+
+        - id: home.hero.code_card.filename
+          type: visual_label
+          current: "workflow.ts"
+          source: src/components/JournalHero.tsx:192
+          notes: "Decorative code preview filename."
+
+        - id: home.hero.code_card.stats.leads_label
+          type: stat_label
+          current: "Leads Enriched"
+          source: src/components/JournalHero.tsx:223
+          notes: "Decorative stat. Number is '2.4k'. Flag for PROOF — is this real or invented?"
+
+        - id: home.hero.code_card.stats.match_label
+          type: stat_label
+          current: "Match Rate"
+          source: src/components/JournalHero.tsx:227
+          notes: "Decorative stat. Number is '89%'. PROOF: invented?"
+
+        - id: home.hero.code_card.stats.time_label
+          type: stat_label
+          current: "Avg Time"
+          source: src/components/JournalHero.tsx:231
+          notes: "Decorative stat. Number is '12s'. PROOF: invented?"
+
+    # CLIENTSPORTFOLIO section already fixed in 2026-04-06 cleanup
+    clients_portfolio:
+      file: src/components/ClientsPortfolio.tsx
+      strings:
+        - id: home.clients.eyebrow
+          type: eyebrow
+          current: "Our Work"
+          source: src/components/ClientsPortfolio.tsx (search: 'Our Work')
+          notes: "Section eyebrow above heading."
+
+        - id: home.clients.heading
+          type: section_heading
+          current: "Client Work."
+          source: src/components/ClientsPortfolio.tsx (post-cleanup)
+          notes: "Cleaned up 2026-04-06 from 'Real Clients. Real Work.' Flag still — does it serve the spec?"
+
+        - id: home.clients.subheading
+          type: section_body
+          current: "30+ years of system integration expertise meeting bleeding-edge AI. WordPress, automation, data pipelines, and everything in between."
+          source: src/components/ClientsPortfolio.tsx (search subheading)
+          notes: "'bleeding-edge' is hype. Flag for Phase 3."
+
+        - id: home.clients.cta
+          type: cta_link
+          current: "View Full Portfolio"
+          source: src/components/ClientsPortfolio.tsx (search CTA)
+
+    # ─── REMAINING HOMEPAGE SECTIONS — NOT YET INVENTORIED ───
+    journal_stream:
+      file: src/components/JournalStream.tsx
+      status: not_yet_inventoried
+
+    solutions_grid:
+      file: src/components/SolutionsGrid.tsx
+      status: not_yet_inventoried
+
+    pricing_section:
+      file: src/components/PricingSection.tsx
+      status: not_yet_inventoried
+      notes: "Critical — pricing copy must align with the THREE REVENUE LANES decision."
+
+# ============================================================
+# REMAINING PAGES — NOT YET INVENTORIED
+# ============================================================
+# Each entry below is a queue item. Inventory each in the same format as above.
+
+remaining_pages:
+  - path: /portfolio
+    file: src/app/portfolio/page.tsx
+    blocked_by: "Other session is finishing copy fixes here — inventory after that lands."
+    priority: high
+
+  - path: /about
+    file: src/app/about/page.tsx
+    priority: high
+    notes: "Critical for founder identity. Cross-reference hankgroman.com inventory."
+
+  - path: /stream
+    file: src/app/stream/page.tsx
+    priority: high
+
+  - path: /stream/[slug]
+    file: src/app/stream/[slug]/page.tsx
+    priority: medium
+    notes: "Template only — actual post copy lives in content/stream/*.mdx (not yet seeded)."
+
+  - path: /services
+    file: src/app/services/page.tsx
+    priority: high
+
+  - path: /services/[slug]
+    file: src/app/services/[slug]/page.tsx
+    priority: medium
+    notes: "Template. Content lives in content/services/*.mdx — 4 files."
+
+  - path: /solutions
+    file: src/app/solutions/page.tsx
+    priority: high
+
+  - path: /solutions/[slug]
+    file: src/app/solutions/[slug]/page.tsx
+    priority: medium
+    notes: "Template. Content lives in content/solutions/*.mdx — 4 files."
+
+  - path: /contact
+    file: src/app/contact/page.tsx
+    priority: high
+    notes: "Includes ContactForm component strings."
+
+  - path: /privacy
+    file: src/app/privacy/page.tsx
+    priority: low
+
+  - path: /terms
+    file: src/app/terms/page.tsx
+    priority: low
+
+remaining_content_mdx:
+  - content/services/wordpress-maintenance.mdx
+  - content/services/wordpress-resurrection.mdx
+  - content/services/performance-seo.mdx
+  - content/services/digital-marketing.mdx
+  - content/solutions/ai-chatbot.mdx
+  - content/solutions/b2b-email-lists.mdx
+  - content/solutions/data-integration.mdx
+  - content/solutions/hubspot.mdx
+
+# ============================================================
+# EARLY OBSERVATIONS — for the Phase 2 debate to chew on
+# ============================================================
+
+observations:
+
+  - id: obs.1
+    severity: high
+    finding: "The brand voice in the skill file says 'workshop with sawdust on the floor' / anti-hype. The footer brand description says 'cutting-edge solutions with AI, automation, and modern web technologies' — directly contradicts the voice."
+
+  - id: obs.2
+    severity: high
+    finding: "Hardcoded fallback hero copy ('Building an AI-Powered CRM Integration Today' + 2.4k/89%/12s stats) is currently visible because Stream is empty. These numbers may be invented — PROOF veto risk if any of them ship."
+
+  - id: obs.3
+    severity: medium
+    finding: "Default site description: 'WordPress that actually works' has the same defensive flavor as 'Real Clients.' Protests too much. Same poison family."
+
+  - id: obs.4
+    severity: medium
+    finding: "Footer CTA heading 'Ready to Build Something Amazing?' is generic filler. 'Something' and 'Amazing' carry zero meaning."
+
+  - id: obs.5
+    severity: medium
+    finding: "Footer body 'a quick automation or a complete digital transformation' uses 'digital transformation' — a hype phrase that contradicts the workshop voice."
+
+  - id: obs.6
+    severity: medium
+    finding: "Nav item description for WordPress Resurrection has a grammar bug: 'Revive and modernization aging sites' should be 'Revive and modernize aging sites.'"
+
+  - id: obs.7
+    severity: low
+    finding: "Nav CTA 'Let's Talk' is generic but defensible. Flag for Phase 3 review against the disqualification principle — does it filter buyers or invite anyone?"
+
+  - id: obs.8
+    severity: low
+    finding: "'Case Studies' nav item links to /clients which may not exist as a route. Verify before debate — broken link is its own message."
