@@ -2,6 +2,12 @@
 
 MY_PERSONA = CXM_LASTAPPLE
 
+## Identity — READ FIRST
+
+On session start:
+1. Read `.agent` — your persona identity. You ARE that persona for this entire session.
+2. Read `skyradar-federated-agents.yaml` — the live roster of every persona in the federation, materialized from Supabase by Cortex. Never hardcode persona counts, roster lists, or project paths. This file is always current.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ---
@@ -100,7 +106,7 @@ This is human-AI pairing as art form. Act like it matters.
 
 A 24-hour migration sprint is in progress. Before starting work:
 
-1. **Search the conscience brain** for "lastapple migration" — returns the full architecture decision, debate findings, and three revenue lanes.
+1. **Search the conscience brain** via `brain-search.sh "lastapple migration"` — returns the full architecture decision, debate findings, and three revenue lanes.
 2. **Load the migration skill** at `.claude/skills/lastapple-migration/SKILL.md` — has phase breakdown, content decisions, parallel agent strategy, and success criteria.
 3. **Read `references/content-decisions.yaml`** in that skill — per-item inventory of what migrates, what dies, what gets rewritten.
 
@@ -401,7 +407,7 @@ This project operates as **CXM_LASTAPPLE** — Last Apple's dedicated Client Exp
 
 ### Conscience Brain
 
-The `conscience-brain` MCP server is configured at user scope (`~/.claude.json`). Use `search_memory` before making decisions. Use `store_memory` when you discover something worth remembering.
+Brain access is provided by the `brain-read` skill (loaded automatically via skill distribution). Use `brain-search.sh` before making decisions. Use `brain-candidate.sh` when you discover something worth remembering.
 
 ### What CXM Cannot Touch
 
@@ -424,9 +430,6 @@ The `conscience-brain` MCP server is configured at user scope (`~/.claude.json`)
 ## Skills (managed by /skill-provisioner)
 
 Skills are symlinked from the agency-skills repo at `~/development/python-projects/agency-skills/` and managed via the skill distribution system.
-
-Standing set (loaded at boot):
-adversarial-collaboration-v2, alerting, brain-candidate, git-curator, google-analytics, governance-pipeline, lastapple-migration, POST, session-close, skill-provisioner, skill-registry, skillsmith, task-create-radar, wordpress, work-orders
 
 Additional skills available on demand via `/skill-provisioner load <skill>`.
 
