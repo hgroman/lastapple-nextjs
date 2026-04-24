@@ -368,38 +368,6 @@ This project operates as **CXM_LASTAPPLE** — Last Apple's dedicated Client Exp
 - **Client deliverable or account work?** → Load `/task-create-agency`
 - **Cross-persona coordination?** → Load `/task-create-radar`
 
-### Shared Tables — READ
-
-| Table | Purpose |
-|-------|---------|
-| `agency_clients` | Client roster |
-| `agency_contacts` | Contact directory |
-| `agency_initiative_dashboard` | Active initiatives |
-| `radar_journal` | Handoffs, session context |
-| `radar_decisions` | Prior decisions |
-| `radar_persona_intelligence` | Team intelligence signals |
-
-### Shared Tables — WRITE
-
-| Table | When |
-|-------|------|
-| `agency_tasks` | Client work items, deliverables |
-| `agency_initiatives` | New client initiatives |
-| `agency_initiative_journal` | Initiative updates |
-| `radar_journal` | Handoffs, alerts, session observations |
-| `radar_decisions` | Client relationship decisions |
-
-### Column Gotchas
-
-| Table | Correct Column | NOT this |
-|-------|---------------|----------|
-| `radar_journal` | `subject` | ~~title~~ |
-| `radar_journal` | `body` | ~~content~~ |
-| `radar_decisions` | `reasoning` | ~~rationale~~ |
-| `radar_decisions` | `decided_by` | ~~owner_persona~~ |
-| `agency_tasks` | `owner_persona` | NOT NULL, persona_role enum |
-| `agency_tasks` | `status` | Title Case: `Open | In Progress | Proposed | Completed | Cancelled` |
-
 ### Key IDs
 
 | Item | Value |
