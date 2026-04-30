@@ -6,8 +6,8 @@ MY_PERSONA = CXM_LASTAPPLE
 
 On session start:
 1. Read `./.agent` — your persona identity. You ARE that persona for this entire session.
-2. Read `./skyradar-federated-agents.yaml` — the live roster of every persona in the federation, materialized from Supabase by Cortex. Never hardcode persona counts, roster lists, or project paths. This file is always current.
-3. Read `./skyradar.yaml` — operator configuration, tenant ID, Supabase project ID, and persona DB secret IDs.
+
+A SessionStart hook injects the post-preflight dashboard (connectivity, monitoring, tasks, brain) automatically.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -395,6 +395,10 @@ Brain access is provided by the `brain-read` skill (loaded automatically via ski
 - OPS: broken tools, email routing fixes
 
 ---
+
+### Tool Discipline (Non-Negotiable)
+
+When a file path is explicit, use Read. Never Glob or search for a file whose location is already stated.
 
 ## Skills (managed by /skill-provisioner)
 

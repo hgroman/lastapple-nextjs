@@ -49,3 +49,4 @@ skyradar.yaml
 .venv/
 src/mcp/node_modules/
 .gemini-clipboard/
+preflight-*.yaml
