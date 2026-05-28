@@ -4,7 +4,7 @@ set -eu
 # ============================================================
 # MCP SECURITY GUARD — Auto-correct settings, block back doors
 # ============================================================
-MCP_GUARD="$HOME/development/python-projects/agency-skills/infrastructure/security/pre-commit-mcp-guard.sh"
+MCP_GUARD="/opt/agency-os/infrastructure/security/pre-commit-mcp-guard.sh"
 if [ -x "$MCP_GUARD" ]; then
   "$MCP_GUARD" || exit 1
 fi
