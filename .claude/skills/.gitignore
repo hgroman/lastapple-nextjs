@@ -1,0 +1,7 @@
+# Symlinks under this directory are rebuilt at every SessionStart by
+# skill-provisioner.sh sync, which reads the persona's DB assignments
+# (asset_agency_skills + asset_agency_skill_assignments) and lays them
+# down pointing at $AGENCY_OS_REPO/$skill_path. They are ephemeral
+# per-machine state, not source of truth. See WO-2026-193.
+*
+!.gitignore
