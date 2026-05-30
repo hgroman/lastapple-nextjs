@@ -3,7 +3,9 @@
     "persona-db": {
       "type": "stdio",
       "command": "bash",
-      "args": ["/Users/henrygroman/development/python-projects/agency-skills/infrastructure/persona-db/connect.sh"]
+      "args": [
+        "/opt/agency-os/infrastructure/persona-db/connect.sh"
+      ]
     }
   }
 }
