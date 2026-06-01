@@ -402,7 +402,7 @@ When a file path is explicit, use Read. Never Glob or search for a file whose lo
 
 ## Skills (managed by /skill-provisioner)
 
-Skills are symlinked from the agency-skills repo at `~/development/python-projects/agency-skills/` and managed via the skill distribution system.
+Skills are symlinked from the agency-skills repo at `/opt/agency-os/` and managed via the skill distribution system.
 
 Additional skills available on demand via `/skill-provisioner load <skill>`.
 
