@@ -50,3 +50,7 @@ skyradar.yaml
 src/mcp/node_modules/
 .gemini-clipboard/
 preflight-*.yaml
+
+# Python virtual environment (zoom skill scaffold, OPS 2026-06-18)
+venv/
+.venv/
