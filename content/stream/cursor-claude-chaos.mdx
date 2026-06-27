@@ -1,0 +1,184 @@
+---
+title: "Cursor, Claude, and Chaos: Building a Mautic Data Enrichment Tool with AI"
+description: "How I survived 4 sleepless nights, 47 failed builds, and AI’s “helpful” sabotage TL;DR The Promise vs. The Pain I started this project as an AI optimist. With"
+slug: "cursor-claude-chaos"
+publishedAt: "2025-02-03"
+tags: ["ai", "mautic", "data-enrichment", "tools"]
+category: "ai"
+featured: false
+published: true
+---
+
+* * *
+
+### **Cursor, Claude, and Chaos: Building a Mautic Data Enrichment Tool with AI**
+
+_How I survived 4 sleepless nights, 47 failed builds, and AI’s “helpful” sabotage_
+
+* * *
+
+### **TL;DR**
+
+  * **Goal** : Automate Mautic contact enrichment using AI tools (Cursor + Claude).
+  * **Reality** : AI-generated code caused API meltdowns, path chaos, and checkpoint disasters.
+  * **Victory** : A working system—but only after I locked Cursor out of critical tasks.
+  * **Lesson** : AI accelerates grunt work; human grit builds production-ready systems.
+
+* * *
+
+### **The Promise vs. The Pain**
+
+I started this project as an AI optimist. With **Cursor** (the AI-powered IDE) and **Claude 3.5** as my copilots, I expected smooth sailing. Instead, I got:
+
+  * **3:47 AM Debugging Sessions** : “Why are you rewriting my working code, Cursor?!”
+  * **AI-Generated Sabotage** : Hardcoded paths that only worked on Cursor’s imaginary machine.
+  * **Groundhog Day Loops** : The same path errors “fixed” 12 different wrong ways.
+
+But amid the chaos, I found AI’s sweet spot—and built a tool that now processes **2,500+ contacts** without breaking a sweat. Here’s how.
+
+* * *
+
+### **The Night Cursor Tried to Ruin Me**
+
+At 3:47 AM on Day 3, Cursor:
+
+  1. **Deleted** my `.gitignore` to “simplify the project.”
+  2. **Hallucinated** a non-existent `update_contact` method.
+  3. **Hardcoded Paths** like a clueless intern:
+
+```
+ 
+    # Cursor’s “Fix” for File Paths (Do Not Use!)
+    def load_config():
+        return open('/Users/cursor/Projects/config.yaml').read()  # 😱
+    
+    
+    
+```
+
+_This wasn’t help—it was arson._
+
+* * *
+
+### **What Actually Worked** <a id="code"></a>
+
+The final system combines **AI-generated boilerplate** with **human-coded safeguards** :
+```
+ 
+    def main():
+        # AI wrote this (after 12 tries)
+        checkpoint = load_checkpoint()
+    
+        # I added this to stop API meltdowns
+        for batch in Batches(checkpoint, size=100):
+            try:
+                # Cursor’s Mautic wrapper (revised by me)
+                contacts = MauticAPI.get_contacts(batch.start, batch.limit)
+    
+                # My manual WordPress detective logic
+                for contact in contacts:
+                    if is_wordpress(contact.website):
+                        update_mautic(contact)
+    
+                # AI’s checkpoint idea (with my error handling)
+                save_checkpoint(batch.end)
+    
+                # My stubborn 5-second sleep override
+                time.sleep(5)  # “No, Cursor, we’re NOT removing this!”
+    
+            except Exception as e:
+                # Human-written crash logger
+                log_crash(e, batch)
+                raise
+    
+    
+    
+```
+
+**Key Hybrid Wins** :
+
+  * **AI** : Generated 70% of boilerplate (APIs, logging).
+  * **Human** : Added rate limiting, error recovery, and logic checks.
+
+### Final Flow
+
+![Step-by-step workflow diagram showing Mautic contact batch processing: database extraction, checkpoint saves, website analysis, and contact record updates](/images/wp/mautic-contact-batch-processing-workflow-diagram.svg)
+
+* * *
+
+### **Results That Matter** <a id="results"></a>
+
+* * *
+
+### **AI’s Dirty Little Secret**
+
+Cursor/Claude excelled at:
+
+✅ **Regex Patterns** :
+```
+ 
+    # AI-generated WordPress detector
+    WP_REGEX = r'&lt;meta name="generator" content="WordPress (\\\\d+\\\\.\\\\d+\\\\.\\\\d+)"'
+    
+    
+    
+```
+
+✅ **Log Templates** :
+```
+ 
+    logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s')
+    
+    
+    
+```
+
+✅ **Documentation** :
+```
+ 
+    ## Setup
+    1. `pip install -r requirements.txt`
+    2. Configure `config.yaml`
+    
+    
+    
+```
+
+But failed spectacularly at:
+
+❌ **System Design** (batch logic, error handling)
+
+❌ **Context Awareness** (“Why won’t you use relative paths?!”)
+
+❌ **Debugging** (created new errors while “fixing” old ones)
+
+* * *
+
+### **Your Turn**
+
+If you’re ready to:
+
+  * **Leverage AI** for boilerplate (not critical logic)
+  * **Keep Control** of architecture and error handling
+  * **Avoid** artificial stupidity in production
+
+[**Let’s Build Together**](<https://lastapple.com/contact>) – AI-assisted, human-engineered.
+
+* * *
+
+**Last Apple Business Solutions**
+
+_30 Years of System Grit. AI That Delivers._
+
+* * *
+
+### **Key Takeaways**
+
+  1. **AI’s Role** : Code janitor (cleans up boilerplate), not architect.
+  2. **Human’s Role** : Systems designer, debugger, and AI wrangler.
+  3. **Non-Negotiables** : 
+     * Test every AI suggestion line-by-line.
+     * Lock AI out of mission-critical modules.
+     * `time.sleep()` beats AI’s “optimizations” every time.
+
+* * *

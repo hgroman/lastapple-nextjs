@@ -5,10 +5,10 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   title: 'About | Last Apple Business Solutions',
-  description: '30+ years of system integration expertise. WordPress maintenance and AI-powered business solutions from La Palma, CA.',
+  description: '30+ years of system integration. One operator. 17 AI agents. WordPress maintenance and AI services from La Palma, CA.',
   openGraph: {
     title: 'About | Last Apple Business Solutions',
-    description: '30+ years of system integration expertise.',
+    description: '30+ years of system integration meets a federated AI operations team.',
     type: 'website',
   },
 };
@@ -16,23 +16,23 @@ export const metadata: Metadata = {
 const values = [
   {
     icon: Lightbulb,
-    title: 'Clarity Over Complexity',
-    description: 'We cut through the noise. No jargon, no overengineering—just solutions that work.',
+    title: 'Disqualify Early',
+    description: 'If this is not the right fit, we say so on the first call. Bad-fit engagements waste your money and our time.',
   },
   {
     icon: Code,
-    title: 'Technology That Serves',
-    description: 'Technology should make your life easier, not harder. We build tools you actually want to use.',
+    title: 'The Work Is the Proof',
+    description: 'No case studies stuffed with invented metrics. The Stream documents the actual work. Read it before you hire us.',
   },
   {
     icon: Users,
-    title: 'Partnership, Not Vendorship',
-    description: 'We succeed when you succeed. Every recommendation is made with your long-term interest in mind.',
+    title: 'Operator, Not Account Manager',
+    description: 'You talk to Hank. The person doing the work is the person on the call. No layer of project managers translating.',
   },
   {
     icon: Briefcase,
-    title: 'Experience You Can Trust',
-    description: 'Three decades in the trenches. Contact centers, healthcare, payments—we\'ve seen it all.',
+    title: '30 Years of Skepticism',
+    description: 'Three decades in contact centers, healthcare, and payments — environments where uptime is not negotiable. That discipline shows up in the work.',
   },
 ];
 
@@ -45,7 +45,7 @@ export default function AboutPage() {
           About Last Apple
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Helping businesses work smarter with technology since 1994.
+          A workshop. One operator with 30+ years of system integration. 17 AI agents doing the work that used to take a team.
         </p>
       </header>
 
@@ -55,20 +55,25 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold mb-6">The Story</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              Last Apple Business Solutions was founded by Hank Groman, a technologist with
-              over 30 years of experience in system integration across contact centers,
-              healthcare, and payment processing industries.
+              Last Apple is not a marketing agency that bolted on AI. It is a systems integrator
+              who now runs a federated team of 17 AI agents alongside him. The difference matters.
             </p>
             <p>
-              After decades of building enterprise-scale solutions for large organizations,
-              Hank recognized that small and mid-sized businesses were being left behind in
-              the technology revolution. They needed the same level of expertise but couldn&apos;t
-              afford dedicated IT departments or expensive consultants.
+              Hank Groman spent three decades building integrations for contact centers, healthcare,
+              and payment processing — environments where data loss, downtime, and silent failures
+              have consequences. That background shapes how the work gets done here: every change is
+              logged, every claim is verifiable, every report is reproducible.
             </p>
             <p>
-              Today, Last Apple bridges that gap. We bring enterprise-grade thinking to
-              businesses of all sizes—whether that&apos;s keeping your WordPress site running
-              smoothly or implementing AI solutions that transform how you work.
+              The AI layer is what makes the price point work. A federated team of Claude-driven
+              agents handles the repeatable parts — security audits, content drafting, GA4 anomaly
+              detection, redirect mapping, indexing API submissions. Hank handles the judgment
+              calls. Together, the workshop ships work that previously required a five-person team.
+            </p>
+            <p>
+              The work is documented in <Link href="/stream" className="text-primary hover:text-primary/80 underline underline-offset-4">The Stream</Link> —
+              daily work logs, real failures, real fixes, the actual craft. If you want to know what
+              hiring this workshop looks like, read The Stream before you book a call.
             </p>
           </div>
         </div>
@@ -82,10 +87,11 @@ export default function AboutPage() {
           </div>
           <div className="flex-1 text-center md:text-left">
             <h3 className="text-2xl font-bold mb-2">Hank Groman</h3>
-            <p className="text-primary mb-4">Founder & Principal Consultant</p>
+            <p className="text-primary mb-4">Owner &amp; Operator</p>
             <p className="text-muted-foreground">
-              30+ years in system integration. Specializing in contact center technology,
-              healthcare systems, and payment processing. Based in La Palma, California.
+              30+ years in system integration — contact centers, healthcare, payment processing.
+              Now running a 17-agent AI operations team out of a workshop in La Palma, California.
+              Reachable by phone (714-813-9973), email, or a 30-minute scoping call.
             </p>
             <div className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
               <Link
@@ -102,6 +108,12 @@ export default function AboutPage() {
               >
                 hank@lastapple.com
               </Link>
+              <Link
+                href="tel:+17148139973"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                714-813-9973
+              </Link>
             </div>
           </div>
         </div>
@@ -109,7 +121,7 @@ export default function AboutPage() {
 
       {/* Values Section */}
       <section className="mb-20">
-        <h2 className="text-2xl font-semibold mb-8 text-center">What We Believe</h2>
+        <h2 className="text-2xl font-semibold mb-8 text-center">How This Workshop Operates</h2>
         <div className="grid sm:grid-cols-2 gap-6">
           {values.map((value) => (
             <div
@@ -127,17 +139,17 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-border text-center">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-          Ready to work together?
+          One conversation. No sales funnel.
         </h2>
         <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-          Whether you need help with WordPress, want to explore AI solutions,
-          or just want to talk technology—I&apos;d love to hear from you.
+          A 30-minute call. We look at your site, your analytics, and what you&apos;re trying to do.
+          If the work makes sense, we scope it. If it doesn&apos;t, we&apos;ll tell you and point you somewhere better.
         </p>
         <Link
           href="/contact"
           className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
         >
-          Get in Touch
+          Book the Call
           <ArrowRight className="h-4 w-4" />
         </Link>
       </section>

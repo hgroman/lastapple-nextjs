@@ -8,20 +8,24 @@ import { ChevronDown } from 'lucide-react';
 
 const services = [
   { title: 'WordPress Maintenance', href: '/services/wordpress-maintenance', description: 'Premium care, security, and optimization' },
-  { title: 'WordPress Resurrection', href: '/services/wordpress-resurrection', description: 'Revive and modernization aging sites' },
-  { title: 'Performance & SEO', href: '/services/performance-seo', description: 'Speed optimization and search rankings' },
-  { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'Content, social, and campaigns' },
+  { title: 'Maintenance Plans & Pricing', href: '/services/maintenance-plans', description: 'Transparent tiers, no surprises' },
+  { title: 'WordPress Performance', href: '/services/wordpress-performance', description: 'Speed optimization and Core Web Vitals' },
+  { title: 'Website Renaissance', href: '/services/website-renaissance', description: 'Rebuild and refresh tired sites' },
+  { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'AI-assisted SEO, content, campaigns' },
 ];
 
 const solutions = [
-  { title: 'AI Chatbots', href: '/solutions/ai-chatbot', description: 'Intelligent customer service' },
-  { title: 'B2B Email Lists', href: '/solutions/b2b-email-lists', description: 'AI-verified contact data' },
+  { title: 'AI Chatbot Solutions', href: '/solutions/ai-chatbot-solutions', description: 'Intelligent customer service' },
+  { title: 'B2B Email List', href: '/solutions/b2b-email-list', description: 'AI-verified contact data' },
   { title: 'Data Integration', href: '/solutions/data-integration', description: 'Connect your systems' },
-  { title: 'HubSpot Setup', href: '/solutions/hubspot', description: 'CRM implementation' },
+  { title: 'HubSpot Integration', href: '/solutions/hubspot-integration', description: 'CRM implementation' },
+  { title: 'Content Creation', href: '/solutions/content-creation', description: 'AI-assisted, human-edited' },
+  { title: 'Social Strategies', href: '/solutions/social-strategies', description: 'Consistent output without a hire' },
+  { title: 'SEO Guide', href: '/solutions/seo-guide', description: 'Practical solopreneur playbook' },
 ];
 
 const clients = [
-  { title: 'Case Studies', href: '/clients', description: 'See our work in action' },
+  { title: 'Portfolio', href: '/portfolio', description: 'See our client work' },
 ];
 
 const simpleNavItems = [

@@ -1,0 +1,352 @@
+[
+  {
+    "path": "/",
+    "sessions": 565,
+    "users": 524,
+    "engaged_sessions": 235,
+    "conversions": 0.0
+  },
+  {
+    "path": "/contact/",
+    "sessions": 81,
+    "users": 81,
+    "engaged_sessions": 12,
+    "conversions": 0.0
+  },
+  {
+    "path": "/from-manual-drudgery-to-ai-driven-efficiency-a-journey-in-data-integration/",
+    "sessions": 69,
+    "users": 69,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/revolutionizing-digital-marketing-the-power-of-ai-in-seo/",
+    "sessions": 69,
+    "users": 69,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai-for-meeting-analysis-task-management/",
+    "sessions": 67,
+    "users": 67,
+    "engaged_sessions": 21,
+    "conversions": 0.0
+  },
+  {
+    "path": "/technical-debt-in-the-age-of-ai-a-journey-from-rigid-systems-to-living-knowledge/",
+    "sessions": 67,
+    "users": 67,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/blog/",
+    "sessions": 62,
+    "users": 57,
+    "engaged_sessions": 3,
+    "conversions": 0.0
+  },
+  {
+    "path": "/wordpress-maintenance/",
+    "sessions": 51,
+    "users": 51,
+    "engaged_sessions": 2,
+    "conversions": 0.0
+  },
+  {
+    "path": "/java-seo-technical-audits-coffee-shops/",
+    "sessions": 45,
+    "users": 33,
+    "engaged_sessions": 13,
+    "conversions": 0.0
+  },
+  {
+    "path": "/privacy/",
+    "sessions": 43,
+    "users": 43,
+    "engaged_sessions": 2,
+    "conversions": 0.0
+  },
+  {
+    "path": "(not set)",
+    "sessions": 37,
+    "users": 100,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/coffee-shop-seo-how-local-businesses-can-brew-better-search-rankings/",
+    "sessions": 35,
+    "users": 35,
+    "engaged_sessions": 10,
+    "conversions": 0.0
+  },
+  {
+    "path": "/services/",
+    "sessions": 35,
+    "users": 35,
+    "engaged_sessions": 4,
+    "conversions": 0.0
+  },
+  {
+    "path": "/cursor-claude-and-chaos-building-a-mautic-data-enrichment-tool-with-ai/",
+    "sessions": 34,
+    "users": 34,
+    "engaged_sessions": 3,
+    "conversions": 0.0
+  },
+  {
+    "path": "/about/",
+    "sessions": 30,
+    "users": 30,
+    "engaged_sessions": 2,
+    "conversions": 0.0
+  },
+  {
+    "path": "/building-a-brain-not-just-another-marketing-tool/",
+    "sessions": 26,
+    "users": 26,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/why-your-company-needs-a-brain-building-an-ai-powered-knowledge-engine/",
+    "sessions": 24,
+    "users": 24,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/from-chaos-to-symphony-when-ai-cognitive-overload-led-to-multi-persona-breakthrough/",
+    "sessions": 21,
+    "users": 21,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/consultation/",
+    "sessions": 20,
+    "users": 20,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/context-anchoring-in-ai-troubleshooting-a-real-world-problem-in-workflow-efficiency/",
+    "sessions": 19,
+    "users": 19,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/orchestrating-the-ai-ensemble-a-five-movement-technical-symphony-of-multi-llm-collaboration/",
+    "sessions": 18,
+    "users": 18,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/partners/",
+    "sessions": 18,
+    "users": 18,
+    "engaged_sessions": 2,
+    "conversions": 0.0
+  },
+  {
+    "path": "/from-sketches-to-systems-four-months-of-transformative-marketing-automation/",
+    "sessions": 17,
+    "users": 17,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/website-renaissance-transforming-digital-presence/",
+    "sessions": 17,
+    "users": 17,
+    "engaged_sessions": 2,
+    "conversions": 0.0
+  },
+  {
+    "path": "/wordpress-resurrection-breathing-new-life-into-aging-websites/",
+    "sessions": 17,
+    "users": 17,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/beyond-the-blueprint-how-multiple-ais-and-one-vision-drove-our-marketing-automation-success/",
+    "sessions": 16,
+    "users": 16,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/the-symphony-of-ai-powered-marketing-automation-gemini-chats-vision-unveiled/",
+    "sessions": 16,
+    "users": 16,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/why-choose-last-apple-pioneering-ai-driven-digital-marketing/",
+    "sessions": 15,
+    "users": 15,
+    "engaged_sessions": 7,
+    "conversions": 0.0
+  },
+  {
+    "path": "/wordpress-performance-optimization-seo-services/",
+    "sessions": 13,
+    "users": 13,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai-powered-chatbot-solutions/",
+    "sessions": 11,
+    "users": 11,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai-powered-content-creation-services-elevate-your-digital-presence/",
+    "sessions": 11,
+    "users": 11,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai/",
+    "sessions": 11,
+    "users": 11,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/augmentive-services/",
+    "sessions": 10,
+    "users": 10,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai-powered-b2b-email-list-services/",
+    "sessions": 8,
+    "users": 8,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/audio-scapes/",
+    "sessions": 8,
+    "users": 8,
+    "engaged_sessions": 5,
+    "conversions": 0.0
+  },
+  {
+    "path": "/seo-guide-for-solopreneurs/",
+    "sessions": 8,
+    "users": 8,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/ai-driven-data-integration-and-process-optimization/",
+    "sessions": 6,
+    "users": 6,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/uncategorized/",
+    "sessions": 6,
+    "users": 6,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "//checkout/",
+    "sessions": 5,
+    "users": 5,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/home-duplicate/",
+    "sessions": 5,
+    "users": 5,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/zoom/",
+    "sessions": 5,
+    "users": 5,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/2024/06/28/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/2024/09/10/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/author/hankgroman/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/schedule-free-seo-report-review/",
+    "sessions": 4,
+    "users": 3,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/terms-use/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/unleash-hubspots-full-potential-with-last-apple/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/wordpress-maintenance-plans/",
+    "sessions": 4,
+    "users": 4,
+    "engaged_sessions": 0,
+    "conversions": 0.0
+  },
+  {
+    "path": "/2025/06/20/",
+    "sessions": 3,
+    "users": 3,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  },
+  {
+    "path": "/elevate-your-social-presence-with-ai-driven-strategies/",
+    "sessions": 3,
+    "users": 3,
+    "engaged_sessions": 1,
+    "conversions": 0.0
+  }
+]

@@ -27,7 +27,13 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/wordpress-resurrection-breathing-new-life-into-aging-websites/:path*',
-        destination: '/services/wordpress-resurrection',
+        destination: '/services/wordpress-maintenance#resurrection',
+        permanent: true,
+      },
+      // Post-merge: standalone resurrection page folded into maintenance#resurrection
+      {
+        source: '/services/wordpress-resurrection',
+        destination: '/services/wordpress-maintenance#resurrection',
         permanent: true,
       },
       {
@@ -83,6 +89,31 @@ const nextConfig: NextConfig = {
       {
         source: '/audio-scapes/:path*',
         destination: '/solutions/audio-scapes',
+        permanent: true,
+      },
+
+      // ============================================================
+      // SLUG ALIGNMENT — old Next-only paths → renamed canonical paths
+      // Added 2026-06-27 (SEO recon WO; destination_gaps fix)
+      // ============================================================
+      {
+        source: '/services/performance-seo',
+        destination: '/services/wordpress-performance',
+        permanent: true,
+      },
+      {
+        source: '/solutions/b2b-email-lists',
+        destination: '/solutions/b2b-email-list',
+        permanent: true,
+      },
+      {
+        source: '/solutions/hubspot',
+        destination: '/solutions/hubspot-integration',
+        permanent: true,
+      },
+      {
+        source: '/solutions/ai-chatbot',
+        destination: '/solutions/ai-chatbot-solutions',
         permanent: true,
       },
 
@@ -256,6 +287,68 @@ const nextConfig: NextConfig = {
       {
         source: '/my-account/:path*',
         destination: '/',
+        permanent: true,
+      },
+
+      // ============================================================
+      // SEO RECON ADDITIONS — 2026-06-27
+      // Orphan WordPress paths surfaced by GSC/GA4 cross-reference
+      // ============================================================
+      {
+        source: '/java/:path*',
+        destination: '/stream/coffee-shop-seo',
+        permanent: true,
+      },
+      {
+        source: '/seo-for-entrepreneurs/:path*',
+        destination: '/solutions/seo-guide',
+        permanent: true,
+      },
+      {
+        source: '/ai/:path*',
+        destination: '/solutions',
+        permanent: true,
+      },
+      {
+        source: '/uncategorized/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      {
+        source: '/home-duplicate/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/author/:path*',
+        destination: '/about',
+        permanent: true,
+      },
+      // WordPress date-based archives (/YYYY/MM/DD/, /YYYY/MM/, /YYYY/)
+      {
+        source: '/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      {
+        source: '/:year(\\d{4})/:month(\\d{2})/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      {
+        source: '/:year(\\d{4})/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      // WordPress category/tag archives — defensive sweeps
+      {
+        source: '/category/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      {
+        source: '/tag/:path*',
+        destination: '/stream',
         permanent: true,
       },
     ];
