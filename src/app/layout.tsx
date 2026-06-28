@@ -57,7 +57,7 @@ const jsonLd = {
       },
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+1-714-813-9973",
+        telephone: "+1-949-529-9017",
         contactType: "customer service",
         email: "hank@lastapple.com",
         areaServed: "US",

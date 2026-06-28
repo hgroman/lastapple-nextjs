@@ -6,7 +6,7 @@ import { ContactForm } from '@/components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contact | Last Apple Business Solutions',
-  description: 'Get in touch with Last Apple Business Solutions. Based in La Palma, CA. Call 714-813-9973 or email hank@lastapple.com.',
+  description: 'Get in touch with Last Apple Business Solutions. Based in La Palma, CA. Call 949-529-9017 or email hank@lastapple.com.',
   openGraph: {
     title: 'Contact | Last Apple Business Solutions',
     description: 'Get in touch with Last Apple Business Solutions.',
@@ -24,8 +24,8 @@ const contactMethods = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '714-813-9973',
-    href: 'tel:+17148139973',
+    value: '949-529-9017',
+    href: 'tel:+19495299017',
   },
   {
     icon: MapPin,

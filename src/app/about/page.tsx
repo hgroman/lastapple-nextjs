@@ -91,7 +91,7 @@ export default function AboutPage() {
             <p className="text-muted-foreground">
               30+ years in system integration — contact centers, healthcare, payment processing.
               Now running a 17-agent AI operations team out of a workshop in La Palma, California.
-              Reachable by phone (714-813-9973), email, or a 30-minute scoping call.
+              Reachable by phone (949-529-9017), email, or a 30-minute scoping call.
             </p>
             <div className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
               <Link
@@ -109,10 +109,10 @@ export default function AboutPage() {
                 hank@lastapple.com
               </Link>
               <Link
-                href="tel:+17148139973"
+                href="tel:+19495299017"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
-                714-813-9973
+                949-529-9017
               </Link>
             </div>
           </div>

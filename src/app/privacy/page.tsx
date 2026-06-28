@@ -104,7 +104,7 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>Email: hank@lastapple.com</li>
-          <li>Phone: 714-813-9973</li>
+          <li>Phone: 949-529-9017</li>
         </ul>
 
         <h2>Changes to This Policy</h2>
