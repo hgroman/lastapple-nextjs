@@ -6,7 +6,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/stream" },
-  title: 'The Stream | Last Apple Business Solutions',
+  title: 'The Stream',
   description: 'Daily work logs, experiments, AI discoveries, and journey documentation from Last Apple.',
   openGraph: {
     title: 'The Stream | Last Apple Business Solutions',

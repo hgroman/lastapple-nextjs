@@ -5,7 +5,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
-  title: 'About | Last Apple Business Solutions',
+  title: 'About',
   description: '30+ years of system integration. One operator. 17 AI agents. WordPress maintenance and AI services from La Palma, CA.',
   openGraph: {
     title: 'About | Last Apple Business Solutions',

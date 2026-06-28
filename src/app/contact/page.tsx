@@ -6,7 +6,7 @@ import { ContactForm } from '@/components/ContactForm';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
-  title: 'Contact | Last Apple Business Solutions',
+  title: 'Contact',
   description: 'Get in touch with Last Apple Business Solutions. Based in La Palma, CA. Call 949-529-9017 or email hank@lastapple.com.',
   openGraph: {
     title: 'Contact | Last Apple Business Solutions',

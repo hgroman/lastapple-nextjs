@@ -6,7 +6,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/solutions" },
-  title: 'Solutions | Last Apple Business Solutions',
+  title: 'Solutions',
   description: 'AI-powered solutions for business automation, data integration, and intelligent workflows.',
   openGraph: {
     title: 'Solutions | Last Apple Business Solutions',

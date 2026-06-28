@@ -3,7 +3,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
-  title: 'Privacy Policy | Last Apple Business Solutions',
+  title: 'Privacy Policy',
   description: 'Privacy policy for Last Apple Business Solutions. Learn how we collect, use, and protect your information.',
 };
 

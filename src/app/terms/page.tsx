@@ -4,7 +4,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/terms" },
-  title: 'Terms of Service | Last Apple Business Solutions',
+  title: 'Terms of Service',
   description: 'Terms of service for Last Apple Business Solutions. Read our terms and conditions for using our services.',
 };
 
