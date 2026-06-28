@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Calendar, ArrowRight, Tag } from 'lucide-react';
+import { Calendar, ArrowRight, Tag, Sparkles } from 'lucide-react';
 import { getStreamPosts } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
@@ -16,13 +16,14 @@ export const metadata: Metadata = {
 
 export default function StreamPage() {
   const posts = getStreamPosts();
+  const [featured, ...rest] = posts;
 
   return (
-    <BaseLayout maxWidth="lg" showGrid>
+    <BaseLayout maxWidth="lg" showGrid orbStrength="vivid">
       {/* Header */}
       <header className="mb-12">
         <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-          The Stream
+          The <span className="gradient-text">Stream</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
           Daily work logs, experiments, AI discoveries, and journey documentation.
@@ -38,8 +39,53 @@ export default function StreamPage() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-6">
-          {posts.map((post) => (
+        <>
+          {/* Featured latest post */}
+          {featured && (
+            <Link
+              href={`/stream/${featured.slug}`}
+              className="group relative block mb-10 rounded-2xl p-[1px] bg-gradient-to-br from-primary/50 via-border to-accent/40 hover:from-primary/70 hover:to-accent/60 transition-all duration-300"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-card/80 backdrop-blur-sm p-8 sm:p-10">
+                <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl" />
+                <div className="relative">
+                  <div className="flex flex-wrap items-center gap-3 mb-5">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Latest
+                    </span>
+                    {featured.category && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                        {featured.category.toUpperCase()}
+                      </span>
+                    )}
+                    <span className="ml-auto flex items-center gap-1.5 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(featured.publishedAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 group-hover:text-primary transition-colors">
+                    {featured.title}
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-6 max-w-3xl">
+                    {featured.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-primary font-medium">
+                    Read the latest
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {/* Rest of the stream */}
+          <div className="grid gap-6">
+          {rest.map((post) => (
             <article
               key={post.slug}
               className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 hover:border-primary/50 transition-all duration-300"
@@ -101,7 +147,8 @@ export default function StreamPage() {
               </div>
             </article>
           ))}
-        </div>
+          </div>
+        </>
       )}
     </BaseLayout>
   );

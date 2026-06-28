@@ -28,11 +28,11 @@ export default function SolutionsPage() {
     <BaseLayout maxWidth="xl" showOrbs>
       {/* Header */}
       <header className="mb-16 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent border border-accent/20 mb-6">
-          <Sparkles className="h-4 w-4" />
-          <span className="text-sm font-medium">AI-Powered Solutions</span>
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent/10 text-accent border border-accent/20 mb-6">
+          <Sparkles className="h-5 w-5" />
+          <span className="text-base font-semibold">AI-Powered Solutions</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
           Transform Your Business
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

@@ -8,6 +8,8 @@ interface BaseLayoutProps {
   className?: string;
   /** Show animated gradient orbs in background */
   showOrbs?: boolean;
+  /** Orb intensity — 'subtle' (default) or 'vivid' for livelier pages like The Stream */
+  orbStrength?: 'subtle' | 'vivid';
   /** Show subtle grid pattern overlay */
   showGrid?: boolean;
   /** Maximum width variant */
@@ -26,9 +28,11 @@ export function BaseLayout({
   children,
   className = '',
   showOrbs = true,
+  orbStrength = 'subtle',
   showGrid = false,
   maxWidth = 'xl',
 }: BaseLayoutProps) {
+  const vivid = orbStrength === 'vivid';
   return (
     <div className="relative min-h-screen pt-32 pb-20 overflow-hidden">
       {/* Background gradient */}
@@ -37,8 +41,11 @@ export function BaseLayout({
       {/* Animated Gradient Orbs */}
       {showOrbs && (
         <>
-          <div className="absolute top-1/4 -left-1/4 w-[800px] h-[800px] rounded-full bg-primary/5 blur-3xl animate-float" />
-          <div className="absolute bottom-0 -right-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-3xl animate-float animation-delay-200" />
+          <div className={`absolute top-1/4 -left-1/4 w-[800px] h-[800px] rounded-full blur-3xl animate-float ${vivid ? 'bg-primary/10' : 'bg-primary/5'}`} />
+          <div className={`absolute bottom-0 -right-1/4 w-[600px] h-[600px] rounded-full blur-3xl animate-float animation-delay-200 ${vivid ? 'bg-accent/10' : 'bg-accent/5'}`} />
+          {vivid && (
+            <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl animate-float animation-delay-400" />
+          )}
         </>
       )}
 

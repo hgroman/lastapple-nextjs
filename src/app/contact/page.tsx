@@ -72,13 +72,13 @@ export default function ContactPage() {
         </p>
       </header>
 
-      <div className="grid lg:grid-cols-2 gap-12">
+      <div className="grid lg:grid-cols-2 gap-8 items-stretch">
         {/* Contact Information */}
-        <div>
+        <div className="flex flex-col p-8 sm:p-10 rounded-2xl bg-card/50 border border-border">
           <h2 className="text-2xl font-semibold mb-8">Contact Information</h2>
 
           {/* Contact Methods */}
-          <div className="space-y-6 mb-12">
+          <div className="space-y-8 flex-1 flex flex-col justify-center">
             {contactMethods.map((method) => (
               <div key={method.label} className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -102,7 +102,7 @@ export default function ContactPage() {
           </div>
 
           {/* Social Links */}
-          <div>
+          <div className="mt-auto pt-8 border-t border-border">
             <h3 className="text-lg font-semibold mb-4">Connect with me</h3>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -122,7 +122,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <div className="p-8 rounded-2xl bg-card/50 border border-border">
+        <div className="p-8 sm:p-10 rounded-2xl bg-card/50 border border-border">
           <h2 className="text-2xl font-semibold mb-6">Send a Message</h2>
           <ContactForm />
         </div>
