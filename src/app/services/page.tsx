@@ -5,6 +5,7 @@ import { getServices } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services" },
   title: 'Services | Last Apple Business Solutions',
   description: 'WordPress maintenance, AI-powered solutions, and system integration services for growing businesses.',
   openGraph: {

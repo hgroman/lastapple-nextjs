@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: 'Terms of Service | Last Apple Business Solutions',
   description: 'Terms of service for Last Apple Business Solutions. Read our terms and conditions for using our services.',
 };

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   keywords: ["WordPress", "AI", "business solutions", "system integration", "digital marketing"],
   metadataBase: new URL("https://lastapple.com"),
   alternates: {
+    canonical: "/",
     types: {
       "application/rss+xml": "/feed.xml",
     },

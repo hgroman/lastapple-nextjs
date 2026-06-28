@@ -5,6 +5,7 @@ import { getStreamPosts } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/stream" },
   title: 'The Stream | Last Apple Business Solutions',
   description: 'Daily work logs, experiments, AI discoveries, and journey documentation from Last Apple.',
   openGraph: {

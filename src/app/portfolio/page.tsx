@@ -3,6 +3,7 @@ import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 import { PortfolioGrid } from '@/components/PortfolioGrid';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/portfolio" },
   title: 'Design Portfolio | Last Apple Business Solutions',
   description: 'WordPress, AI, SaaS, and automation — explore the sites we build and maintain for businesses across industries.',
   openGraph: {

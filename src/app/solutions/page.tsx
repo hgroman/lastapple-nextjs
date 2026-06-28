@@ -5,6 +5,7 @@ import { getSolutions } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/solutions" },
   title: 'Solutions | Last Apple Business Solutions',
   description: 'AI-powered solutions for business automation, data integration, and intelligent workflows.',
   openGraph: {
