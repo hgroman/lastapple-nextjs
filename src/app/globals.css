@@ -61,6 +61,7 @@
   --gradient-primary: linear-gradient(135deg, #a63d3d, #c74a4a);
   --gradient-accent: linear-gradient(135deg, #3d9999, #4db3a8);
   --gradient-warm: linear-gradient(135deg, #a63d3d, #d97832);
+  --gradient-brand: linear-gradient(120deg, #d16b6b 0%, #c74a4a 35%, #4db3a8 100%);
   --gradient-dark: linear-gradient(180deg, #141010, #1c1616);
   --gradient-glow: radial-gradient(ellipse at center, rgba(199, 74, 74, 0.15), transparent 70%);
   --gradient-teal-glow: radial-gradient(ellipse at center, rgba(61, 153, 153, 0.12), transparent 70%);
@@ -389,6 +390,13 @@
 
   .gradient-text-warm {
     background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-brand {
+    background: var(--gradient-brand);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
