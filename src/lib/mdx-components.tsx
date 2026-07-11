@@ -101,10 +101,10 @@ export const mdxComponents = {
 
   // Lists
   ul: (props: ListProps) => (
-    <ul className="my-4 ml-6 list-disc text-muted-foreground space-y-2" {...props} />
+    <ul className="my-4 list-none text-muted-foreground space-y-2" {...props} />
   ),
   ol: (props: ListProps) => (
-    <ol className="my-4 ml-6 list-decimal text-muted-foreground space-y-2" {...props} />
+    <ol className="my-4 list-none text-muted-foreground space-y-2" {...props} />
   ),
   li: (props: ListItemProps) => (
     <li className="leading-relaxed" {...props} />
