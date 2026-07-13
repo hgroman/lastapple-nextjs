@@ -34,9 +34,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: post.title,
       description: post.description,
       type: 'article',
+      url: `/stream/${slug}`,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       tags: post.tags,
+      authors: ['Hank Groman'],
     },
   };
 }
@@ -53,18 +55,50 @@ export default async function StreamPostPage({ params }: PageProps) {
   const wordCount = post.body.split(/\s+/).length;
   const readingTime = `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
 
+  // BlogPosting structured data — makes each Stream entry eligible for article
+  // rich results. publisher links to the Organization node defined in layout.tsx.
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `https://lastapple.com/stream/${slug}#article`,
+    headline: post.title,
+    description: post.description,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: 'Hank Groman',
+      url: 'https://lastapple.com',
+    },
+    publisher: { '@id': 'https://lastapple.com/#organization' },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://lastapple.com/stream/${slug}`,
+    },
+    image: `https://lastapple.com/stream/${slug}/opengraph-image`,
+    url: `https://lastapple.com/stream/${slug}`,
+    ...(post.tags?.length ? { keywords: post.tags.join(', ') } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
+  };
+
   return (
-    <StreamLayout
-      title={post.title}
-      description={post.description}
-      publishedAt={post.publishedAt}
-      updatedAt={post.updatedAt}
-      tags={post.tags}
-      category={post.category}
-      readingTime={readingTime}
-      featuredImage={post.featuredImage}
-    >
-      <MDXRemote source={post.body} components={mdxComponents} options={{ blockJS: false }} />
-    </StreamLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
+      <StreamLayout
+        title={post.title}
+        description={post.description}
+        publishedAt={post.publishedAt}
+        updatedAt={post.updatedAt}
+        tags={post.tags}
+        category={post.category}
+        readingTime={readingTime}
+        featuredImage={post.featuredImage}
+      >
+        <MDXRemote source={post.body} components={mdxComponents} options={{ blockJS: false }} />
+      </StreamLayout>
+    </>
   );
 }
