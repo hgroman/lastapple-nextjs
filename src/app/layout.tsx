@@ -4,9 +4,13 @@ import { Navigation } from "@/components/Navigation";
 import { CursorGlow } from "@/components/CursorGlow";
 import "./globals.css";
 
-// Analytics IDs from environment variables
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+// Analytics IDs from environment variables.
+// trim() is load-bearing: a trailing newline in the Vercel dashboard value lands
+// inside a single-quoted JS string literal below and kills the whole inline script
+// with "SyntaxError: Invalid or unexpected token" — silently, at runtime only, with
+// a green build. That is exactly what happened (2026-01 → 2026-08-02, no analytics).
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim();
 
 export const metadata: Metadata = {
   title: {
@@ -113,31 +117,39 @@ export default function RootLayout({
         {GA_MEASUREMENT_ID && (
           <>
             <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`}
               strategy="afterInteractive"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}');
-              `}
-            </Script>
+                gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)});
+              `,
+              }}
+            />
           </>
         )}
 
         {/* Microsoft Clarity */}
         {CLARITY_PROJECT_ID && (
-          <Script id="microsoft-clarity" strategy="afterInteractive">
-            {`
+          <Script
+            id="microsoft-clarity"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
               (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");
-            `}
-          </Script>
+              })(window, document, "clarity", "script", ${JSON.stringify(CLARITY_PROJECT_ID)});
+            `,
+            }}
+          />
         )}
 
         <CursorGlow />
