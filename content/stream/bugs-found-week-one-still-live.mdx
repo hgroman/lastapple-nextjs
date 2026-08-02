@@ -13,9 +13,9 @@ published: true
 
 ---
 
-*236 hours. 104 sessions. Six personas. One subsystem — the thing that's supposed to
-call my phone when the business breaks. Here's the audit, and the number that killed
-the story I wanted to tell.*
+*31 days. 236 active hours. 104 sessions. Six personas. One subsystem — the thing
+that's supposed to call my phone when the business breaks. Here's the audit, and the
+number that killed the story I wanted to tell.*
 
 ---
 
@@ -25,8 +25,9 @@ I spent July building an alerting system. At the end of it I asked my forensics
 persona a vain question: **could I write a case study about how AI is saving me
 time?**
 
-It went and counted. 104 sessions. 236 active hours — six full work weeks — on one
-subsystem. Then it told me no, and showed me why.
+It went and counted. Over **31 calendar days**: 104 sessions and **236 active hours**
+on one subsystem — the equivalent of nearly six 40-hour weeks of work, crammed into a
+single month. Then it told me no, and showed me why.
 
 The finding wasn't that the AI was slow to find problems. It was the opposite. Every
 significant defect was on the table in the **first week**. Then they sat there.
@@ -93,7 +94,7 @@ I took four days off from alerting in a month.
 | Personas involved | OPS 50, DBA 41, CTO 5, CONSCIENCE 4, FORGE 3, PRISM 1 |
 | Heaviest day | 2026-08-01 — 6 sessions, 21.8 active hours |
 | Heaviest session | 2026-08-01 01:21 OPS — 9.1h, 46 messages from me |
-| Human-role turns | 1,603 (937 of them typed by hand; the rest pasted reports) |
+| Human-role turns | 1,539 deduplicated — **910 typed by hand**, 629 pasted reports |
 
 ---
 
@@ -165,25 +166,30 @@ open for the month.**
 
 ## Act V — The Signature
 
-Then it showed me the thing I'd felt but couldn't prove. My own frustration, by week,
-as a percentage of messages I typed:
+Then it showed me the thing I'd felt but couldn't prove. My own frustration — the
+share of my typed messages containing profanity — across the 31 days:
 
-```
-week 1   19.0%
-week 2   21.4%
-week 3    9.4%
-week 4   24.5%
-week 5   11.4%
-week 6   38.2%   <-- the last week
-```
+| Window | Days | Messages | Heated | Rate |
+|---|---|---|---|---|
+| Jul 3 – Jul 9 | 7 | 168 | 28 | 16.7% |
+| Jul 10 – Jul 16 | 7 | 145 | 34 | 23.4% |
+| Jul 17 – Jul 23 | 7 | 210 | 21 | 10.0% |
+| Jul 24 – Jul 30 | 7 | 189 | 45 | 23.8% |
+| Jul 31 – Aug 2 | **3 (partial)** | 198 | 70 | **35.4%** |
 
-20.7% of my 937 hand-typed messages contained profanity. 46 of 104 sessions had at
-least one.
+Overall: **198 of 910 typed messages — 21.8%.** 42 of the 104 sessions had at least
+one.
 
-**The friction peaked at the end.** That's the tell. If this were a normal hard
-project, the curve runs the other way — you thrash early, then it gets easier. Mine
-got worse, because the same defects kept coming back around and I kept re-learning
-that they were still there.
+That last row is a **3-day window, not a week**, and I'm flagging it rather than
+letting it carry the argument. The clean comparison is the two halves of the month:
+
+> **First half, Jul 3–17: 18.6%. Second half, Jul 18–Aug 2: 23.9%.**
+
+**The friction rose as the project went on.** That's the tell. If this were a normal
+hard project the curve runs the other way — you thrash early, then it gets easier.
+Mine got worse, because the same defects kept coming back around and I kept
+re-learning they were still there. The worst stretch of the month was the end of it,
+which is not what progress looks like.
 
 ---
 
@@ -267,8 +273,18 @@ Every number in this post was measured on 2026-08-02 and can be re-pulled.
 **Session survey** — transcripts under `~/.claude/projects/**/*.jsonl` starting on or
 after 2026-07-01; matched on human-authored text only, excluding tool results, system
 blocks, and skill expansions; threshold 10+ mentions; subagent transcripts excluded.
-Yield: 104 sessions, 236.0 active hours, 1,603 human-role turns, 937 hand-typed, 27
-distinct days, span 2026-07-03 → 2026-08-02.
+Yield: 104 sessions, 236.0 active hours, 27 distinct working days, calendar span
+2026-07-03 → 2026-08-02 (**31 days**). Human-role turns deduplicated across resumed
+and forked transcripts: 1,539 — of which **910 hand-typed** and 629 pasted reports or
+skill expansions. 71 raw turns were exact duplicates and are counted once.
+
+**Frustration windows** — fixed 7-day windows measured from the first typed message,
+not calendar-month buckets. The final window covers 3 days and is labelled as partial
+in the table rather than compared against full weeks. Halves: 18.6% (Jul 3–17) vs
+23.9% (Jul 18–Aug 2).
+
+**"Six 40-hour weeks"** is an effort comparison — 236 active hours ÷ 40 — inside a
+31-day calendar month. It is not a claim about elapsed time.
 
 **Active time** — sum of intervals between consecutive transcript events, each capped
 at 900 seconds. Wall-clock first-to-last across the same set exceeds 1,100 hours and
@@ -302,3 +318,7 @@ numbers operates under one rule: every fact it asserts is one it can re-pull now
 it flags the claim as unverified. It corrected itself twice while producing this post —
 once for quoting a schedule it had carried forward from an earlier session instead of
 measuring it. Both corrections are in the transcript.*
+
+---
+
+*Corrected 2026-08-02: the original version grouped the frustration data into calendar-month buckets and labelled two partial windows as full weeks, and did not deduplicate messages that appeared in resumed transcripts. The windowing and the counts have been rebuilt; the direction of the finding is unchanged, the magnitude is smaller. Details in Receipts.*
