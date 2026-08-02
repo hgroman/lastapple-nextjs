@@ -28,6 +28,7 @@ const GA_COLLECT = /google-analytics\.com\/g\/collect|analytics\.google\.com\/g\
 const CLARITY = /clarity\.ms/;
 
 const requests = [];
+const responses = []; // [status, url] — a request that 400s is NOT a working tag
 const pageErrors = [];
 const consoleErrors = [];
 
@@ -36,6 +37,7 @@ const context = await browser.newContext();
 const page = await context.newPage();
 
 page.on('request', (r) => requests.push(r.url()));
+page.on('response', (r) => responses.push([r.status(), r.url()]));
 page.on('pageerror', (e) => pageErrors.push(String(e)));
 page.on('console', (m) => {
   if (m.type() === 'error') consoleErrors.push(m.text());
@@ -53,16 +55,27 @@ try {
 
 await browser.close();
 
-const gaLoaded = requests.some((u) => u.includes('googletagmanager.com/gtag/js'));
-const gaFired = requests.some((u) => GA_COLLECT.test(u));
-const clarityFired = requests.some((u) => CLARITY.test(u));
+const ok2xx = (re) => responses.some(([s, u]) => re.test(u) && s >= 200 && s < 400);
+
+const gaLoaded = ok2xx(/googletagmanager\.com\/gtag\/js/);
+// GA4 answers a good beacon with 204 No Content.
+const gaFired = ok2xx(GA_COLLECT);
+const clarityOk = ok2xx(CLARITY);
+
+// A SyntaxError from an inline script is the signature of a malformed env value
+// being interpolated into a JS string literal — the exact 2026-01 bug. Treat that
+// as fatal. Unrelated app exceptions are reported but do not fail the gate, or the
+// guard becomes noise and gets ignored.
+const analyticsSyntaxError = [...pageErrors, ...consoleErrors].some((e) =>
+  /SyntaxError/.test(e)
+);
 
 const checks = [
   ['page loaded', navOk],
   ['gtag.js loaded', gaLoaded],
-  ['GA4 /g/collect beacon fired', gaFired],
-  ['Microsoft Clarity loaded', clarityFired],
-  ['no uncaught page exceptions', pageErrors.length === 0],
+  ['GA4 /g/collect beacon accepted (204)', gaFired],
+  ['Microsoft Clarity tag accepted', clarityOk],
+  ['no inline-script SyntaxError', !analyticsSyntaxError],
 ];
 
 console.log(`\nverify-analytics — ${URL}\n`);
@@ -72,11 +85,22 @@ for (const [label, ok] of checks) {
 
 const failed = checks.filter(([, ok]) => !ok);
 
+// Always surface non-2xx analytics responses — a 400 here means the tag is
+// installed but the provider is rejecting the ID.
+const badAnalytics = responses.filter(
+  ([s, u]) => s >= 400 && (GA_COLLECT.test(u) || CLARITY.test(u) || /gtag\/js/.test(u))
+);
+if (badAnalytics.length) {
+  console.log('\n  analytics endpoints returning errors:');
+  for (const [s, u] of badAnalytics) console.log(`    ${s}  ${u.slice(0, 120)}`);
+}
+
+if (pageErrors.length) {
+  console.log('\n  page exceptions (informational unless SyntaxError):');
+  for (const e of pageErrors.slice(0, 5)) console.log(`    ${e}`);
+}
+
 if (failed.length) {
-  if (pageErrors.length) {
-    console.log('\n  page exceptions:');
-    for (const e of pageErrors.slice(0, 5)) console.log(`    ${e}`);
-  }
   if (consoleErrors.length) {
     console.log('\n  console errors:');
     for (const e of consoleErrors.slice(0, 5)) console.log(`    ${e}`);

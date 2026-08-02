@@ -3,6 +3,14 @@ import { getStreamPosts, getServices, getSolutions } from '@/lib/content';
 
 const BASE_URL = 'https://lastapple.com';
 
+// lastModified is emitted ONLY where a real content date exists (stream posts).
+// It used to be `new Date()` on every static/service/solution entry — the build
+// timestamp — which told Google that every page changed on every deploy. A wrong
+// lastmod is worse than none: Google learns to distrust the signal site-wide and
+// spends crawl budget re-fetching pages that did not change. Services and
+// solutions carry no date in frontmatter, and file mtime resets on a fresh clone,
+// so there is no honest value to emit — omit the field instead of inventing one.
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getStreamPosts();
   const services = getServices();
@@ -12,55 +20,46 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${BASE_URL}/stream`,
-      lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/services`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/solutions`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/about`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/portfolio`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/contact`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/privacy`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/terms`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
@@ -77,7 +76,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Service pages
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${BASE_URL}/services/${service.slug}`,
-    lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -85,7 +83,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Solution pages
   const solutionPages: MetadataRoute.Sitemap = solutions.map((solution) => ({
     url: `${BASE_URL}/solutions/${solution.slug}`,
-    lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
