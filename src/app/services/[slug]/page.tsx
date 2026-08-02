@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { getServices, getService } from '@/lib/content';
 import { ServiceLayout } from '@/components/content/layouts/ServiceLayout';
 import { mdxComponents } from '@/lib/mdx-components';
@@ -58,7 +59,7 @@ export default async function ServicePage({ params }: PageProps) {
       heroImage={service.heroImage}
       tierImages={service.tierImages}
     >
-      <MDXRemote source={service.body} components={mdxComponents} options={{ blockJS: false }} />
+      <MDXRemote source={service.body} components={mdxComponents} options={{ blockJS: false, mdxOptions: { remarkPlugins: [remarkGfm] } }} />
     </ServiceLayout>
   );
 }

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { getSolutions, getSolution } from '@/lib/content';
 import { SolutionLayout } from '@/components/content/layouts/SolutionLayout';
 import { mdxComponents } from '@/lib/mdx-components';
@@ -56,7 +57,7 @@ export default async function SolutionPage({ params }: PageProps) {
       caseStudy={solution.caseStudy}
       heroImage={solution.heroImage}
     >
-      <MDXRemote source={solution.body} components={mdxComponents} options={{ blockJS: false }} />
+      <MDXRemote source={solution.body} components={mdxComponents} options={{ blockJS: false, mdxOptions: { remarkPlugins: [remarkGfm] } }} />
     </SolutionLayout>
   );
 }

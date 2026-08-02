@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { getStreamPosts, getStreamPost } from '@/lib/content';
 import { StreamLayout } from '@/components/content/layouts/StreamLayout';
 import { mdxComponents } from '@/lib/mdx-components';
@@ -97,7 +98,7 @@ export default async function StreamPostPage({ params }: PageProps) {
         readingTime={readingTime}
         featuredImage={post.featuredImage}
       >
-        <MDXRemote source={post.body} components={mdxComponents} options={{ blockJS: false }} />
+        <MDXRemote source={post.body} components={mdxComponents} options={{ blockJS: false, mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </StreamLayout>
     </>
   );
