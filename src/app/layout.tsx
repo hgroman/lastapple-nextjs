@@ -68,10 +68,13 @@ const jsonLd = {
         areaServed: "US",
         availableLanguage: "English",
       },
+      // sameAs tells Google which accounts ARE this organization. A dead or personal
+      // profile here actively misinforms the knowledge graph. COMPANY accounts only,
+      // verified against asset_social_media 2026-08-02 (task ea75e32b).
       sameAs: [
-        "https://www.facebook.com/LastAppleConsulting",
-        "https://x.com/lastappledma",
-        "https://www.instagram.com/hank_groman/",
+        "https://www.facebook.com/LastAppleAI",
+        "https://x.com/lastappleai",
+        "https://www.instagram.com/lastappleai/",
         "https://www.youtube.com/@lastappleai",
         "https://linkedin.com/company/lastapple",
       ],

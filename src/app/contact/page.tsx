@@ -36,26 +36,29 @@ const contactMethods = [
   },
 ];
 
+// COMPANY accounts only — verified against asset_social_media 2026-08-02 (task ea75e32b).
+// A business surface never routes a prospect to a personal property. Do not "fix" these
+// from memory or from the Notion directory; asset_social_media is the reconciled truth.
 const socialLinks = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/hankgroman/',
+    href: 'https://linkedin.com/company/lastapple',
   },
   {
     icon: Facebook,
     label: 'Facebook',
-    href: 'https://www.facebook.com/LastAppleConsulting',
+    href: 'https://www.facebook.com/LastAppleAI',
   },
   {
     icon: Instagram,
     label: 'Instagram',
-    href: 'https://www.instagram.com/hjgroman/',
+    href: 'https://www.instagram.com/lastappleai/',
   },
   {
     icon: Youtube,
     label: 'YouTube',
-    href: 'https://www.youtube.com/channel/UC3OPbkyTemkxPwFNvIhHu2g',
+    href: 'https://www.youtube.com/@lastappleai',
   },
 ];
 

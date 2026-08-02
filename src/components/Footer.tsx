@@ -5,10 +5,13 @@ import { ArrowRight, Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Youtube
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Social links from WordPress (PLUGIN-INVENTORY.yaml)
+// COMPANY accounts only — verified against asset_social_media 2026-08-02 (task ea75e32b).
+// These were inherited from WordPress (PLUGIN-INVENTORY.yaml) and had drifted: Facebook
+// pointed at LastAppleConsulting, a page VERIFIED DELETED 2026-07-28, and Instagram pointed
+// at the operator's personal handle. asset_social_media is the reconciled truth.
 const socialLinks = [
-  { name: 'Facebook', href: 'https://www.facebook.com/LastAppleConsulting', icon: Facebook },
-  { name: 'Instagram', href: 'https://www.instagram.com/hank_groman/', icon: Instagram },
+  { name: 'Facebook', href: 'https://www.facebook.com/LastAppleAI', icon: Facebook },
+  { name: 'Instagram', href: 'https://www.instagram.com/lastappleai/', icon: Instagram },
   { name: 'LinkedIn', href: 'https://linkedin.com/company/lastapple', icon: Linkedin },
   { name: 'YouTube', href: 'https://www.youtube.com/@lastappleai', icon: Youtube },
 ];
@@ -128,9 +131,10 @@ export function Footer() {
                 <social.icon className="h-5 w-5" />
               </a>
             ))}
-            {/* X/Twitter - custom SVG since lucide uses old Twitter icon */}
+            {/* X/Twitter - custom SVG since lucide uses old Twitter icon.
+                Was x.com/lastappledma — VERIFIED DEAD (HTTP 404) 2026-07-28. */}
             <a
-              href="https://x.com/lastappledma"
+              href="https://x.com/lastappleai"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg bg-muted/50 hover:bg-primary/20 text-muted-foreground hover:text-primary transition-colors"
