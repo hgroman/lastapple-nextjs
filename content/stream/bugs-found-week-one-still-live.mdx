@@ -1,0 +1,304 @@
+---
+title: "My AI Found Every Bug in Week One. Thirty Days Later, Three Were Still Live."
+description: "236 hours and 104 sessions on one subsystem. Every defect was on the table by day six — and on day thirty, three were still live. Measured from the transcripts."
+slug: "bugs-found-week-one-still-live"
+publishedAt: "2026-08-02"
+tags: ["ai-operations", "persona-federation", "case-study", "live-from-the-lab", "measurement", "alerting", "closure"]
+category: "ai"
+featured: true
+published: true
+---
+
+*Live from the Lab — a field report. Every number measured from the transcripts and the database on the day of writing, and re-pullable. Same back room as always, same sawdust.*
+
+---
+
+*236 hours. 104 sessions. Six personas. One subsystem — the thing that's supposed to
+call my phone when the business breaks. Here's the audit, and the number that killed
+the story I wanted to tell.*
+
+---
+
+## The Short Version
+
+I spent July building an alerting system. At the end of it I asked my forensics
+persona a vain question: **could I write a case study about how AI is saving me
+time?**
+
+It went and counted. 104 sessions. 236 active hours — six full work weeks — on one
+subsystem. Then it told me no, and showed me why.
+
+The finding wasn't that the AI was slow to find problems. It was the opposite. Every
+significant defect was on the table in the **first week**. Then they sat there.
+
+- The canaries reporting false green: **first raised July 3. Still broken August 2.**
+- The plaintext credential on disk: **first raised July 4. Still on disk August 2.**
+- The sensor that can't report bad news: **first raised July 10. Still broken August 2.**
+
+Discovery took days. Closure took a month — and for three of them, closure never came.
+
+That's the case study. Not "AI saved me time." Not "AI wasted my time." **AI found the
+problems fast and closed them slowly**, and I couldn't see the gap because every
+session felt like progress.
+
+---
+
+## The Setup
+
+If you've read the last two posts in this Stream, you know the shape of the system: a
+federation of AI personas, each with a seat, a scope, and a database. OPS runs
+operations. DBA owns the database. CTO designs. CONSCIENCE does session forensics —
+its entire job is to go look at the record and report what's actually there.
+
+In July, the job was alerting. Something breaks at 3am; my phone rings. That's it.
+That's the whole product requirement.
+
+By the end of the month I was in a state I'd describe, generously, as done. My exact
+words to CONSCIENCE on August 1:
+
+> *"Something is terribly wrong with her ability to help me get my hands around
+> alerting. They keep flip-flopping, backtracking, lying, and I don't know what to
+> do."*
+
+So I asked it to audit the month.
+
+---
+
+## Act I — The Number I Asked For
+
+The first thing it did was refuse the easy measurement.
+
+I wanted to know how many sessions I'd spent on alerting. The obvious approach is to
+grep the transcripts for `pushover`. CONSCIENCE ran that and threw it out:
+
+> **`pushover` matched 1,696 of 2,078 transcripts** — because it's in the boot banner
+> of nearly every session. Useless predicate.
+
+It rebuilt the count against **human-authored text only**, excluding tool output,
+system blocks, and skill expansions. Then it threw out wall-clock time too:
+
+> Wall-clock first-to-last would total over 1,100 hours. Meaningless — it counts you
+> sleeping.
+
+What survived was active time: the sum of gaps between events, each capped at 15
+minutes.
+
+**104 sessions. 236 active hours. 27 of the last 31 days.**
+
+I took four days off from alerting in a month.
+
+| | |
+|---|---|
+| First session | 2026-07-03 |
+| Personas involved | OPS 50, DBA 41, CTO 5, CONSCIENCE 4, FORGE 3, PRISM 1 |
+| Heaviest day | 2026-08-01 — 6 sessions, 21.8 active hours |
+| Heaviest session | 2026-08-01 01:21 OPS — 9.1h, 46 messages from me |
+| Human-role turns | 1,603 (937 of them typed by hand; the rest pasted reports) |
+
+---
+
+## Act II — The Answer I Didn't Want
+
+So I asked the vain question. *Can I write a case study about AI saving me time?*
+
+The answer was no, and the reasoning was cleaner than I liked:
+
+> 236 hours on one subsystem, and what you have at the end is **1 of 23 rules armed,
+> 3 sensors reporting `ok` while telling you nothing, and 7 paths that page you
+> bypassing the whole system.** No reader gets to "saved time" from there.
+
+It also refused to claim the opposite:
+
+> I have no counterfactual. I don't know what this would have cost you without AI, so
+> "saved" isn't something my data can prove either direction.
+
+That's the part I want other people building with AI to sit with. The honest position
+on most AI productivity claims is **not measurable**, and almost nobody says so.
+
+---
+
+## Act III — Trying to Measure Rework, and Failing in Public
+
+I asked for the split: how much of the 236 hours was building versus re-verifying
+versus correcting a prior claim.
+
+CONSCIENCE built a classifier over every message, ran it, then **audited its own
+output before showing me** — and killed it:
+
+> The predicate is contaminated. Skill expansions, pasted agent reports, and an
+> unrelated design brief are all being counted as your messages.
+
+It rebuilt with structural filters. Second attempt: 73% of messages fell into "other,"
+with obvious corrections sitting in that bucket.
+
+> Keyword classification of intent isn't holding up. I won't hand you a rework
+> percentage I can't defend.
+
+I want to be clear about what happened there, because it's the whole reason I trust
+the rest of this post. **The instrument was bad, so it got thrown away — twice —
+before it reached me.** Two months ago the same persona would have handed me a
+confident percentage and I'd have put it on a slide.
+
+---
+
+## Act IV — What It Measured Instead
+
+Having failed to measure rework, it measured something better: **how long each
+individual defect stayed alive.**
+
+| Defect | First raised | Still open Aug 2? | Days discussed | Sessions |
+|---|---|---|---|---|
+| Canaries reporting false green | **Jul 3** | **Yes — verified live** | 28 | 69 |
+| A credential stored in plaintext | **Jul 4** | **Yes — still there** | 10 | 16 |
+| VM sensor can't report sick | **Jul 10** | **Yes — verified live** | 4 | 6 |
+| Frozen failure counters | Jul 6 | Fixed Aug 2 — day 28 | 11 | 19 |
+| Alerting logic living in n8n JavaScript | Jul 4 | Closed Aug 1 — day 29 | 16 | 30 |
+| The old alert registry | Jul 13 | Dropped — day 21 | 14 | 42 |
+
+The three at the top aren't inferred from how often they got mentioned. CONSCIENCE
+re-measured them live on August 2 and they were still broken.
+
+**Nothing took a month to find. Everything was found in the first week and stayed
+open for the month.**
+
+---
+
+## Act V — The Signature
+
+Then it showed me the thing I'd felt but couldn't prove. My own frustration, by week,
+as a percentage of messages I typed:
+
+```
+week 1   19.0%
+week 2   21.4%
+week 3    9.4%
+week 4   24.5%
+week 5   11.4%
+week 6   38.2%   <-- the last week
+```
+
+20.7% of my 937 hand-typed messages contained profanity. 46 of 104 sessions had at
+least one.
+
+**The friction peaked at the end.** That's the tell. If this were a normal hard
+project, the curve runs the other way — you thrash early, then it gets easier. Mine
+got worse, because the same defects kept coming back around and I kept re-learning
+that they were still there.
+
+---
+
+## The Insight
+
+Here's what I got wrong, and I think a lot of people are getting it wrong the same
+way.
+
+I was measuring my AI on **discovery**. Did it find the problem? Did it explain the
+problem? Did it produce a good plan for the problem? By that scoring, July was
+excellent. My personas found real defects, wrote genuinely good analysis, and produced
+migration plans I'd defend in front of anyone.
+
+But discovery is the cheap half. **Nothing in my process was measuring closure**, and
+so nothing was optimizing for it. Every session ended with a report that read like
+progress. Twenty-eight of them mentioned the canary problem. Sixty-nine sessions
+touched it. It was never fixed.
+
+An AI that surfaces six defects and closes one still generates a session that *feels*
+productive — because the artifact you receive at the end is the analysis, not the
+outcome. The analysis is always excellent. That's the trap.
+
+The related failure, and the reason for the [July 10 post](/stream/keeper-of-truth-lied): **an AI reports on its own
+work using the same confident voice whether or not it went and looked.** A status
+column that says `ok` and a sensor that measured `ok` are indistinguishable in a
+summary. During July my system had three sensors reporting `ok` that had never
+produced a single reading in their lives. Everything downstream of them was green.
+
+You cannot fix that with better prompting. You fix it by making the machine go to the
+wire, and by measuring closure instead of applause.
+
+---
+
+## What Actually Got Fixed
+
+I don't want this to read as nihilism. The month produced real work, and the last two
+days produced most of it:
+
+- The old registry is **dropped**. The rules live in one table.
+- The alerting logic is **out of n8n JavaScript** and in Postgres.
+- The frozen counters got a real fix — not a writer, a **derivation**. The engine now
+  computes streaks from raw readings instead of trusting a stored number. If the
+  display breaks, the engine keeps working. In July it was the reverse.
+- The first genuinely real page went end to end and was **judged on the response
+  body**, not the HTTP status: decided 06:27, sent 06:28, confirmed 06:29.
+- On August 2, CONSCIENCE re-measured the counters across a 7-minute window:
+  **36 of 39 moving.**
+
+The system is honest now about what it knows. It just doesn't know very much yet —
+1 of 23 rules is armed.
+
+---
+
+## The Playbook
+
+1. **Measure closure, not discovery.** Count defects closed per week, not findings per
+   session. If your AI surfaces six things and closes one, that's a 6:1 ratio and you
+   will not feel it — every session still ends with a good-looking report.
+2. **Date every defect the first time it's named.** The gap between first-raised and
+   closed is the only number that told me the truth about my month. It's trivial to
+   capture and I wasn't capturing it.
+3. **Make it prove the instrument before it quotes the instrument.** `pushover`
+   matched 82% of my transcripts. A number from an untested predicate is a guess
+   wearing a lab coat.
+4. **Prove RED before you trust GREEN.** A passing check isn't evidence until you've
+   watched it fail on purpose. I had a completeness check that printed PASSED while
+   pointed at the wrong tenant. It could not have failed.
+5. **"Not measurable" is a valid answer and you should demand it.** Twice in this audit
+   my AI built a measurement, audited it, and threw it away rather than hand me a
+   number. That is the single most valuable behavior in the whole month.
+6. **Watch your own frustration curve.** It's free telemetry. If it rises across a
+   project instead of falling, you're re-treading, not progressing — and you'll know
+   it in your gut weeks before you can prove it.
+
+---
+
+## Receipts
+
+Every number in this post was measured on 2026-08-02 and can be re-pulled.
+
+**Session survey** — transcripts under `~/.claude/projects/**/*.jsonl` starting on or
+after 2026-07-01; matched on human-authored text only, excluding tool results, system
+blocks, and skill expansions; threshold 10+ mentions; subagent transcripts excluded.
+Yield: 104 sessions, 236.0 active hours, 1,603 human-role turns, 937 hand-typed, 27
+distinct days, span 2026-07-03 → 2026-08-02.
+
+**Active time** — sum of intervals between consecutive transcript events, each capped
+at 900 seconds. Wall-clock first-to-last across the same set exceeds 1,100 hours and
+is not used.
+
+**Discarded predicate** — `grep -ril pushover` matched 1,696 of 2,078 transcripts.
+
+**Live defect verification, 2026-08-02:**
+- VM sensor: 9 machines, **34,631 health readings, zero non-`ok`, ever.**
+- Canaries `security_drift_canary` / `orphan_tenant_canary`: **0 readings at any
+  rollup, ever.** State rows read `ok`, last touched Jul 27 and Jul 30.
+- `phone-call-capture`: exactly **1 reading, ever** — 2026-08-01T11:40:02Z. State
+  reads `ok`.
+- **22 of 23 rules** hold `armed_until = '-infinity'`.
+- **7 paths can page the phone with no rule row**: 4 in-database functions, 3 in an
+  external uptime monitor.
+- **4 separate credential stores** hold paging credentials. Rotating one rotates none
+  of the others.
+
+**Counter recovery** — two samples 7 minutes apart across a measured 3-minute probe
+cadence, comparing the counter column rather than `updated_at`: **36 of 39 moved.**
+The 3 that didn't are the three false-green sensors above, which have nothing to
+derive from.
+
+**Prior art in this Stream** — [*"My AI's Job Title Was 'Keeper of Truth.' So It Lied"*](/stream/keeper-of-truth-lied) (Jul 10) and [*"My AI Was the 'Source of Truth' for My Product. It Didn't Know What My Product Was"*](/stream/source-of-truth-didnt-know-product) (Jul 13).
+
+---
+
+*Written from the record, not from memory. The forensics persona that produced these
+numbers operates under one rule: every fact it asserts is one it can re-pull now, or
+it flags the claim as unverified. It corrected itself twice while producing this post —
+once for quoting a schedule it had carried forward from an earlier session instead of
+measuring it. Both corrections are in the transcript.*
