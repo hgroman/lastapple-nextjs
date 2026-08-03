@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft, Tag, Share2, Bookmark } from 'lucide-react';
 import Link from 'next/link';
+import { formatPostDate } from '@/lib/utils';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { BaseLayout } from './BaseLayout';
@@ -50,12 +51,7 @@ export function StreamLayout({
   relatedPosts,
   children,
 }: StreamLayoutProps) {
-  const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const formattedDate = formatPostDate(publishedAt, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   // Determine which image to use (prefer structured featuredImage)
   const heroImageSrc = featuredImage?.src || image;
@@ -133,7 +129,7 @@ export function StreamLayout({
             </span>
             {updatedAt && (
               <span className="text-xs">
-                Updated: {new Date(updatedAt).toLocaleDateString('en-US')}
+                Updated: {formatPostDate(updatedAt, { year: 'numeric', month: 'numeric', day: 'numeric' })}
               </span>
             )}
           </div>
@@ -231,11 +227,7 @@ export function StreamLayout({
                 className="p-5 rounded-xl bg-card/50 border border-border hover:border-primary/30 hover:bg-card/80 transition-all group"
               >
                 <div className="text-xs text-muted-foreground mb-2">
-                  {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
+                  {formatPostDate(post.publishedAt, { month: 'short', day: 'numeric', year: 'numeric' })}
                 </div>
                 <h4 className="font-medium text-foreground group-hover:text-primary transition-colors mb-2 line-clamp-2">
                   {post.title}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Clock, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { formatPostDate } from '@/lib/utils';
 
 interface JournalHeroProps {
   latestPost?: {
@@ -15,13 +16,20 @@ interface JournalHeroProps {
 }
 
 export function JournalHero({ latestPost }: JournalHeroProps) {
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  // Was new Date() — today's date — rendered during SSR. This page is statically
+  // generated, so the HTML froze the BUILD date while the browser computed the CURRENT
+  // date; they disagreed on every day after a deploy, throwing React hydration error
+  // #418 on every homepage load. The latest post's date is deterministic, identical on
+  // server and client, and says something truer under a "Live from the Lab" banner:
+  // when the lab last shipped, not what day you happen to be reading.
+  const formattedDate = latestPost
+    ? formatPostDate(latestPost.publishedAt, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
 
   return (
     <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">

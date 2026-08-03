@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import type { StreamPost } from '../../content/schema/stream';
+import { formatPostDate } from '@/lib/utils';
 
 interface JournalStreamProps {
   posts: StreamPost[];
@@ -32,17 +33,14 @@ const itemVariants = {
 };
 
 export function JournalStream({ posts }: JournalStreamProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  };
+  // Was relative time ("Today", "Yesterday", "3 days ago") computed from new Date() at
+  // render. That is a live clock inside a STATICALLY GENERATED page: the HTML is frozen
+  // at build time, so the server text and the browser text disagreed (React hydration
+  // error #418 on every homepage load) and the label went stale as soon as the build
+  // aged — a week-old deploy still claimed "Today". Absolute dates are deterministic,
+  // never go stale, and match how every other date on the site already renders.
+  const formatDate = (dateString: string) =>
+    formatPostDate(dateString, { month: 'short', day: 'numeric' });
 
   return (
     <section id="stream" className="relative py-24 overflow-hidden">

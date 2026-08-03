@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { formatPostDate } from '@/lib/utils';
 import { Calendar, ArrowRight, Tag, Sparkles } from 'lucide-react';
 import { getStreamPosts } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
@@ -62,11 +63,7 @@ export default function StreamPage() {
                     )}
                     <span className="ml-auto flex items-center gap-1.5 text-sm text-muted-foreground">
                       <Calendar className="h-4 w-4" />
-                      {new Date(featured.publishedAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
+                      {formatPostDate(featured.publishedAt, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 group-hover:text-primary transition-colors">
@@ -137,11 +134,7 @@ export default function StreamPage() {
                 <div className="flex sm:flex-col items-center sm:items-end gap-4 sm:gap-2">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4" />
-                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
+                    {formatPostDate(post.publishedAt, { month: 'short', day: 'numeric', year: 'numeric' })}
                   </span>
                   <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                 </div>

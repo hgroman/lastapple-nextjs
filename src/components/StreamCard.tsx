@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatPostDate } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { StreamPost } from '../../content/schema/stream';
 
@@ -7,11 +8,7 @@ interface StreamCardProps {
 }
 
 export function StreamCard({ post }: StreamCardProps) {
-  const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const date = formatPostDate(post.publishedAt);
 
   return (
     <Link href={`/stream/${post.slug}`}>
