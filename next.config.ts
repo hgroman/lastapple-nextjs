@@ -291,6 +291,37 @@ const nextConfig: NextConfig = {
       },
 
       // ============================================================
+      // GSC-SURFACED LEGACY 404s — 2026-08-17
+      // Found by live-checking every URL in the GSC "Crawled - currently not
+      // indexed" report rather than trusting the "Not found (404)" bucket, which
+      // only lists what Google has already RE-crawled since the migration. These
+      // three still 404: Google last fetched them while WordPress was serving
+      // 200s, so they are queued to become 404 reports on next crawl.
+      //
+      // /ai-powered-social-media-marketing-services/ was missed by the original
+      // migration audit because it was never archived by the Wayback Machine, so
+      // no URL-reconstruction sweep could have found it. GSC's own crawl history
+      // is the more complete source of legacy URLs.
+      // ============================================================
+      {
+        source: '/ai-powered-social-media-marketing-services/:path*',
+        destination: '/solutions/social-strategies',
+        permanent: true,
+      },
+      // WordPress RSS/comment feeds. No feed is served today, so point
+      // subscribers and crawlers at the content they were following.
+      {
+        source: '/feed/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+      {
+        source: '/comments/feed/:path*',
+        destination: '/stream',
+        permanent: true,
+      },
+
+      // ============================================================
       // WOOCOMMERCE PAGES (redirect to relevant pages)
       // ============================================================
       {
