@@ -45,8 +45,9 @@
  * a regression in either trap fails the build instead of going quiet.
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative, extname, basename } from 'node:path';
+import { execSync } from 'node:child_process';
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const APP_DIR = join(ROOT, 'src/app');
@@ -235,7 +236,38 @@ function selfTest(rules) {
   return failures;
 }
 
+// ── Is the pre-commit guard actually connected? ──────────────────────────────
+
+/**
+ * This check lives here, in the script that ALWAYS runs, because it cannot live
+ * in the hook it is checking on: if the hooks are disconnected, the hook never
+ * fires to report it. On 2026-08-17 this repo was found with .githooks/ tracked
+ * since May but core.hooksPath never set, so the credential guard and MCP guard
+ * had never run on a single commit. Nothing announced it. Now the build does.
+ * Warning only — never fails, and stays quiet in CI where hooks are irrelevant.
+ */
+function warnIfHooksDisconnected() {
+  if (process.env.CI || process.env.VERCEL) return;
+  let hooksPath = '';
+  try {
+    hooksPath = execSync('git config core.hooksPath', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim();
+  } catch {
+    // git config exits non-zero when the key is unset — that IS the finding.
+  }
+  if (!hooksPath) {
+    console.warn(
+      '\n  WARNING: git hooks are NOT installed in this clone.\n' +
+        '  The credential guard, the MCP guard and this link check are not running\n' +
+        '  on commit. Fix with:  sh scripts/install_hooks.sh\n'
+    );
+  }
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────
+
+warnIfHooksDisconnected();
 
 const routes = realRoutes();
 const rules = redirectTable();

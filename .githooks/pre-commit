@@ -23,6 +23,30 @@ if [ -n "$STAGED_SECRETS" ]; then
   echo "Unstage secrets before commit."
   exit 1
 fi
+# ============================================================
+# INTERNAL LINK GUARD — added 2026-08-17
+# A dead href is invisible until Google emails about it months later.
+# /meeting-demo shipped inside an indexed Stream post and sat there; two more
+# dead links were live in the global nav and footer on EVERY page.
+# This runs on the working tree, so a broken link cannot become a commit.
+# The same check also runs as npm prebuild — that is the backstop for anyone
+# whose hooks are not installed, which is how this repo went unguarded for
+# three months. Never use --no-verify; fix the href or add a redirect.
+# ============================================================
+if [ -f scripts/verify-internal-links.mjs ] && command -v node >/dev/null 2>&1; then
+  echo "Checking internal links..."
+  if ! node scripts/verify-internal-links.mjs; then
+    echo ""
+    echo "========================================================"
+    echo "  COMMIT BLOCKED: a link points at a page that does not exist"
+    echo "========================================================"
+    echo ""
+    echo "Fix the href listed above, or add a redirect in next.config.ts"
+    echo "whose destination is a real route."
+    exit 1
+  fi
+fi
+
 if [ -f scripts/check_work_orders.py ]; then
   echo "Running work-order integrity checks..."
   python3 scripts/check_work_orders.py
