@@ -179,7 +179,7 @@ npm run dev    # Preview locally
 
 Previous exports are archived at:
 ```
-~/development/python-projects/lastapple-archive/TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/
+~/development/python-projects/lastapple-archive/TRANSFER-TO-LAUNCHPAD/docs/03-reference/wordpress-exports/   (retired path — lastapple-archive resolves nowhere)
 ├── page/           # 37 page exports (JSON)
 └── post/           # 14 post exports (JSON)
 ```
