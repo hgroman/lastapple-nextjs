@@ -54,3 +54,14 @@ preflight-*.yaml
 # Python virtual environment (zoom skill scaffold, OPS 2026-06-18)
 venv/
 .venv/
+
+# Machine-generated preflight state (2026-08-17)
+# preflight-*.yaml above only covered the dashboard; the requester marker and the
+# mywork JSON are regenerated every boot and showed as untracked noise in every
+# session's git status.
+preflight-*.json
+.preflight-requester-lastseen
+
+# Python bytecode
+__pycache__/
+*.py[cod]
