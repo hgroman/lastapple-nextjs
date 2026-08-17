@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/verify-internal-links.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "verify:links": "node scripts/verify-internal-links.mjs",
     "verify:analytics": "node scripts/verify-analytics.mjs"
   },
   "dependencies": {
