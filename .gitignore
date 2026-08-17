@@ -65,3 +65,11 @@ preflight-*.json
 # Python bytecode
 __pycache__/
 *.py[cod]
+
+# Machine-generated session state — written by preflight-dashboard.sh on EVERY boot.
+# Tracking these leaves every persona tree permanently dirty, which is what makes
+# agency-os-pull refuse its ff-merge and silently freezes a VM on stale shared code.
+.preflight-*
+preflight-mywork.json
+supabase/.temp/
+*.bak-*
