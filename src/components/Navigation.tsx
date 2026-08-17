@@ -420,7 +420,7 @@ export function Navigation() {
                     Solutions
                   </Link>
                   <Link
-                    href="/clients"
+                    href="/portfolio"
                     onClick={() => setMenuOpen(false)}
                     className="text-xl font-medium text-foreground hover:text-primary transition-colors"
                   >

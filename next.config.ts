@@ -267,6 +267,30 @@ const nextConfig: NextConfig = {
       },
 
       // ============================================================
+      // BROKEN INTERNAL LINKS — 2026-08-17
+      // GSC "Not found (404)" report: /meeting-demo was linked from the
+      // ai-meeting-analysis Stream post (inherited verbatim from the WordPress
+      // original). The page never existed on the new site. INTERNAL-LINKS.yaml
+      // planned this mapping during migration; it was never applied.
+      // /clients was linked from the mobile nav ("Client Work") and never existed.
+      // ============================================================
+      {
+        source: '/meeting-demo/:path*',
+        destination: '/contact?type=demo',
+        permanent: true,
+      },
+      {
+        source: '/clients/:path*',
+        destination: '/portfolio',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-chatbot',
+        destination: '/solutions/ai-chatbot-solutions',
+        permanent: true,
+      },
+
+      // ============================================================
       // WOOCOMMERCE PAGES (redirect to relevant pages)
       // ============================================================
       {

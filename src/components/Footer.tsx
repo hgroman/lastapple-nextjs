@@ -98,7 +98,7 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/services/wordpress-maintenance" className="hover:text-foreground transition-colors">WordPress Maintenance</Link></li>
-              <li><Link href="/services/ai-chatbot" className="hover:text-foreground transition-colors">AI Chatbots</Link></li>
+              <li><Link href="/solutions/ai-chatbot-solutions" className="hover:text-foreground transition-colors">AI Chatbots</Link></li>
               <li><Link href="/solutions/data-integration" className="hover:text-foreground transition-colors">Data Integration</Link></li>
               <li><Link href="/services" className="hover:text-foreground transition-colors">All Services</Link></li>
             </ul>
