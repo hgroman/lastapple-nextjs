@@ -72,4 +72,5 @@ __pycache__/
 .preflight-*
 preflight-mywork.json
 supabase/.temp/
-*.bak-*
+.claude/*.bak-*
+CLAUDE.md.bak-*
