@@ -8,6 +8,14 @@
             "command": "/opt/agency-os/src/vpos-cli/ensure-session-registered.sh"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agency-os/src/vpos-cli/classify-if-ready.sh"
+          }
+        ]
       }
     ],
     "PreToolUse": [
