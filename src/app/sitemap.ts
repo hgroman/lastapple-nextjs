@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getStreamPosts, getServices, getSolutions } from '@/lib/content';
+import { getStreamPosts, getServices, getSolutions, getSkiesEntries } from '@/lib/content';
 
 const BASE_URL = 'https://lastapple.com';
 
@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getStreamPosts();
   const services = getServices();
   const solutions = getSolutions();
+  const skies = getSkiesEntries();
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -36,6 +37,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${BASE_URL}/solutions`,
       changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/skies`,
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
@@ -87,5 +93,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...streamPages, ...servicePages, ...solutionPages];
+  // Live-Scored Skies. These carry a real release date, so lastModified is
+  // honest here in a way it is not for services and solutions.
+  //
+  // ONLY the /skies/<slug> pages are listed. The trip maps and 360 spheres
+  // served at /skies/map/* and /skies/pano/* are deliberately absent: they are
+  // noindexed embedded components (71 indexable words against 94KB of script),
+  // and the page that embeds one is the indexable surface. Listing an artifact
+  // here would ask Google to index exactly what the noindex is refusing.
+  const skiesPages: MetadataRoute.Sitemap = skies.map((entry) => ({
+    url: `${BASE_URL}/skies/${entry.slug}`,
+    lastModified: new Date(entry.releaseDate),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...streamPages, ...servicePages, ...solutionPages, ...skiesPages];
 }

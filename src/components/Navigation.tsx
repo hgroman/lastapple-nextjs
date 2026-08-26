@@ -24,8 +24,11 @@ const solutions = [
   { title: 'SEO Guide', href: '/solutions/seo-guide', description: 'Practical solopreneur playbook' },
 ];
 
-const clients = [
+// "Our Work" rather than "Client Work": Live-Scored Skies is a line of business,
+// not a client engagement, and filing it under client work would mis-frame it.
+const ourWork = [
   { title: 'Portfolio', href: '/portfolio', description: 'See our client work' },
+  { title: 'Live-Scored Skies', href: '/skies', description: 'Aerial cinematography, original scoring' },
 ];
 
 const simpleNavItems = [
@@ -162,9 +165,9 @@ function PortfoliosDropdown() {
 
               {/* Client Work Column */}
               <div>
-                <h4 className="mb-3 text-sm font-semibold text-foreground">Client Work</h4>
+                <h4 className="mb-3 text-sm font-semibold text-foreground">Our Work</h4>
                 <ul className="space-y-2">
-                  {clients.map((item) => (
+                  {ourWork.map((item) => (
                     <li key={item.href}>
                       <Link
                         href={item.href}
@@ -425,6 +428,13 @@ export function Navigation() {
                     className="text-xl font-medium text-foreground hover:text-primary transition-colors"
                   >
                     Client Work
+                  </Link>
+                  <Link
+                    href="/skies"
+                    onClick={() => setMenuOpen(false)}
+                    className="text-xl font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    Live-Scored Skies
                   </Link>
                 </div>
               </motion.div>
