@@ -1,9 +1,47 @@
 import type { NextConfig } from "next";
 
+import { SKIES_ARTIFACTS } from "./src/lib/skies-artifacts";
+
 const nextConfig: NextConfig = {
   // Handle trailing slashes - WordPress uses trailing slashes, Next.js doesn't by default
   // This ensures /wordpress-maintenance/ redirects properly
   trailingSlash: false,
+
+  async rewrites() {
+    return SKIES_ARTIFACTS.flatMap(({ path, origin }) => [
+      { source: path, destination: origin },
+      { source: `${path}/:path*`, destination: `${origin}/:path*` },
+    ]);
+  },
+
+  /**
+   * NOTE — there is deliberately NO headers() block adding X-Robots-Tag to the
+   * paths above, and it must not be added back.
+   *
+   * It was tried on 2026-08-26 and it does NOT work: an external rewrite proxies
+   * the upstream response verbatim, so the artifact's own Vercel headers win and
+   * next.config's headers() never applies. Measured — the proxied response comes
+   * back carrying the ORIGIN's `server: Vercel` and `x-vercel-cache`, and no
+   * X-Robots-Tag at all. Config that looks like a guard and enforces nothing is
+   * worse than no guard, because it stops anyone from looking again.
+   *
+   * The noindex has to live in the artifact's own HTML (a <meta name="robots">
+   * in the sky-publish template), which is also the only thing that can protect
+   * the bare *.vercel.app address — measured the same day, both origins serve a
+   * 404 for robots.txt and carry no robots meta and no X-Robots-Tag, so they are
+   * fully indexable today and are unprotected by anything except the fact that
+   * nothing links to them yet. Linking them from /skies removes that accident.
+   *
+   * robots.txt Disallow is NOT the answer either: it blocks the crawl, and a
+   * blocked crawler never reads the noindex, so a linked-but-disallowed URL can
+   * still surface as a bare URL entry. Allow the crawl, serve the noindex.
+   *
+   * DO NOT link an artifact path from a published page until its HTML carries
+   * the noindex. That is not left to memory: each entry above declares
+   * `noindexVerified`, and scripts/verify-internal-links.mjs treats a false one
+   * as NOT a real route — so linking it fails the commit. Flip the flag only
+   * after fetching the artifact and seeing the tag with your own eyes.
+   */
 
   async redirects() {
     return [

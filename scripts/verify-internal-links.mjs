@@ -53,9 +53,10 @@ const ROOT = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const APP_DIR = join(ROOT, 'src/app');
 const CONTENT_DIR = join(ROOT, 'content');
 const CONFIG = join(ROOT, 'next.config.ts');
+const ARTIFACT_REGISTRY = join(ROOT, 'src/lib/skies-artifacts.ts');
 
 // Content collections whose MDX filenames become /<collection>/<slug> routes.
-const COLLECTIONS = ['services', 'solutions', 'stream'];
+const COLLECTIONS = ['services', 'solutions', 'stream', 'skies'];
 
 // Extensions worth scanning for hrefs.
 const SCAN_EXT = new Set(['.mdx', '.md', '.tsx', '.ts', '.json']);
@@ -106,7 +107,52 @@ function realRoutes() {
   // Framework-generated endpoints that are real but have no page.tsx.
   routes.add('/robots.txt');
   routes.add('/sitemap.xml');
+  for (const p of skiesArtifactPaths()) routes.add(p);
   return routes;
+}
+
+/**
+ * Paths served by a REWRITE rather than by a page.tsx or an MDX file.
+ *
+ * The Live-Scored Skies trip maps and 360 panoramas are separate static Vercel
+ * deploys proxied to /skies/map/<slug> and /skies/pano/<slug>. They are real
+ * URLs that return 200, but nothing on disk under src/app or content/ proves
+ * it, so without this they look dead to the checker and a correct link would
+ * fail the commit.
+ *
+ * Read out of SKIES_ARTIFACTS in src/lib/skies-artifacts.ts, which is the single
+ * place a map is registered — next.config.ts builds its rewrites from the same
+ * table, so a path cannot be served without appearing here. Returning an empty
+ * list when the table cannot be found is the safe direction: links then appear
+ * DEAD rather than silently valid, which is the failure direction this whole
+ * script is built around.
+ *
+ * ONLY entries with noindexVerified: true are returned. The artifacts are thin,
+ * JS-rendered pages — 71 indexable words against 94KB of script for the trip
+ * map — and linking one that has not yet been confirmed to carry
+ * <meta name="robots" content="noindex"> would feed that to Google under a
+ * 20-year domain. An unverified artifact therefore reads as a DEAD LINK here
+ * and fails the commit, which is the point: the rule stops depending on whoever
+ * happens to remember it.
+ */
+function skiesArtifactPaths() {
+  let text;
+  try {
+    text = readFileSync(ARTIFACT_REGISTRY, 'utf8');
+  } catch {
+    return [];
+  }
+  const table = text.match(/const SKIES_ARTIFACTS[^=]*=\s*\[([\s\S]*?)\n\];/);
+  if (!table) return [];
+  const paths = [];
+  // Match per ENTRY, not per field — pairing a path with the flag from a
+  // different entry is exactly the kind of off-by-one that reports CLEAN.
+  for (const entry of table[1].matchAll(/\{[^}]*\}/g)) {
+    const path = entry[0].match(/path:\s*'([^']+)'/);
+    const verified = /noindexVerified:\s*true/.test(entry[0]);
+    if (path && verified) paths.push(path[1]);
+  }
+  return paths;
 }
 
 // ── The redirect table, parsed out of next.config.ts ────────────────────────
