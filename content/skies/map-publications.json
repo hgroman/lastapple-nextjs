@@ -1,0 +1,298 @@
+{
+  "exportedAt": "2026-08-26T15:10:03Z",
+  "_generatedBy": "SQL against sky_library \u2014 see handoff/map-publications.sql. Never hand-typed. Three numeric 'drifts' were reported on 2026-08-26; not one was the catalogue, and every one came from a human retyping a rendered figure.",
+  "_populations": "clips = ALL media rows for the trip. mapped = rows carrying GPS, which is what the artifact can plot. These differ and BOTH are correct \u2014 the 2026 trip has 2 rows with no GPS, both video, 0.25 GB, which is the entire explanation for 346-vs-344, 203-vs-201 and 122.1-vs-121.9. Nothing was ever stale.",
+  "publications": [
+    {
+      "slug": "cross-country-2026",
+      "title": "Cross-Country 2026",
+      "tripSlug": "cross-country-2026",
+      "url": "https://skymap-cross-country-2026.vercel.app",
+      "status": "published",
+      "publishedAt": "2026-08-26T14:59:22Z",
+      "mediaAsOf": "2026-06-26T12:58:36Z",
+      "flightCount": 346,
+      "poster": {
+        "src": "/images/skies/cross-country-2026.jpg",
+        "alt": "Satellite map of the 2026 cross-country expedition, aerial clips tracing a continuous line from Utah across Wyoming, Nebraska and Iowa to Pennsylvania"
+      },
+      "stats": [
+        {
+          "label": "clips",
+          "value": 346,
+          "scope": "rows in sky_library.media for this trip",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "video",
+          "value": 203,
+          "scope": "media rows with media_type=video",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "GB",
+          "value": 122.1,
+          "scope": "sum of media.size_mb",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "mapped",
+          "value": 344,
+          "scope": "media rows carrying GPS - what the map plots",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "states",
+          "value": 10,
+          "scope": "distinct media.state, NOT trips.states_visited",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "golden-hour",
+          "value": 52,
+          "scope": "time_of_day in sunrise/sunset/golden",
+          "asOf": "2026-08-26T15:10:03Z"
+        }
+      ]
+    },
+    {
+      "slug": "four-corners-2025",
+      "title": "Four Corners 2025",
+      "tripSlug": "four-corners-2025",
+      "url": "https://skymap-four-corners-2025.vercel.app",
+      "status": "published",
+      "publishedAt": "2026-08-26T14:59:11Z",
+      "mediaAsOf": "2026-08-26T14:11:04Z",
+      "flightCount": 54,
+      "poster": {
+        "src": "/images/skies/four-corners-2025.jpg",
+        "alt": "Satellite map of the Four Corners expedition across the desert Southwest, from Sedona up through the San Juan Mountains, with the Molas Pass sunrise clips marked in orange north of Durango"
+      },
+      "stats": [
+        {
+          "label": "clips",
+          "value": 54,
+          "scope": "rows in sky_library.media for this trip",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "video",
+          "value": 47,
+          "scope": "media rows with media_type=video",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "GB",
+          "value": 33.6,
+          "scope": "sum of media.size_mb",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "mapped",
+          "value": 54,
+          "scope": "media rows carrying GPS - what the map plots",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "states",
+          "value": 4,
+          "scope": "distinct media.state, NOT trips.states_visited",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "golden-hour",
+          "value": 13,
+          "scope": "time_of_day in sunrise/sunset/golden",
+          "asOf": "2026-08-26T15:10:03Z"
+        }
+      ]
+    },
+    {
+      "slug": "cross-country-2025",
+      "title": "Cross-Country 2025",
+      "tripSlug": "cross-country-2025",
+      "url": "https://skymap-cross-country-2025.vercel.app",
+      "status": "published",
+      "publishedAt": "2026-08-26T14:58:59Z",
+      "mediaAsOf": "2026-08-26T14:18:18Z",
+      "flightCount": 166,
+      "poster": {
+        "src": "/images/skies/cross-country-2025.jpg",
+        "alt": "Satellite map framed tight on the Pennsylvania\u2013New York border, where the 2025 cross-country footage concentrates: a dense cluster of aerial clips around Westfield and Genesee in Tioga and Potter counties, with outliers north toward Warsaw, New York"
+      },
+      "stats": [
+        {
+          "label": "clips",
+          "value": 166,
+          "scope": "rows in sky_library.media for this trip",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "video",
+          "value": 107,
+          "scope": "media rows with media_type=video",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "GB",
+          "value": 115.0,
+          "scope": "sum of media.size_mb",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "mapped",
+          "value": 164,
+          "scope": "media rows carrying GPS - what the map plots",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "states",
+          "value": 7,
+          "scope": "distinct media.state, NOT trips.states_visited",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "golden-hour",
+          "value": 12,
+          "scope": "time_of_day in sunrise/sunset/golden",
+          "asOf": "2026-08-26T15:10:03Z"
+        }
+      ]
+    },
+    {
+      "slug": "pano-addison-aug-2026",
+      "title": "Above Addison",
+      "tripSlug": "westfield-aug-2026",
+      "url": "https://skypano-addison-aug-2026.vercel.app",
+      "status": "published",
+      "publishedAt": "2026-08-26T15:10:17Z",
+      "mediaAsOf": "2026-08-24T19:04:35Z",
+      "flightCount": 1,
+      "poster": {
+        "src": "/images/skies/pano-addison-aug-2026.jpg",
+        "alt": "Interactive 360-degree aerial sphere over Addison, New York \u2014 a farm valley of cornfields and treelines under summer cumulus, looking down the Canisteo river valley"
+      },
+      "stats": [
+        {
+          "label": "clips",
+          "value": 38,
+          "scope": "rows in sky_library.media for the parent trip westfield-aug-2026",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "video",
+          "value": 24,
+          "scope": "media rows with media_type=video",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "GB",
+          "value": 13.8,
+          "scope": "sum of media.size_mb",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "mapped",
+          "value": 38,
+          "scope": "media rows carrying GPS",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "states",
+          "value": 2,
+          "scope": "distinct media.state, NOT trips.states_visited",
+          "asOf": "2026-08-26T15:10:03Z"
+        },
+        {
+          "label": "golden-hour",
+          "value": 0,
+          "scope": "time_of_day in sunrise/sunset/golden",
+          "asOf": "2026-08-26T15:10:03Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "_note": "Agency-wide totals for a stat band. READ THE SCOPES: 'media rows' is 1004 and 'media linked to a trip' is 726 \u2014 278 rows are not attached to any trip. An earlier TOM message quoted 726 as the total; that was the linked population mislabelled, the same undeclared-population error as 346-vs-344. Both numbers are true; neither is 'the' number.",
+    "stats": [
+      {
+        "label": "trips catalogued",
+        "value": 16,
+        "scope": "rows in sky_library.trips, tenant Last Apple",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "media rows",
+        "value": 1004,
+        "scope": "ALL rows in sky_library.media, whether or not linked to a trip",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "media linked to a trip",
+        "value": 726,
+        "scope": "media rows with a non-null trip_id \u2014 the population the per-trip maps draw from",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "video",
+        "value": 572,
+        "scope": "all media rows with media_type=video",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "photo",
+        "value": 367,
+        "scope": "all media rows with media_type=photo",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "GB",
+        "value": 400.0,
+        "scope": "sum of media.size_mb across all rows",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "with GPS",
+        "value": 992,
+        "scope": "media rows carrying coordinates \u2014 what any map can plot",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "drone flights",
+        "value": 277,
+        "scope": "rows in sky_library.flights decoded from DJI telemetry",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "flights with exact GPS",
+        "value": 267,
+        "scope": "flights rows with non-null coordinates",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "states",
+        "value": 16,
+        "scope": "distinct non-null media.state across all rows",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "golden-hour clips",
+        "value": 118,
+        "scope": "media rows with time_of_day in sunrise/sunset/golden",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "first flight",
+        "value": "2025-04-09",
+        "scope": "min(flights.flight_date)",
+        "asOf": "2026-08-26T15:25:00Z"
+      },
+      {
+        "label": "most recent flight",
+        "value": "2026-08-24",
+        "scope": "max(flights.flight_date)",
+        "asOf": "2026-08-26T15:25:00Z"
+      }
+    ]
+  }
+}
