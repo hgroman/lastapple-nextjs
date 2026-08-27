@@ -34,7 +34,13 @@ export function BaseLayout({
 }: BaseLayoutProps) {
   const vivid = orbStrength === 'vivid';
   return (
-    <div className="relative min-h-screen pt-32 pb-20 overflow-hidden">
+    // pt-40 on mobile, not pt-32: the floating logo is fixed at top-6 with
+    // h-28, so it occupies y 24..136px at EVERY breakpoint. pt-32 starts content
+    // at 128px and the page heading collided with the logo — visible on a phone
+    // on every BaseLayout page, and invisible on desktop only because the
+    // centred max-width container puts the heading to the right of the logo.
+    // 160px clears the logo with 24px to spare. Desktop spacing is unchanged.
+    <div className="relative min-h-screen pt-40 sm:pt-32 pb-20 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/30" />
 
