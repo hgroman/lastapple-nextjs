@@ -13,7 +13,10 @@ export const ServiceSchema = z.object({
   description: z.string().max(160),
   slug: z.string(),
   icon: z.string(),
-  category: z.enum(['wordpress', 'ai', 'integration']),
+  // 'aerial' added 2026-08-26: aerial cinematography with original scoring is a
+  // line of business, not a WordPress or AI service, and forcing it into one of
+  // those buckets mislabels it on the services index.
+  category: z.enum(['wordpress', 'ai', 'integration', 'aerial']),
   features: z.array(z.string()).min(3),
   pricing: z.object({
     starting: z.number().optional(),

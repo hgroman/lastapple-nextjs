@@ -12,6 +12,7 @@ const services = [
   { title: 'WordPress Performance', href: '/services/wordpress-performance', description: 'Speed optimization and Core Web Vitals' },
   { title: 'Website Renaissance', href: '/services/website-renaissance', description: 'Rebuild and refresh tired sites' },
   { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'AI-assisted SEO, content, campaigns' },
+  { title: 'Aerial Cinematography', href: '/services/aerial-cinematography', description: 'Drone films with original scoring' },
 ];
 
 const solutions = [
