@@ -1,5 +1,6 @@
 import { JournalHero } from '@/components/JournalHero';
 import { JournalStream } from '@/components/JournalStream';
+import { SkiesSection } from '@/components/SkiesSection';
 import { SolutionsGrid } from '@/components/SolutionsGrid';
 import { PricingSection } from '@/components/PricingSection';
 import { ClientsPortfolio } from '@/components/ClientsPortfolio';
@@ -24,6 +25,10 @@ export default function Home() {
 
       {/* The Stream */}
       <JournalStream posts={streamPosts.slice(0, 4)} />
+
+      {/* Live-Scored Skies — the aerial line of business, directly below The
+          Stream so the site says out loud that Last Apple does more than code. */}
+      <SkiesSection />
 
       {/* Solutions Portfolio */}
       <SolutionsGrid />

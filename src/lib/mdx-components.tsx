@@ -17,6 +17,7 @@ import {
 } from '@/components/content/ContentImage';
 import { CaseStudy } from '@/components/content/blocks/CaseStudy';
 import { ProcessSteps } from '@/components/content/blocks/ProcessSteps';
+import { SkiesMap } from '@/components/skies/SkiesMap';
 
 // Type-safe component mappings for MDX
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
@@ -33,6 +34,11 @@ type PreProps = ComponentPropsWithoutRef<'pre'> & {
 type ImageProps = ComponentPropsWithoutRef<'img'>;
 
 export const mdxComponents = {
+  // Embed a published flight map or 360 sphere by slug: <SkiesMap slug="..." />.
+  // Resolves URL, poster and figures from the committed catalogue export, so a
+  // Stream entry can show a map without a number being retyped.
+  SkiesMap,
+
   // Headings
   h1: (props: HeadingProps) => (
     <h1
