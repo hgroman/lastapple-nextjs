@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/opt/agency-os/src/vpos-cli/ensure-session-registered.sh"
+            "command": "/opt/agency-os/src/vpos-cli/ensure-session-registered.sh --from cxm_lastapple"
           }
         ]
       },
@@ -13,7 +13,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/opt/agency-os/src/vpos-cli/classify-if-ready.sh"
+            "command": "/opt/agency-os/src/vpos-cli/classify-if-ready.sh --from cxm_lastapple"
           }
         ]
       }
@@ -23,11 +23,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/opt/agency-os/src/vpos-cli/ensure-session-registered.sh"
+            "command": "/opt/agency-os/src/vpos-cli/ensure-session-registered.sh --from cxm_lastapple"
           }
         ]
       }
     ]
   },
-  "_comment": "Committable Claude Code settings. UserPromptSubmit + PreToolUse run the launch-path-independent session-registration guard (ensure-session-registered.sh): seeds agency_session_registry for job/bridge/headless-p launches where the SessionStart hook (and preflight \u00a710) never run. Marker-guarded, fail-open. Task 80de6ffa / The Engine Room."
+  "_comment": "Committable Claude Code settings. UserPromptSubmit + PreToolUse run the launch-path-independent session-registration guard (ensure-session-registered.sh): seeds agency_session_registry for job/bridge/headless-p launches where the SessionStart hook (and preflight §10) never run. Marker-guarded, fail-open. Task 80de6ffa / The Engine Room."
 }
