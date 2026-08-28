@@ -1,3 +1,49 @@
 #!/usr/bin/env sh
+# git-curator commit-msg hook — REFERENCE, DO NOT COPY THE VALIDATOR.
+#
+# This tiny shim is committed into each repo as .githooks/commit-msg. It is the ONLY
+# per-repo file; the rules live once at the anchor.
+#
+# WHY A WRAPPER AND NOT A SYMLINK — measured 2026-07-26, debate 078:
+#   A dangling symlink at .githooks/commit-msg does NOT block a commit. Git stats the
+#   hook path, treats an unresolvable one as ABSENT, and proceeds SILENTLY. Tested in a
+#   throwaway repo: the commit succeeded with zero output. So symlinking the hook to
+#   /opt/agency-os would mean that any box which lost the anchor would quietly stop
+#   enforcing anything, and nothing would ever say so — strictly worse than the drifted
+#   copies this replaces, because drift is at least visible.
+#
+#   This shim exists to turn that silence into a refusal. It checks the validator is
+#   readable BEFORE exec and exits non-zero with a named reason if it is not.
+#
+# Keep this file dumb and stable. Every rule change belongs in the validator at the
+# anchor, so it lands in every repo at once. If you find yourself editing this shim in
+# one repo, you are recreating the problem it was written to end.
+
 set -eu
-python3 scripts/check_git_curator_commit_msg.py "$1"
+
+ANCHOR="${AGENCY_OS_ANCHOR:-/opt/agency-os}"
+VALIDATOR="$ANCHOR/src/hooks/check_git_curator_commit_msg.py"
+
+if [ ! -r "$VALIDATOR" ]; then
+    echo "ERROR: commit-msg hook FAILED CLOSED — the commit was NOT made." >&2
+    echo "" >&2
+    echo "  The git-curator validator is unreachable:" >&2
+    echo "    $VALIDATOR" >&2
+    echo "" >&2
+    echo "  The agency-os anchor is not mounted or not readable on this box." >&2
+    echo "  Fix the anchor (it should resolve to the agency-os checkout), or if you" >&2
+    echo "  genuinely mean to commit unchecked, use --no-verify deliberately." >&2
+    echo "" >&2
+    echo "  This refusal is intentional. A hook that cannot find its rules must block," >&2
+    echo "  never wave the commit through — see _3_Watch: a green check that proves" >&2
+    echo "  nothing is worse than no check at all." >&2
+    exit 1
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "ERROR: commit-msg hook FAILED CLOSED — python3 not found on PATH." >&2
+    echo "  The commit was NOT made. Install python3 or use --no-verify deliberately." >&2
+    exit 1
+fi
+
+exec python3 "$VALIDATOR" "$1"
