@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     alternates: { canonical: `/stream/${slug}` },
-    title: `${post.title} | The Stream`,
+    title: post.title,
     description: post.description,
     openGraph: {
       title: post.title,
