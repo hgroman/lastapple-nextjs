@@ -46,6 +46,22 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // ============================================================
+      // HOSTNAME CANONICALISATION — must stay FIRST (Next.js matches in order)
+      // ============================================================
+      // https://www.lastapple.com served a full 200 copy of the site rather than
+      // redirecting, so Google was indexing a second hostname; GSC showed
+      // http://www.lastapple.com/ earning its own impressions at position 33.4.
+      // The canonical tag already pointed at the apex, which is why this never
+      // became a visible duplicate-content problem — but a canonical is a hint
+      // and a 308 is not. Measured 2026-09-04.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.lastapple.com' }],
+        destination: 'https://lastapple.com/:path*',
+        permanent: true,
+      },
+
+      // ============================================================
       // WORDPRESS SERVICES → NEW SERVICE PATHS
       // ============================================================
       {

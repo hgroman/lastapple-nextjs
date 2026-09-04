@@ -53,11 +53,13 @@ export function JournalHero({ latestPost }: JournalHeroProps) {
       <div className="relative z-10 mx-auto max-w-7xl px-6 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left Column - Journal Entry */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
+          {/* LCP: this wrapper and the h1/excerpt below deliberately do NOT animate
+              in from opacity:0. They did, and it cost 5.33s mobile LCP against a 10ms
+              TTFB — the largest text could not paint until JS downloaded, React
+              hydrated, framer-motion initialised and a 0.4s delay elapsed. Entrance
+              animations are kept on the secondary elements (badge, meta, tags, CTAs),
+              which are not LCP candidates. Do not add initial={{ opacity: 0 }} here. */}
+          <motion.div>
             {/* Live Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -91,9 +93,6 @@ export function JournalHero({ latestPost }: JournalHeroProps) {
 
             {/* Main Title */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.7 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6"
             >
               {latestPost ? (
@@ -114,9 +113,6 @@ export function JournalHero({ latestPost }: JournalHeroProps) {
 
             {/* Excerpt */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
               className="text-lg text-muted-foreground mb-8 max-w-xl"
             >
               {latestPost?.description ||
