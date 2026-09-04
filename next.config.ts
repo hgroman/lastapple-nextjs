@@ -74,6 +74,36 @@ const nextConfig: NextConfig = {
       },
 
       // ============================================================
+      // SOLUTION PAGES FOLDED INTO THE SERVICE PILLARS — CEO decision 2026-09-04
+      // ============================================================
+      // These four spoke to "solopreneurs" and "small teams" while the site sells
+      // $10K+ engagements. Combined they earned 10 impressions and 0 clicks in the
+      // 7.5 weeks after cutover, so there was no ranking equity to protect. The
+      // capability is not gone — it is described properly on the pillars below.
+      // Legacy WordPress-era redirects that used to land here were repointed to the
+      // same destinations, so nothing takes two hops.
+      {
+        source: '/solutions/seo-guide',
+        destination: '/services/seo-content-engine',
+        permanent: true,
+      },
+      {
+        source: '/solutions/content-creation',
+        destination: '/services/seo-content-engine',
+        permanent: true,
+      },
+      {
+        source: '/solutions/b2b-email-list',
+        destination: '/services/digital-marketing',
+        permanent: true,
+      },
+      {
+        source: '/solutions/social-strategies',
+        destination: '/services/digital-marketing',
+        permanent: true,
+      },
+
+      // ============================================================
       // WORDPRESS SERVICES → NEW SERVICE PATHS
       // ============================================================
       {
@@ -124,7 +154,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ai-powered-b2b-email-list-services/:path*',
-        destination: '/solutions/b2b-email-list',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       {
@@ -139,17 +169,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ai-powered-content-creation-services-elevate-your-digital-presence/:path*',
-        destination: '/solutions/content-creation',
+        destination: '/services/seo-content-engine',
         permanent: true,
       },
       {
         source: '/elevate-your-social-presence-with-ai-driven-strategies/:path*',
-        destination: '/solutions/social-strategies',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       {
         source: '/seo-guide-for-solopreneurs/:path*',
-        destination: '/solutions/seo-guide',
+        destination: '/services/seo-content-engine',
         permanent: true,
       },
       {
@@ -169,7 +199,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/solutions/b2b-email-lists',
-        destination: '/solutions/b2b-email-list',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       {
@@ -371,7 +401,7 @@ const nextConfig: NextConfig = {
       // ============================================================
       {
         source: '/ai-powered-social-media-marketing-services/:path*',
-        destination: '/solutions/social-strategies',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       // WordPress RSS/comment feeds. No feed is served today, so point
@@ -422,7 +452,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/seo-for-entrepreneurs/:path*',
-        destination: '/solutions/seo-guide',
+        destination: '/services/seo-content-engine',
         permanent: true,
       },
       {

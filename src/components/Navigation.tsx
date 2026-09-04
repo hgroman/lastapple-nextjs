@@ -7,22 +7,26 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import { ChevronDown } from 'lucide-react';
 
 const services = [
+  // Order mirrors content/services/*.mdx `order:` — CEO decision 2026-09-04. The two
+  // consulting lanes lead; WordPress is DEMOTED, not removed (it is live revenue).
+  { title: 'AI Agent Operations', href: '/services/ai-agent-operations', description: 'Build and govern a multi-agent operation' },
+  { title: 'SEO Content Engine', href: '/services/seo-content-engine', description: 'Written from primary sources, claims verified' },
+  { title: 'WordPress Operations', href: '/services/wordpress-operations', description: 'SSH, WP-CLI, locked baselines, control groups' },
+  { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'AI-assisted SEO, content, campaigns' },
+  { title: 'Aerial Cinematography', href: '/services/aerial-cinematography', description: 'Drone films with original scoring' },
   { title: 'WordPress Maintenance', href: '/services/wordpress-maintenance', description: 'Premium care, security, and optimization' },
   { title: 'Maintenance Plans & Pricing', href: '/services/maintenance-plans', description: 'Transparent tiers, no surprises' },
   { title: 'WordPress Performance', href: '/services/wordpress-performance', description: 'Speed optimization and Core Web Vitals' },
   { title: 'Website Renaissance', href: '/services/website-renaissance', description: 'Rebuild and refresh tired sites' },
-  { title: 'Digital Marketing', href: '/services/digital-marketing', description: 'AI-assisted SEO, content, campaigns' },
-  { title: 'Aerial Cinematography', href: '/services/aerial-cinematography', description: 'Drone films with original scoring' },
 ];
 
 const solutions = [
+  // seo-guide, content-creation, b2b-email-list and social-strategies were folded into
+  // the service pillars on 2026-09-04 and now redirect. They spoke to solopreneurs and
+  // small teams, which is the wrong buyer for the lanes this site now sells.
   { title: 'AI Chatbot Solutions', href: '/solutions/ai-chatbot-solutions', description: 'Intelligent customer service' },
-  { title: 'B2B Email List', href: '/solutions/b2b-email-list', description: 'AI-verified contact data' },
   { title: 'Data Integration', href: '/solutions/data-integration', description: 'Connect your systems' },
   { title: 'HubSpot Integration', href: '/solutions/hubspot-integration', description: 'CRM implementation' },
-  { title: 'Content Creation', href: '/solutions/content-creation', description: 'AI-assisted, human-edited' },
-  { title: 'Social Strategies', href: '/solutions/social-strategies', description: 'Consistent output without a hire' },
-  { title: 'SEO Guide', href: '/solutions/seo-guide', description: 'Practical solopreneur playbook' },
 ];
 
 // "Our Work" rather than "Client Work": Live-Scored Skies is a line of business,
