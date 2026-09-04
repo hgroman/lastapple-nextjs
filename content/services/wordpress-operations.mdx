@@ -1,0 +1,97 @@
+---
+title: "WordPress Run Like Infrastructure"
+description: "SSH and WP-CLI, not a dashboard. Locked baselines, control groups, and scheduled verdicts — WordPress managed as a system rather than a chore."
+icon: "Terminal"
+category: "wordpress"
+features:
+  - "Direct server access over SSH and WP-CLI — we read logs, transients and version state, not a plugin's summary of them"
+  - "Every content intervention measured against a locked pre-change baseline, with an untouched control group where one exists"
+  - "Verdicts scheduled in advance — four, eight and thirteen weeks — including the read that could prove the work didn't help"
+  - "Alerts triaged to root cause, because most of them are billing signals or config artifacts rather than faults"
+  - "Security posture reviewed beyond the alert that prompted it — standing third-party grants, admin 2FA, credential-rotation completeness"
+  - "Changes we decline, and why, written down as part of the deliverable"
+cta:
+  text: "Book a scoping call"
+  href: "/contact"
+published: true
+order: 2
+---
+
+## What This Is
+
+For fifteen years the value in WordPress work was finesse: knowing which plugins fought each other, which update would take the site down, which combination held. You paid for someone who had been burned enough times to have the map.
+
+**That skill has been commoditized, and pretending otherwise is how agencies keep charging for it.**
+
+What replaced it is not "we use AI to write your blog." It is that one person can now hold the whole system in view at once — server, logs, database, version state, search console, analytics — and stay in a strategic seat instead of wrestling a plugin panel. The wrestling is still happening. It just isn't where the hours go anymore, and it isn't what you should be paying for.
+
+So this page is about the part that remains: **judgment about what to change, and proof about whether it worked.**
+
+## We Measure Against a Control Group
+
+Most SEO and content work is unfalsifiable by construction. Traffic went up, the invoice says the traffic went up, and nobody can separate the work from the season.
+
+On one engagement we optimized thirteen pages and then split the client's own site into two halves for the same time windows:
+
+| | Before | After | Change |
+|---|---|---|---|
+| The 13 optimized pages | 136 clicks | 269 clicks | **+98%** |
+| The rest of the site, untouched | 755 clicks | 718 clicks | **−5%** |
+
+The untouched remainder is a natural control group. If the lift were seasonality or general growth, both halves would move together. Instead the treated set nearly doubled while the control drifted *down*.
+
+That is the difference between "the pages improved" and "the improvement is attributable to the work." An earlier audit of the same engagement had explicitly caveated that it could not make the second claim. This one can.
+
+**We led the client's results email with the −5%, not the +98%**, because the control is what makes the number defensible rather than promotional. We also pre-empted a ratio artifact in the same email — site-wide CTR appeared to fall while clicks rose, purely because impressions grew faster — so the client would not open Search Console, see a falling percentage, and reasonably wonder what they were paying for.
+
+## Baselines Get Locked Before Anything Changes
+
+Before a structural intervention we capture the complete pre-change state and file it — including Google's own verdict on every URL in the sitemap, with last-crawl dates and referring URLs, pulled from the API rather than screenshotted from a dashboard.
+
+Then the checkpoints get scheduled **in advance**: a four-week read of whether crawl signals are moving (explicitly *not* a verdict), an eight-week read that includes a falsification gate, and a thirteen-week verdict that asks the only question that matters — did the reclaimed crawl budget become a business outcome?
+
+Scheduling the disconfirming read before you know the result is the entire discipline. It is also why we can tell you when something didn't work.
+
+## SSH and WP-CLI, Not a Dashboard
+
+A plugin panel tells you what a plugin believes. The server tells you what happened.
+
+**A nightly "failed automatic update" alert** had been emailing a client every morning and rolling their site back. The panel showed a failing plugin update. The transient on the server showed the real cause: the product's subscription had expired, and the expiry marker was sitting in the field where the download URL belongs — so the updater fetched a package that did not exist, failed, and the host restored its backup on schedule. **The alert was a billing signal, not a fault.** The site was never at risk, and the fix was a renewal decision rather than an engineering one.
+
+**A site's core had been frozen for 78 days** while its plugins updated every day or two — a pattern no dashboard surfaces, because each individual screen looks fine. We patched it by hand, then designed the follow-up as a test rather than a checkbox: if the platform quietly reverts the version, that is a materially bigger finding than a stalled updater, because it means no manual patch will ever hold and every future security release has to be re-applied by hand.
+
+**A sitemap could not be read over HTTP** because the site's security plugin challenges non-browser requests. That reads exactly like "the site is broken," and it is not. Rather than register a guessed URL — which 404s and makes the search property worse — we queried the origin over SSH and had the server fetch its own candidates, bypassing the challenge entirely, then verified Google downloaded it rather than assuming.
+
+## The Controls That Exist But Enforce Nothing
+
+This is the category we find most often, and it is invisible from a dashboard by definition.
+
+**An entire robots.txt ruleset was silently inert.** A blank line immediately after `User-agent: *` terminates the record per specification, orphaning every rule below it — in this case including the `/wp-admin/` protection everyone assumed was in force. It had been that way for a long time and nothing reported it, because a broken rule and an absent rule look identical from the outside. We repaired it and then verified fifteen of fifteen paths against Google's documented matching behaviour rather than trusting the file to read correctly.
+
+**A security alert was the least important thing on the site.** An outdated-plugin notice prompted a full posture review. That review found a third-party access grant issued in 2020 that was still live and had survived a post-compromise credential rotation earlier that year — the rotation's scope said "all credentials" and this external grant was not in it. It also found no two-factor authentication on any administrator account. Neither would ever have generated an email.
+
+**A repository file was carrying an instruction to destroy a live page.** A frozen snapshot of a client's flagship hub page began with a header telling any future reader to regenerate the page from that file. The snapshot predated three sections that were live. Following its own instruction would have silently deleted all three, dropped the page's citations, reverted its title and broken its links to three other pages. We found it and disarmed it before anyone acted on it.
+
+## What We Decline
+
+A deliverable includes the changes we did not make.
+
+We declined to rebuild a client's blog archive. It is rendered by a page-builder template, and the "fix" meant editing live page-builder JSON — real risk to a working page for a cosmetic gain. Google needed a crawlable link path, not a prettier archive, so we built a plain indexed list of all 84 posts instead and verified it appeared in the raw HTML without JavaScript.
+
+When retiring nine zero-traffic utility pages from the index, **every single one was verified at zero clicks and zero impressions over ninety days before the change** — nothing of value was withdrawn on an assumption. Privacy, terms, refund and returns pages were deliberately left alone, because ecommerce trust pages are conventionally left indexed even when their traffic is negligible.
+
+And when a form platform showed nine active forms with zero submissions recorded since 2021, we could not distinguish broken lead capture from a data-retention purge — so we kept it out of the client summary rather than alarm them with a maybe, and said plainly that if leads are being dropped it is worth vastly more than the licence fee.
+
+## Who This Isn't For
+
+**Not for you if you want a maintenance plan.** We sell one of those — it starts at $97/month and it is a genuinely different product. If updates, backups and monitoring are the need, buy that and don't buy this.
+
+**Not for you if the site can't be reached.** This depends on real server access. Locked-down managed hosting with no SSH removes most of the advantage.
+
+**Not for you if you don't want to hear that something didn't work.** The checkpoints are scheduled before the results are known, which means sometimes they report a null. If that reads as failure rather than information, the arrangement will disappoint you.
+
+## What It Costs
+
+Scoped per engagement. The usual entry point is an audit: what your site actually asserts, what its controls actually enforce, and what your measurement can and cannot prove.
+
+Quoted after one conversation, not after a discovery retainer.
