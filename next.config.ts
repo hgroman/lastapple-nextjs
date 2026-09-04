@@ -60,6 +60,18 @@ const nextConfig: NextConfig = {
         destination: 'https://lastapple.com/:path*',
         permanent: true,
       },
+      // new.lastapple.com is an ALIAS on this same Vercel project — it served the
+      // identical production build at 200, with robots.txt "Allow: /" and no robots
+      // meta, so it was a fully crawlable duplicate of the whole site. Google had
+      // already indexed new.lastapple.com/portfolio (5 impressions, position 25).
+      // It carries no preview value (Vercel issues per-deployment preview URLs), so
+      // it redirects rather than being noindexed. Measured 2026-09-04.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'new.lastapple.com' }],
+        destination: 'https://lastapple.com/:path*',
+        permanent: true,
+      },
 
       // ============================================================
       // WORDPRESS SERVICES → NEW SERVICE PATHS
