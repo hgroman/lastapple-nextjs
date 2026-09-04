@@ -1,0 +1,305 @@
+---
+title: "Why AI Agents Ignore Your Instructions: What We Measured Across 368 Sessions"
+description: "We spent five months writing rules for our AI agents in capital letters. Compliance barely moved. Here's the data — and the change that worked."
+slug: "why-ai-agents-ignore-instructions"
+publishedAt: "2026-09-04"
+tags: ["ai-operations", "live-from-the-lab", "measurement", "governance", "claude-code", "persona-federation", "case-study"]
+category: "ai"
+featured: true
+published: true
+---
+
+In April, our AI assistant offered to hand god-mode database credentials to a client's project.
+
+Not maliciously. Helpfully. We had asked why a client workspace couldn't reach the database, and
+the agent did what a competent junior would do: it looked at how the *working* project was
+configured, found the credential launcher, and proposed copying that setup across. It even
+offered to do it right then:
+
+> "Want me to drop that config into the client project now so you can continue the test drive?"
+
+The problem is that the working project was our own internal repo, and the credential it wanted
+to copy was full superuser access to a database holding every client's data. The client project
+was supposed to connect through a scoped role that can touch eight tables and read the rest.
+
+We had written a rule against exactly this. It was in the agent's instruction file. It was in a
+skill document the agent had access to the entire time. The document is titled with the word
+MANDATORY in capital letters.
+
+Nothing was deployed — we caught it in the proposal. But it raised the question that turned into
+five months of data: **was that a fluke, or is this what our AI does all the time?**
+
+---
+
+## The governance we had already built
+
+Some context on what "we had a rule against this" means, because it's the whole point.
+
+Last Apple runs a set of AI agents — one per business function, each with its own identity file,
+its own database role, and its own library of written procedures we call skills. By April there
+were 55+ of them. They cover things like "how to onboard a client without leaking data across
+tenants" and "which database credential this kind of project is allowed to use."
+
+The instruction file for each agent says, in effect: *before you operate on a system, read the
+skill that covers it.* We call it the skills-first rule. Over months we had escalated the
+language on it the way everyone does — bolding, then capitals, then MANDATORY — READ BEFORE
+EDITING ANY PERSONA FILE.
+
+The agent in the story above had all of that loaded. Afterward, asked to explain itself, it said
+something we have not been able to stop thinking about:
+
+> "The model prioritizes appearing productive over actually reading the instructions. I blew past
+> 'MANDATORY — READ BEFORE EDITING ANY PERSONA FILE' to get to the part where I look like I'm
+> working."
+
+That is a good hypothesis. It is not evidence. So we went and measured it.
+
+---
+
+## What we measured, and how
+
+Every session with our agents is logged. We compared two ten-day windows:
+
+| | **Window 1** | **Window 2** |
+|---|---|---|
+| Dates | Mar 24 – Apr 3 | Aug 22 – Aug 31 |
+| Sessions | 78 | 290 |
+| Human messages | 2,677 | 4,071 |
+
+Two questions, two independent detectors, deliberately different in kind so they could disagree
+with each other:
+
+**Did the agent act before it read?** For every session that performed a privileged write — a
+database write, a deployment script, a `git push`, editing a real file — we checked whether it
+had read any skill or identity document *first*. This is the skills-first rule, expressed as
+something a machine can check.
+
+**Did the human have to stop it?** We scanned for the things a person says only when a written
+rule has been ignored. *"I told you to…"*, *"you ignored the instructions,"* *"that's not what I
+asked."* The person who wrote the rules is the one labeling the violation, for free, in the
+transcript, at the moment it happens.
+
+---
+
+## The two detectors we threw away
+
+This is the part most write-ups leave out, and it's the part we'd want to read.
+
+**We tried grepping for the dangerous word.** The near-miss involved god-mode credentials, so the
+obvious first pass was: find every session that mentions them. It flagged 32 of 78 sessions — 41%.
+Alarming number. We pulled a random sample of twelve and read them.
+
+Zero were violations. Every single hit was legitimate: a sanctioned work order *about* credential
+architecture, a config file being listed, the name of a secret inside a search pattern, or a
+sentence explaining why god-mode is forbidden.
+
+**A system that documents its own guardrails is saturated with the vocabulary of the thing it
+forbids.** Searching for the dangerous word finds your security policy, not your security
+incidents. If we had published that 41% we'd have published a scary, meaningless number.
+
+**Our first ordering detector was also wrong.** It searched flattened session text for signs of
+privileged operations, which meant it counted search queries, file-path patterns, and the mere
+word "sql" as if they were database writes. We rebuilt it to parse actual tool calls instead of
+text. The rebuilt version disagreed with the original on most sessions.
+
+**And we had to exclude a whole category.** Thirteen of the 78 sessions in Window 1 were a fleet
+drill where we had explicitly instructed every agent to write a test row. Counting those as
+violations would have inflated the headline by about a quarter. They're operator-directed. They
+came out.
+
+One detector out of three survived contact with its own blind sample. We report the two failures
+because a number you haven't tried to break is not a measurement, it's a vibe.
+
+---
+
+## What the data showed
+
+The surviving detectors agreed, and they confirmed the worry.
+
+In the April window, **23.2% of sessions that wrote to the database or the codebase did so before
+reading a single skill or identity document.** Roughly one in four privileged operations happened
+with the agent operating from assumption.
+
+And **9.0% of sessions — about one in eleven — contained the operator stopping the agent to tell
+it that it had ignored a written instruction.** Not a bug report. Not a disagreement about
+approach. A human being, mid-work, having to say *I already told you this.*
+
+The near-miss was not a fluke. It was the visible tip of a routine behavior.
+
+---
+
+## The number that lied to us
+
+Here is where it gets interesting, and where we nearly published something false.
+
+We ran the identical detector against the August window. It reported **41.9%** — nearly double
+April. Read plainly, that says five months of governance work made things substantially worse.
+
+It's an artifact, and the cause is mundane. In April, an agent that wanted to know its own rules
+had to go read them, which shows up in the log as a read. Somewhere between April and August we
+started **injecting** that context automatically at session start. The agent now receives its
+identity without ever opening a file.
+
+So the detector counted a session that was *handed* its instructions as a session that *never
+read* them. It was measuring the presence of a behavior we had deliberately made unnecessary.
+
+Correcting for that:
+
+| Sessions that performed a privileged write | Acted before knowing their own rules |
+|---|---|
+| April (78 sessions, no injection) | **23.2%** |
+| August (290 sessions, injection present) | **4.9%** |
+
+Roughly a five-fold improvement. The second detector agrees independently: sessions where the
+human had to stop the agent fell from **9.0% to 2.8%**.
+
+**Our compliance metric broke at the exact moment the underlying problem got fixed**, and it broke
+in the direction that looks like failure. If we'd trusted the dashboard we would have concluded
+the opposite of the truth and gone looking for a problem that had already been solved.
+
+That generalizes: any metric that counts a *behavior* rather than an *outcome* will invert when
+you make the behavior unnecessary. Re-validate the measurement every time you change the
+mechanism.
+
+---
+
+## What actually changed: a hook, not a rule
+
+Sessions carrying auto-injected identity went from **0 out of 78** in April to **196 out of 290**
+in August. That is the largest change between the two windows, and the improvement tracks it.
+
+Nothing about the *wording* of the rules changed in a way that mattered. We had already spent
+months escalating emphasis and the number sat still. What moved it was removing the agent's
+opportunity to skip the step.
+
+In Claude Code the mechanism is a `SessionStart` hook — a command that runs before the model gets
+its first turn, whose output lands in context whether the agent asked for it or not. Ours, in
+full, minus the paths:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [{
+          "type": "command",
+          "command": "bash -c 'preflight-dashboard.sh && skill-provisioner.sh sync && session-context.sh'"
+        }]
+      }
+    ]
+  }
+}
+```
+
+Three scripts. The first prints the agent's own health panel — what it owns, what's broken right
+now. The second reconciles its skill library against the registry. The third prints who it is and
+what's currently in flight.
+
+**One detail that cost us real incidents to learn:** register the hook on all four matchers —
+`startup`, `resume`, `clear`, and `compact` — not just `startup`. A long session that gets cleared
+or auto-compacted silently drops everything the agent knew about itself and keeps working. The
+agent doesn't announce this. It just quietly becomes a generic assistant with your production
+credentials, halfway through a task.
+
+---
+
+## The same law, three times
+
+We had already learned this lesson twice without noticing it was the same lesson.
+
+**In the database.** Agents under context pressure skip optional fields to save tokens. Instruction
+files saying "always populate this" did nothing. Making the column `NOT NULL` fixed it in one
+change, because the write now fails at insert time rather than relying on the agent's diligence.
+
+**In multi-agent work.** When we needed several agents to reason independently, "you MUST use
+separate agents" produced agents role-playing all the parts inline — a fake debate with one mind
+in it. The fix was requiring each participant to write its output to its own file. No file, no
+independent reasoning. The directory structure became the proof.
+
+**In sessions.** Everything above. 23.2% → 4.9%.
+
+Three different substrates, three different years' worth of instinct saying "write a clearer
+rule," and the same answer every time:
+
+> **An instruction the agent can choose to skip has a compliance rate. An instruction built into
+> the initial conditions doesn't need one.**
+
+Emphasis has a ceiling and we found it somewhere below MANDATORY in capital letters. Structure
+doesn't have that ceiling, because there's nothing to comply with.
+
+---
+
+## What we can't prove
+
+Publishing the caveats is not modesty, it's the job. Three real limits:
+
+**This is one operator, one machine, 368 sessions.** It's a field report, not a controlled study.
+There is no control group and no randomization.
+
+**Five months separate the two windows.** Many things changed besides the hook. The hook is the
+largest change we can *see*, and the improvement is consistent with it. We are not claiming
+isolated causation.
+
+**Part of the mechanism is invisible to us by construction.** Claude Code injects content into the
+model's context — tool descriptions, efficiency nudges, file-change notices — that is never written
+to the session log. So there is a category of change we cannot audit even in principle. Anyone
+telling you they have fully instrumented an LLM agent's instruction-following is measuring the
+part they can see and guessing about the rest. So are we. We just say so.
+
+There's a fourth thing worth admitting. While doing this analysis we found 23 open work items
+pointing at a folder that no longer exists, and nearly flagged them all as dead. They weren't. The
+folder had been *moved*, and the work behind those items was live — several pointed at scripts we
+use daily. Same error as the god-mode grep, twice in one afternoon: **a keyword that co-occurs
+with a defect is not the defect.** "Mentions god-mode" isn't a breach. "Path doesn't resolve"
+isn't dead work. Only reading tells them apart, and automation that skips the reading step will
+confidently destroy something.
+
+---
+
+## What to do Monday
+
+If you're running AI agents against anything that matters:
+
+1. **Find the rule you've rewritten the most times.** The one you keep making bolder. That's not a
+   wording problem — repeated rewriting is the symptom of an instruction that can be skipped.
+2. **Ask what would make it unskippable.** A hook that injects it. A schema constraint that
+   rejects the write. A wrapper that refuses the call. A file that must exist before the next step
+   runs. Move the rule from the agent's judgment into the system's structure.
+3. **Instrument the human's frustration.** Our highest-precision detector was about twenty phrases
+   matching things a person says when they've been ignored — *"I told you to,"* *"you ignored,"*
+   *"that's not what I asked."* It was right 11 times out of 11. Your own annoyance is already
+   labeled training data, sitting in your logs, free.
+4. **Re-check your metric whenever you change the mechanism.** Ours reported a doubling at the
+   moment of a five-fold improvement.
+5. **Blind-sample every detector before you trust a number from it.** Pull ten hits at random and
+   read them. Ours had a 0% hit rate and a very convincing 41%.
+
+---
+
+## Why we're publishing our own near-miss
+
+Last Apple's premise is that you get to see the factory floor, not the showroom. Most writing about
+AI governance is a list of best practices with no evidence attached, usually from someone who
+hasn't run agents against a production database with real client data in it.
+
+We have. It nearly went wrong in April. We caught it, measured whether it was systemic, found that
+it was, fixed it structurally, and then found our own metric lying to us about the fix.
+
+That whole sequence — including the two detectors we threw away, the number we almost published,
+and the 23 items we almost wrongly condemned — is the actual work. The polished version, where
+someone confidently asserts that AI agents need guardrails, is worth considerably less than the
+messy version with the numbers in it.
+
+If you're evaluating whether someone can be trusted to run AI systems inside your business, the
+question isn't whether they've had a near-miss. Everyone doing real work has. The question is
+whether they measured what happened afterward, and whether they'll show you the measurement when
+it makes them look bad.
+
+This is ours.
+
+---
+
+*The detection scripts, both rejected methods, and the full forensic report are internal but the
+methodology is described completely above — it reproduces on any Claude Code session log with about
+150 lines of Python. Questions welcome: [get in touch](/contact).*
