@@ -1,0 +1,92 @@
+---
+title: "AI Agent Operations: Built, Governed, and Measured"
+description: "We build multi-agent AI operations that hold their own guardrails — least-privilege credentials, structural governance, measured compliance. From $10K."
+icon: "Network"
+category: "ai"
+features:
+  - "One agent per business function, each with a written identity and its own scoped credential — not one assistant holding root"
+  - "Governance built into the initial conditions: session-start context injection, schema constraints, commit-time guards"
+  - "Instrumentation that measures whether your agents actually follow instructions — blind-sampled before any number is trusted"
+  - "A written procedure library your team owns, edits, and can read without us"
+  - "A credential-path review: we find the route your agent could take to your production data, and close it structurally"
+  - "Handover documentation written for the person who inherits this after we leave"
+cta:
+  text: "Book a scoping call"
+  href: "/contact"
+published: true
+order: 0
+---
+
+## What This Is
+
+Most AI consulting sells you a pilot. This is the other thing: **a governed multi-agent operation running against your real systems, built so it cannot quietly do the wrong thing.**
+
+The distinction matters more than it sounds. An agent that can read your database is a demo. An agent that can *write* to your database, deploy your code, or send mail as your company is an operation — and an operation needs governance that survives the day everybody stops paying attention.
+
+We know where that breaks, because we published ours breaking.
+
+## The Near-Miss We Published
+
+In April, our own AI assistant offered to copy god-mode database credentials into a client project. Not maliciously — helpfully. It looked at how the working project was configured, found the credential launcher, and proposed copying it across.
+
+The credential was full superuser access to a database holding every client's data. We had a written rule against exactly this. It was in the agent's instruction file. The document is titled with the word MANDATORY in capital letters.
+
+Nothing was deployed; we caught it in the proposal. Then we spent five months measuring whether it was a fluke. It wasn't — and the full field report, including the two detection methods we threw away and the metric that lied to us about our own fix, is published at [Why AI Agents Ignore Your Instructions](/stream/why-ai-agents-ignore-instructions).
+
+**That post is the reason to hire us, and it is also the reason to trust the number below.**
+
+## What We Actually Fixed, and How
+
+Across 368 measured sessions, sessions that performed a privileged write before reading a single governing document fell from **23.2% to 4.9%**. Sessions where a human had to stop the agent and say *I already told you this* fell from **9.0% to 2.8%**.
+
+Nothing about the *wording* of the rules changed. We had already spent months escalating emphasis — bolding, then capitals, then MANDATORY — and the number sat still.
+
+What moved it was removing the agent's opportunity to skip the step:
+
+> **An instruction the agent can choose to skip has a compliance rate. An instruction built into the initial conditions doesn't need one.**
+
+That is the whole method, and it is what we build into your system. A rule you have rewritten four times is not a wording problem — it is a design problem, and it has a structural fix: a hook that injects the context, a schema constraint that rejects the write, a wrapper that refuses the call, a file that must exist before the next step runs.
+
+## What You Get
+
+**An agent per function, not one assistant with root.** Each one has a written identity, a scoped credential, and a library of procedures it is expected to follow. Least privilege is the default, not the hardening pass.
+
+**Governance in the initial conditions.** Context injected before the model's first turn, so an agent cannot begin work not knowing its own rules. Constraints at the database layer, so the write fails at insert time rather than relying on diligence. Guards at commit time, so the dangerous change is refused rather than reviewed.
+
+**Measurement you can audit.** Detectors that report whether your agents follow instructions, blind-sampled before anyone trusts them. We will show you the ones that failed our own sampling — one of ours flagged 41% of sessions and was wrong every single time.
+
+**Documentation written for your team, not for us.** The procedure library is plain text in your repository. You can read it, edit it, and keep running without us. If an engagement ends and your system becomes unmaintainable, we built it wrong.
+
+## Why Us Specifically
+
+Thirty years of system integration before any of this — contact centers, healthcare, payments. Regulated environments where a bad write is not a bug report, and where "we'll fix it in the next sprint" was never an available sentence.
+
+That matters here because agent governance is not an AI problem wearing a new hat. It is an access-control and data-integrity problem, and the industry currently discussing it mostly arrived in 2023.
+
+We also run this on ourselves, daily, in public. The [Stream](/stream) is the working journal — including the parts where we were wrong.
+
+## Who This Isn't For
+
+Straight answers, so nobody wastes a call:
+
+**Not for you if you want a chatbot.** That is a smaller, cheaper, genuinely different project. We build [chatbot solutions](/solutions/ai-chatbot-solutions) too, and if that is the real need we will tell you on the call rather than upsell you into this.
+
+**Not for you if nothing is at stake.** If your agents only read public data and draft copy, this is over-engineered. Governance is worth paying for when an agent can touch money, customer records, production systems, or your outbound reputation.
+
+**Not for you if you want the pilot and not the operation.** We are not the right team for a proof of concept that will be shelved. The work here is the unglamorous half — the credentials, the constraints, the measurement.
+
+**Not for you if "we'll write a stricter prompt" is the preferred answer.** We measured that approach for five months. It has a ceiling, and the ceiling is somewhere below MANDATORY in capital letters.
+
+## What It Costs
+
+**Engagements start at $10,000.**
+
+Scope drives the number: how many functions your agents cover, what they are allowed to touch, and how much of the governance already exists. A single well-bounded function with a clean credential story sits near the floor. A multi-function operation with production write access and a compliance story to satisfy sits well above it.
+
+We will give you a scoped number after one conversation, not after a discovery retainer.
+
+## The First Conversation
+
+Book a scoping call and bring the boring details: what your agents can currently reach, what you have already tried, and the rule you have rewritten the most times. That last one is usually where the real problem is hiding.
+
+You will get a straight read on whether this is worth doing at all — including "not yet," which we say often enough that it is worth putting in writing.
