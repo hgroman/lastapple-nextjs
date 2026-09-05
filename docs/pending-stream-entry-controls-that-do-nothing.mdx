@@ -1,0 +1,138 @@
+---
+title: "The Control Was On. That Was the Wrong Question."
+description: "Four times in five weeks we verified a safeguard, got a true answer, and were wrong anyway. Here is what each one was actually protecting."
+slug: "the-control-was-on"
+publishedAt: "2026-09-04"
+tags: ["ai-operations", "live-from-the-lab", "measurement", "security", "wordpress", "governance", "case-study"]
+category: "ai"
+featured: true
+published: true
+---
+
+*Live from the Lab — a field report. Every example is our own, measured from our own records and our own systems on the day of writing. Same back room as always, same sawdust.*
+
+---
+
+A client's online store was being hit with stolen credit cards. The team who owned the payment gateway had already applied exactly what they were asked to apply, and they had applied it correctly: a velocity limit capping attempts per hour, and a rule declining any transaction where the card security code did not match.
+
+Both settings were on. Both were correct. Anyone who opened the panel and asked "is fraud detection applied?" would have been told yes, and the yes would have been **true**.
+
+The attack continued anyway.
+
+---
+
+## One row deeper
+
+The gateway's fraud suite also checks the billing address. That filter was enabled too. What nobody had looked at was the row-by-row configuration underneath it.
+
+The address filter was set to **decline** on what you might call structural failures: no billing address supplied at all, malformed data, a card issued outside the country. Every one of those was correctly set to reject.
+
+Every **address-mismatch** response was set to allow.
+
+The specific response that means *street does not match, postal code does not match, extended postal code does not match* — which is precisely what a stolen card number with an invented billing address produces — was being waved straight through to authorization.
+
+So the filter was enabled. The filter was correctly described. The filter was, for this attack, doing nothing at all.
+
+We closed that row and the fraudulent orders stopped. But the finding that mattered was not the fix. It was that **every previous answer had been true**. "Is address verification on?" — yes. "Is the fraud suite enabled?" — yes. "Did the team apply what we asked?" — yes, correctly, and they deserve to be told so. Nobody had asked the only question that mattered, which is *which cases does it act on*.
+
+The sentence went into our incident record and has since been promoted to something we check against everywhere:
+
+> **A filter can be enabled, correctly described, and still not doing the thing you told the client it does.**
+
+---
+
+## The same shape, in a text file
+
+On another client's site we opened `robots.txt` — the file that tells search engines what they may crawl. It had rules in it. Sensible ones, including the standard protection on the admin directory.
+
+The specification for that file says a record ends at a blank line. The file had a blank line immediately after its first line, before any of its rules.
+
+Which means every rule below it was orphaned. Not overridden, not wrong — **outside the record entirely**, attached to nothing. The site's whole ruleset had been silently inert for as long as anyone could tell.
+
+There was no error, because there is no error to raise. A broken rule and an absent rule produce identical output: nothing. The file opens, the rules are visibly there, and a person reading it — including a person specifically checking it — sees a configured site.
+
+We repaired it, and then verified fifteen paths against the search engine's documented matching behaviour rather than trusting our own repair to read correctly. That last step is not paranoia. It is the only part of the process that produced evidence.
+
+---
+
+## The same shape, in our own repository
+
+Today, publishing a post on this very site, we went to commit and noticed the commit was not being checked.
+
+This repository carries two guards. One refuses a commit containing a credential. One refuses a commit containing a link that points nowhere. Both are written, both are committed, both have been in the repo for months and have their own documentation.
+
+Neither was running.
+
+Git hooks live behind a per-clone configuration setting, and `git clone` does not carry it. Anyone who clones this repository fresh gets all the guard scripts and none of the guarding. There is a warning designed to catch exactly this — and it did not reach us, because it prints early in a build whose output scrolls.
+
+The build went green. It had been going green.
+
+We ran the one-line installer, and the guards then passed on the very next commit: eighteen link targets checked, zero broken. They work. They had simply never been asked.
+
+**A control that exists in your repository but is not wired into your clone is indistinguishable, from the outside, from a control you never wrote.**
+
+---
+
+## The fourth one is about us, and it is the worst
+
+That is three safeguards that existed and enforced nothing. The fourth is the same law pointed the other way, and it is ours.
+
+A task in our own database says a payment control is "unconfirmed." It is timestamped twelve hours **before** the work that confirmed it. Nobody went back to update the row, because nobody ever does — the fix gets recorded somewhere else, in a session journal, and the original row keeps sitting there asserting an absence that stopped being true overnight.
+
+Four of us read that row. In sequence.
+
+The first wrote the false claim into the incident record itself, then found the evidence and retracted it, in terms worth quoting because they are harder on the author than we would have been:
+
+> "I asserted an absence without visiting the one place the evidence would be. That is the identical failure that produced this incident's original gap — committed a second time, by the record written to describe it."
+
+The second read that retraction, and then made the same error again, on the same incident, the same week.
+
+The third — one of our agents, working today — reported the stale row to us as measured fact, while in the same message correctly warning us not to treat settled-looking claims as current. It had opened the journal that disproved it earlier in the day and filtered the output down to four lines, and the sentence that would have corrected it was in the part filtered out.
+
+The fourth was this session. We escalated it to the operator as a live security exposure.
+
+He pushed back from memory against four agents holding a document, and he was right. The control had been verified seven weeks earlier, with him in the room.
+
+---
+
+## What the four have in common
+
+Every one of these is a **true statement at the wrong altitude.**
+
+"The filter is enabled" — true. "The rules are in the file" — true. "The guards are in the repository" — true. "The row says unconfirmed" — true.
+
+Each true statement was accepted as the answer to a question it does not answer. Enabled is not *acts on this case*. Present in the file is not *attached to a record*. In the repository is not *installed in this clone*. The row says is not *is*.
+
+And every one of them fails silently in the same direction: **toward looking fine.** A misconfigured filter processes payments. An orphaned rule file serves a 200. An uninstalled hook lets every commit through. A stale row reads like a current one. None of them raise anything, because in each case the broken state and the healthy state produce identical observable output.
+
+This is the same law we wrote about [when our AI agents kept ignoring written instructions](/stream/why-ai-agents-ignore-instructions) — where a compliance metric reported the problem doubling at the exact moment it had improved fivefold, because it counted a behaviour rather than an outcome. We thought that was a story about AI. It isn't. It is a story about verification, and AI just gave us more surfaces to get it wrong on, faster.
+
+---
+
+## What we do about it now
+
+Five things, all of which cost more than the check they replace, and all of which we now do:
+
+1. **Verify at the level of cases, not the level of on.** "Is it enabled" is a question about a checkbox. "Which inputs does it reject" is a question about behaviour. Only the second one has ever caught anything for us.
+
+2. **Prove the control by triggering it.** After repairing that rules file we ran fifteen paths through the search engine's own matching spec. After installing the guards we watched them refuse and then pass a real commit. A control you have not seen act is a control you are assuming.
+
+3. **Never assert an absence from a document.** Go to the system. All four failures above are the same act — reading a record about reality instead of reality. Our own agent did it while warning us against it, which is how strong the pull is.
+
+4. **Treat a stale row as a lie in waiting.** A task saying "unconfirmed," left unedited after confirmation, is not neutral. It is an active false claim that will be believed by the next four people who read it, and it will look authoritative because it is in the system of record.
+
+5. **Ask who verified, when, and against what.** "Seven weeks ago, in the vendor portal, by reloading the page after saving" is a verification. "It's in the notes" is not.
+
+---
+
+## Why we publish the ones where we look bad
+
+Because the alternative is a post about security best practices from someone who has never had a filter that was enabled and useless.
+
+We had four in five weeks. One on a client's payment path, one on a client's crawl rules, one in our own repository protecting our own credentials, and one in our own database that four consecutive agents — and one of them twice — read as current fact.
+
+The operator caught the last one by remembering something the documents disagreed with. That is not a process. It does not scale, and it is exactly what a system this size is supposed to make unnecessary. That we needed it is the finding, not the save.
+
+If you are evaluating whether someone can be trusted to run systems inside your business, the question is not whether their controls have ever been silently off. Everyone's have. The question is whether they check at the level where it shows, and whether they will tell you when the check failed.
+
+This is ours.
