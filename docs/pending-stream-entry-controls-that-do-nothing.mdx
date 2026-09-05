@@ -31,9 +31,15 @@ Every **address-mismatch** response was set to allow.
 
 The specific response that means *street does not match, postal code does not match, extended postal code does not match* — which is precisely what a stolen card number with an invented billing address produces — was being waved straight through to authorization.
 
+Only that one row was closed. Its neighbours — street matched but postal code did not, postal code matched but street did not — were deliberately left open, because declining those blocks real customers with apartment numbers and abbreviated street names, on a store taking a couple of orders a week. The fix was one row, chosen; not a blanket tightening. Knowing which row mattered is the entire job.
+
 So the filter was enabled. The filter was correctly described. The filter was, for this attack, doing nothing at all.
 
-We closed that row and the fraudulent orders stopped. But the finding that mattered was not the fix. It was that **every previous answer had been true**. "Is address verification on?" — yes. "Is the fraud suite enabled?" — yes. "Did the team apply what we asked?" — yes, correctly, and they deserve to be told so. Nobody had asked the only question that mattered, which is *which cases does it act on*.
+The row was changed. The store had been reopened once before without that change, and the attack returned within hours — two fraudulent orders eight minutes apart, matching the previous wave's signature exactly. Reopened again with the row closed, four weeks passed with no fraudulent order at all against eight clean ones.
+
+That is not proof. A control that works and an attacker who moved on look identical from outside. But it is the closest thing to a controlled test an incident ever hands you: same surface, same store, one variable moved, and a documented precedent showing what unfixed looks like.
+
+And the finding that mattered was still not the fix. It was that **every previous answer had been true**. "Is address verification on?" — yes. "Is the fraud suite enabled?" — yes. "Did the team apply what we asked?" — yes, correctly, and they deserve to be told so. Nobody had asked the only question that mattered, which is *which cases does it act on*.
 
 The sentence went into our incident record and has since been promoted to something we check against everywhere:
 
@@ -67,9 +73,17 @@ Git hooks live behind a per-clone configuration setting, and `git clone` does no
 
 The build went green. It had been going green.
 
-We ran the one-line installer, and the guards then passed on the very next commit: eighteen link targets checked, zero broken. They work. They had simply never been asked.
+We ran the one-line installer and the guards passed on the very next commit: eighteen link targets checked, zero broken. They work. They had simply never been asked.
 
 **A control that exists in your repository but is not wired into your clone is indistinguishable, from the outside, from a control you never wrote.**
+
+Except that is not where this one ended, and the rest of it is worse.
+
+Hours later, checking the site by hand, we found three links on the **homepage** pointing at pages that do not exist. The link checker — now installed, now running, now passing — had reported a clean tree on every single run.
+
+It could not see them. It matched markdown links and `href=` attributes, and those three routes are stored in a component as an object key called `link`. Real links, rendered, clickable, dead, and written in a shape the guard had no pattern for. Widening it took one line, and the count of links it audits went from eighteen to thirty.
+
+So it had been checking sixty percent of the site and reporting success. **A partial check that announces completion is worse than no check at all, because it is the reason nobody looks.** We had spent the morning congratulating ourselves for installing it.
 
 ---
 
@@ -90,6 +104,8 @@ The second read that retraction, and then made the same error again, on the same
 The third — one of our agents, working today — reported the stale row to us as measured fact, while in the same message correctly warning us not to treat settled-looking claims as current. It had opened the journal that disproved it earlier in the day and filtered the output down to four lines, and the sentence that would have corrected it was in the part filtered out.
 
 The fourth was this session. We escalated it to the operator as a live security exposure.
+
+None of that was caught by an agent noticing. Three warnings about this exact anti-pattern were already sitting on that incident record — including the first retraction, written specifically so nobody would repeat it — and a fourth reader walked straight into it anyway, not out of carelessness. What stopped it was the operator refusing the answer and sending someone back to do the work. The written warnings caught nobody. A human declining to accept a confident report caught it.
 
 He pushed back from memory against four agents holding a document, and he was right. The control had been verified seven weeks earlier, with him in the room.
 
