@@ -216,9 +216,17 @@ function matchRedirect(rules, path) {
 
 // ── Link extraction ─────────────────────────────────────────────────────────
 
-// Markdown links, JSX href=, next/link href={}, and JSON "url" fields.
+// Markdown links, JSX href=, next/link href={}, and OBJECT PROPERTIES that hold a route.
+//
+// TRAP 3 — the property that isn't called href. On 2026-09-04 three links on the HOMEPAGE
+// were live 404s (/services/wordpress-care, /services/ai-marketing, /services/system-integration)
+// and this checker reported a clean tree. They live in src/components/SolutionsGrid.tsx as
+// `link: '/services/...'` — an object key named `link`, not an `href=` attribute and not a
+// quoted "url" field, so the old pattern could not see them. The guard existed, had self-tests,
+// and did not cover the case. Route-bearing keys are now matched quoted OR unquoted.
+// If you add a new component that stores a route under some other key name, add it here.
 const LINK_RE =
-  /(?:\]\(\s*<?|href\s*=\s*["'{`]\s*|href\s*=\s*\{?\s*["'`]|["']url["']\s*:\s*["'])((?:https?:\/\/(?:www\.)?lastapple\.com)?\/[^)"'`\s>{}\]]*)/g;
+  /(?:\]\(\s*<?|href\s*=\s*["'{`]\s*|href\s*=\s*\{?\s*["'`]|["']?(?:url|link|href|to|path)["']?\s*:\s*["'`])((?:https?:\/\/(?:www\.)?lastapple\.com)?\/[^)"'`\s>{}\]]*)/g;
 
 function normalize(raw) {
   let u = raw.replace(/[>.,;]+$/, '');

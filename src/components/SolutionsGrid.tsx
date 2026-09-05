@@ -11,7 +11,7 @@ const solutions = [
     description: 'Performance optimization, security hardening, and proactive maintenance for WordPress sites that just work.',
     features: ['Sub-second load times', '24/7 monitoring', 'Weekly updates'],
     color: 'from-blue-500 to-cyan-500',
-    link: '/services/wordpress-care',
+    link: '/services/wordpress-maintenance',
   },
   {
     icon: Brain,
@@ -19,7 +19,7 @@ const solutions = [
     description: 'From lead enrichment to content generation—AI systems that multiply your marketing impact.',
     features: ['GPT integrations', 'Auto-generated content', 'Smart personalization'],
     color: 'from-violet-500 to-purple-500',
-    link: '/services/ai-marketing',
+    link: '/services/digital-marketing',
   },
   {
     icon: Cog,
@@ -27,7 +27,7 @@ const solutions = [
     description: 'Connect your tools, automate your workflows, and build data pipelines that scale.',
     features: ['n8n workflows', 'API development', 'Data sync'],
     color: 'from-amber-500 to-orange-500',
-    link: '/services/system-integration',
+    link: '/solutions/data-integration',
   },
 ];
 
