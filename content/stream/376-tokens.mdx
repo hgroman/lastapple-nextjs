@@ -1,0 +1,73 @@
+---
+title: "We Built a Proxy to See Where the Money Goes. The Prompt Was 376 Tokens."
+description: "We were going to switch AI tools to cut the bill. Then we measured 20 requests and found the prompt was 0.04% of what we were paying for."
+slug: "376-tokens"
+publishedAt: "2026-09-05"
+tags: ["ai-operations", "live-from-the-lab", "measurement", "cost", "claude-code", "case-study"]
+category: "ai"
+featured: false
+published: false
+---
+
+In April we were going to switch AI coding tools to save money. We built a proxy first, to find out what we were actually paying for.
+
+Twenty requests later the plan was dead, and not because it was wrong. Because it was aimed at the wrong number.
+
+## The Plan Everyone Agreed On
+
+The setup was ordinary: a heavy Claude Code habit, a bill that kept climbing, and no visibility into which part of it was which. There was a second constraint too, and it mattered more than the money — client code must not reach a provider nobody had vetted, and that needed to be enforceable at the wire rather than by remembering to type the right flag.
+
+So the same question went to four models — ChatGPT, Gemini, Grok and Perplexity — with a deliberately unfriendly prompt: terminal-first, exact commands, config files, validation steps, rollback notes. Make a decision, don't hand me options.
+
+They agreed almost completely. All four said: use Aider as the repo-aware engine, route everything through one gateway, run a cost-tier model as the daily driver, and add a local proxy **later** for metering and routing. All four quarantined the cheapest provider to non-sensitive repositories, unprompted.
+
+About three-quarters of the four answers were the same answer. The interesting quarter was elsewhere: one of the models ignored the question and rewrote *our prompt* instead, adding "do not ask clarifying questions" and "prefer commands and config over explanation" to cut what it called consultant theater. It was right, and it was the most useful thing any of them said.
+
+## We Built the Last Stage First
+
+The plan put the proxy in stage four. We built it first, and pointed it at the tool we already had rather than the one we were planning to buy.
+
+It is a pass-through: our agent talks to `localhost:4000`, which forwards its requests, unmodified, upstream. The agent never learns it is being watched. Nothing about how it works changes. Every request it makes becomes a row in a log.
+
+So the first artifact of a project about replacing an expensive tool was an instrument for measuring it. That ordering is the entire story.
+
+## What Twenty Requests Said
+
+Ten minutes of one working session. Twenty requests, all successful.
+
+| | Tokens |
+|---|---:|
+| Fresh input | **376** |
+| Written to cache | **190,620** |
+| Read from cache | **821,620** |
+| Output | 7,177 |
+
+Cost for the ten minutes: **$1.07.**
+
+Read the first row again. Across twenty requests, the agent sent **376 tokens** of genuinely new input. Everything else it consumed — more than a million tokens — was cache being written and read back.
+
+What was in the cache: **59 tool definitions**, attached to nineteen of the twenty requests, and a system prompt of **15,676 characters**. Identical every turn. That is why it caches well. It is also why it is the entire bill.
+
+And one more number that changes how you think about a "request": **seventeen of the twenty ended in a tool call**, not an answer. One thing a person asked for cost about seven round trips — each one re-reading the same fixed payload.
+
+## Why the Switch Died
+
+Every one of those four plans optimised the same variable: price per token. Move to a model at a tenth the rate, pay a tenth as much. The arithmetic is correct.
+
+It is aimed at 0.04% of what we were consuming.
+
+**The cost is not in what you send. It is in what you carry.** A cheaper model reduces the price of the overhead. It does not reduce the overhead. And the switch would have cost something real — the tool loop, the skills, the framework already working — in exchange for a discount on a rounding error.
+
+Nobody could have known that before the proxy existed. Before the proxy, the bill was one number with no parts.
+
+So the sentence we actually bought, for about a dollar: **you cannot reason about agent cost from how long your prompt is. Nobody's prompt is the problem.**
+
+## The Part We Should Say Out Loud
+
+This sat in a research folder for five months and nobody looked at it again, because from the outside it looked like an abandoned experiment. The switching project *was* abandoned. The measurement wasn't — it was just never claimed.
+
+That is what an unclaimed win looks like: a config file, a log, and four markdown documents in a directory nobody opened.
+
+A caveat we will not bury: these are twenty requests, in one ten-minute window, on one day, with one tool, at that month's model prices. The dollar figure is a measurement, not a rate card, and the ratio would move with a different tool or a longer session. What survives is the shape — cache traffic beating fresh input by three orders of magnitude — not the digits.
+
+We had already written our own version of the conclusion before we measured it, in the principle we use for building agents: *the fastest agent is the one carrying exactly what it needs and nothing else.* It turns out that was not a philosophy. It was a description of the invoice.
