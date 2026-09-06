@@ -9,6 +9,7 @@ features:
   - "Deliverability and sender-reputation remediation, including getting a suspended account reinstated"
   - "List hygiene that distinguishes a dead address from a live customer who has stopped listening — those need opposite responses"
   - "Platform administration: the routing defaults that silently drop mail nobody knows is missing"
+  - "Campaign readiness: SMS/10DLC registration remediation, consent language, and privacy policy carve-outs that survive a carrier review"
   - "Findings that end in 'stop sending and pick up the phone' when that is what the data says"
 cta:
   text: "Book a scoping call"
@@ -89,6 +90,14 @@ Mail platforms ship with routing behaviour that is documented, sensible, and inv
 - **Mail sent on behalf of another mailbox is not copied to the sender's own sent items** by default, so the person who sent it has no record that they did.
 
 Both are default-on behaviours, not faults. Both are the kind of thing found by reading the tenant's actual configuration rather than asking whether email is working.
+
+## Campaign Readiness: Getting Approved Before You Send
+
+The same discipline applies one layer earlier, when a channel will not let you start at all.
+
+SMS campaign registration is the common one: a carrier rejects a campaign and the rejection reason is a category, not an explanation. Getting through it is a remediation job, not a resubmission job — the privacy policy needs specific telecom carve-outs, the consent language on the form has to match what the campaign says it collects, and the resubmission has to address the actual objection rather than restate the application.
+
+It is the same work as an ESP reinstatement wearing different vocabulary: **read what the reviewer will actually check, make the thing on the page true, then say so.** Normally that means a compliance lawyer, a web developer and a messaging specialist. It is one engagement here.
 
 ## Who This Isn't For
 
