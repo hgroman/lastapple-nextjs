@@ -31,7 +31,7 @@ Six weeks. **Fifty dated shipped items. Eighty-four captured hours.** A complete
 - A client-facing platform surface: their own initiatives, self-service create and edit, document upload across six formats with text extraction
 - The content engine itself — **7 tables, 16 foreign keys, zero cascade deletes, 13 client-callable database functions, 13 endpoints, three screens and a multi-form chooser** — plus the provenance machinery that lets a generated story cite which person and which source each individual claim came from
 - An interview instrument that grew from 17 to 32 questions **as data, with no deploy**, gained a second archival questionnaire, and learned to reopen a filled-in form when someone answers across several sittings
-- **329 front-end tests, mutation-checked** — which is to say we checked that the tests would actually fail if the code broke, rather than trusting a green tick
+- **A front-end test suite in the hundreds, checked by hand for whether it would actually fail** — we broke the code deliberately to see whether the tests noticed, rather than trusting a green tick. (There is no automated mutation-testing tool in the repo, and we are not implying one.)
 
 Conventional procurement for that scope is six specialists — architect, database, backend, frontend, DevOps, security — coordinated across three to five months including discovery, spec and QA.
 
