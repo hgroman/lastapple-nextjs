@@ -51,6 +51,29 @@ A spoke sends motivated readers into a pillar page. If that pillar's central pro
 
 A page that says "currently integrates with eleven platforms" inside FAQ schema is not marketing copy. It is a structured claim that Google reads and a buyer acts on. It gets checked with the platform owner directly, not inferred from a distributor's help pages.
 
+## When The Expert Is Already On Your Payroll
+
+Primary sources are not always a vendor's documentation. Sometimes the primary source is the person down the hall from you, and the problem is that nobody has ever asked them the right question.
+
+On a life-sciences engagement, Search Console showed one technical article sitting at position 7.8 with roughly 20,600 impressions and 137 clicks — a 0.7% click-through rate. It was ranking. Nobody was reading it.
+
+The query data said why. People were arriving on operational questions — how the assay is designed, what goes wrong, what the regulator expects at release — and the page answered descriptively. **It was accurate and it was not useful,** which is a distinction traffic reports cannot see and a practitioner notices in four seconds.
+
+So we did not write anything. We reverse-engineered five questions out of the gap between what people searched and what the page said, and sent them to the client's own staff scientist — a PhD who does this work for a living and had never been asked to write for the website.
+
+His answers became two new sections and three rewritten ones, including the single most valuable line on the page: that a result in the dish does not equal a result in a patient. **No agency writer produces that sentence.** It is the kind of thing only a practitioner volunteers, and only when the question is specific enough to be worth their time.
+
+The workflow around it is the actual service:
+
+- **Find the question from the data,** not from a keyword tool — the gap between the query and the answer is where the expert's time is worth spending
+- **Ask in a form a busy specialist will actually answer,** which means five precise questions, not "can you review the site"
+- **Return the draft in the format they want to edit in.** When our HTML review email turned out to be the wrong tool for a scientist who wanted to mark up prose, we produced a Word version for tracked changes rather than asking him to adapt to us
+- **They approve before it publishes.** Their name is on the expertise; the sign-off is not a formality
+
+That is what "expert-led" means here. **The authority is your staff. Our job is to find the question worth their time, and to get the answer onto the page without flattening it.**
+
+The same principle drives internal linking. On the same account, links were placed out of a published article using Search Console performance to choose the targets — reinforcing the clusters that were already ranking and deliberately routing authority to one commercial services page — rather than linking wherever a phrase happened to fit.
+
 ## What E-E-A-T Actually Requires
 
 Google's guidance on Experience, Expertise, Authoritativeness and Trust gets treated as an author-bio problem — add a headshot, add credentials, done.
@@ -69,6 +92,20 @@ Content only works if the crawler agrees. Same hands, same engagement:
 - **Render verification on the live URL** after cache flush, because a green build is not evidence that anything reached a reader
 
 We publish our own failures in this area too. The [Stream](/stream) has the audit where our own site was found publishing into a void with dead analytics for seven months.
+
+### What A 404 Report Is Actually Hiding
+
+An automated weekly error report had been landing in an inbox for months. Nobody opened it, because nothing on the site looked broken and nobody had complained.
+
+Inside it was a redirect quietly sending on the order of a thousand visitors a month to a **retired** copy of the client's flagship service page — while the live version of that page was carrying 88,558 impressions over a 455-day Search Console window. Every one of those visitors landed on the wrong version of the most commercially important page on the site. Nothing was down. Nothing alarmed.
+
+Two things about how that got fixed are the reason this is a service and not a task:
+
+**Roughly 140 of about 500 real error hits were two link bugs repeated** — not two hundred broken pages. A vendor billing per redirect rule would have written a hundred rules, cleared the log, declared victory, and left both defects sitting in the published content to keep generating hits. We fixed the links.
+
+**A 108-entry glossary was unreachable, and we advised against rebuilding it.** The obvious move was to restore it. Search Console showed zero impressions across those URLs over fifteen months, and the traffic the hub did get was students and reagent shoppers — not the client's buyer. We consolidated what was worth keeping and told them not to spend the money on the rest.
+
+And the redirect rule that would have looped back on its own destination was caught by dry-running the pattern before it went anywhere near the live site, rather than by a customer finding it.
 
 ## Who This Isn't For
 

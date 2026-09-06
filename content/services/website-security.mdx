@@ -1,0 +1,102 @@
+---
+title: "Website Security & Incident Response"
+description: "Compromise triage, eradication and verified recovery — plus the review that finds what the alert never mentioned. WordPress, from the server side."
+icon: "ShieldAlert"
+category: "wordpress"
+features:
+  - "Compromise triage from the server, not the plugin dashboard — file integrity, upload paths, scheduled tasks and admin roster read directly"
+  - "Restore-point forensics before any restore, because the obvious backup is often already infected"
+  - "Eradication that includes the persistence you did not go looking for — rogue accounts, standing third-party grants, remote-control channels"
+  - "Posture reviews that are not triggered by an alert, and that report a clean verdict as a deliverable in its own right"
+  - "Layered form and bot defence, on the assumption that any single challenge will eventually be defeated"
+  - "A written account of what was found, what was changed, and what we deliberately did not touch"
+cta:
+  text: "Book a scoping call"
+  href: "/contact"
+published: false
+order: 3
+---
+
+## What This Is
+
+Two things get sold as website security. One is a monitoring plugin that emails you when a version number changes. The other is a person who arrives after something has already happened.
+
+This is the second one, plus the part almost nobody buys: **the review that goes looking before there is an alert to react to.**
+
+The through-line across every engagement below is the same. **The alert is rarely the most important thing on the site.** It is the thing that happened to be instrumented.
+
+## When The Site Is Already Compromised
+
+One engagement began the way most do — something looked slightly wrong. What the server actually held was a supply-chain compromise inherited from a previous developer.
+
+The site was running cracked commercial plugins, pulled from one of the "GPL vault" resale sites that redistribute paid software with the licence checks removed. Three things came with them:
+
+- **An active file-upload webshell.** Not a dormant artifact. A working remote channel for putting new files on the server.
+- **A cracked page builder that sabotaged the genuine licence.** The client was paying for the real product, and the counterfeit copy was preventing it from activating — so the legitimate updates that would have closed known vulnerabilities never arrived.
+- **Hidden remote-control channels that survived restores.** This is the part that matters commercially: the site could be rolled back and would come back compromised, which is exactly why the problem had persisted.
+
+The same-day response was forensic triage, malware and backdoor removal, replacement of the counterfeit software with genuine licensed builds, full credential rotation, edge and firewall hardening, and a verified-clean backup taken at the end rather than assumed at the start.
+
+## The Restore Point Is Part Of The Attack
+
+The single most expensive mistake in a WordPress compromise is restoring to a backup taken after the intrusion and before the symptom.
+
+On that engagement the obvious restore point was still infected. Establishing that — reading the attack chain backwards until the first known-clean state is identified, rather than picking the most recent backup that renders — is why the recovery held. A full integrity sweep across 24,939 files followed, so "clean" meant enumerated rather than believed.
+
+**A restore that reinstates the backdoor is not a recovery. It is a delay with an invoice attached.**
+
+## The Review That No Alert Triggered
+
+A different engagement started from a low-grade automated warning about an outdated component. The warning was accurate and almost irrelevant.
+
+The review it prompted found a **third-party access grant issued in 2020 that was still live** — and that had survived a full post-compromise credential rotation earlier that year, because the rotation's scope said "all credentials" and an external integration's standing grant was not in anybody's list. It also found **no two-factor authentication on any administrator account.**
+
+Neither of those generates an email. Ever. A control that was never configured and a control that silently stopped working look identical from outside the server, and monitoring products are built to report change, not absence.
+
+## A Clean Verdict Is A Deliverable
+
+On another site we ran a multi-vector review — core file integrity against the official checksums, a malware and webshell sweep, and a cloaking test that compares what the server returns to a search crawler against what it returns to a browser, because a site can be serving one thing to Google and another to you.
+
+**It came back clean.** Scanner: zero issues. That result was written up and delivered exactly as thoroughly as a bad one would have been, in one session, with a verdict the client could act on.
+
+We say this plainly because the incentive runs the other way. A security vendor that never finds anything struggles to justify itself, and the temptation is to inflate a housekeeping item into a threat. A clean report you can trust is worth more than a long one you can't.
+
+## Forms And Bots: Layered, On Purpose
+
+Contact forms are the cheapest way into a site's inbox, its CRM and its sender reputation.
+
+We deploy **layered** defence — an invisible trap field plus a modern challenge widget, with rate limiting and content filtering behind them — on the working assumption that **any single challenge will eventually be defeated.** We don't publish a claim about which vendor's challenge is currently strongest, because that changes faster than a service page does. The design principle is what survives: no single control carries the whole load.
+
+The other half is knowing that the same-looking symptom can be two different threats. A form flooded by a scripted bot and a form used by a human operation are not the same problem and do not take the same fix, and choosing the lighter control when the lighter control is sufficient is part of the work.
+
+## What We Decline
+
+**We do not sell a monitoring subscription as security.** Monitoring is a smoke alarm. It is worth having and it is not a fire department.
+
+**We do not publish our incident specifics with client names attached.** Everything above is anonymized. If your engagement goes badly, it does not become a case study — and neither does anyone else's without a signed conversation first.
+
+**We will not tell you an incident was neutralized when it was contained.** Those are different words with different meanings, and the difference is the part a buyer deserves to hear accurately.
+
+## Who This Isn't For
+
+**Not for you if you want a compliance certificate.** We are not an auditor and we will not sign an attestation. If the requirement is a badge for a procurement form, buy the badge.
+
+**Not for you if we can't reach the server.** This work happens over SSH and the command line. Locked-down hosting with no shell access removes most of the advantage, and we will say so before you pay for it.
+
+**Not for you if the answer has to be "you're fine."** Reviews sometimes find that the most serious problem is one nobody had noticed and nobody had budgeted for. If that is unwelcome news rather than useful news, this engagement will be uncomfortable.
+
+**Not for you if you want ongoing updates and backups.** That is a maintenance plan, it starts at $97/month, and it is a genuinely different product. Buy [that one](/services/wordpress-maintenance) instead.
+
+## What It Costs
+
+Incident response is scoped to the incident, and the first hour is triage rather than a quote — we cannot price a compromise before we know what is in it.
+
+Reviews are scoped per site. The usual starting point is a posture review of one property: what its controls actually enforce, who still holds access to it, and what is currently on the server that nobody put there deliberately.
+
+Quoted after one conversation, not after a discovery retainer.
+
+## The First Conversation
+
+If something is happening right now, say that first and skip the rest — the sequence changes when the site is live and hostile.
+
+Otherwise, bring the list of everyone who has ever had access, including the agencies and contractors you no longer work with. In our experience that list is where the finding usually is.
