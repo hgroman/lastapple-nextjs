@@ -15,7 +15,7 @@ Twenty requests later the plan was dead, and not because it was wrong. Because i
 
 ## The Plan Everyone Agreed On
 
-The setup was ordinary: a heavy Claude Code habit, a bill that kept climbing, and no visibility into which part of it was which. There was a second constraint too, and it mattered more than the money — client code must not reach a provider nobody had vetted, and that needed to be enforceable at the wire rather than by remembering to type the right flag.
+The setup was ordinary: a heavy Claude Code habit, a bill that kept climbing, and nobody reading which part of it was which. There was a second constraint too, and it mattered more than the money — client code must not reach a provider nobody had vetted, and that needed to be enforceable at the wire rather than by remembering to type the right flag.
 
 So the same question went to four models — ChatGPT, Gemini, Grok and Perplexity — with a deliberately unfriendly prompt: terminal-first, exact commands, config files, validation steps, rollback notes. Make a decision, don't hand me options.
 
@@ -58,7 +58,7 @@ It is aimed at 0.04% of what we were consuming.
 
 **The cost is not in what you send. It is in what you carry.** A cheaper model reduces the price of the overhead. It does not reduce the overhead. And the switch would have cost something real — the tool loop, the skills, the framework already working — in exchange for a discount on a rounding error.
 
-Nobody could have known that before the proxy existed. Before the proxy, the bill was one number with no parts.
+The per-request numbers were there all along — the API reports cache reads and writes on every call. Nobody had ever added them up and put them next to the decision they were supposed to inform. That is the gap the proxy closed: not access to the data, but the habit of reading it before signing off on a migration.
 
 So the sentence we actually bought, for about a dollar: **you cannot reason about agent cost from how long your prompt is. Nobody's prompt is the problem.**
 
