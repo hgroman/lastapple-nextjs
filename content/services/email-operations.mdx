@@ -1,0 +1,107 @@
+---
+title: "Email Operations"
+description: "Most email problems are measurement problems. We check that the numbers are real before we try to move them — and sometimes we tell you to stop emailing."
+icon: "Mail"
+category: "ai"
+features:
+  - "Instrumentation verified before optimisation — a rate you cannot trust is worse than no rate"
+  - "Compliance mechanics checked at the token level, not the template level: a broken opt-out and a missing one look identical in a preview"
+  - "Deliverability and sender-reputation remediation, including getting a suspended account reinstated"
+  - "List hygiene that distinguishes a dead address from a live customer who has stopped listening — those need opposite responses"
+  - "Platform administration: the routing defaults that silently drop mail nobody knows is missing"
+  - "Findings that end in 'stop sending and pick up the phone' when that is what the data says"
+cta:
+  text: "Book a scoping call"
+  href: "/contact"
+published: false
+order: 6
+---
+
+## What This Is
+
+Email is the channel where everyone believes their numbers and almost nobody has checked them.
+
+Our work starts one layer below the campaign: **is the thing you are measuring actually being measured, and is the mechanism you believe is running actually running?** On more than one engagement the answer has been no, and the campaign that got "optimised" on top of it was optimising a fiction.
+
+## The Opt-Out That Was a Broken Link
+
+A healthcare technology client's campaign footers carried an unsubscribe token their sending platform did not recognise. Two wrong variants were in circulation — one from a previous platform entirely, inherited when content was imported.
+
+The platform did not error. It treated the tag as a **tracked link column** and shipped it to recipients as a literal broken URL where the opt-out should have been.
+
+That is two failures at once. A working opt-out is a legal requirement in most of the world. It is also the mechanic that keeps a sending account out of trouble with its own provider — and this account had already been suspended twice.
+
+**How the right answer was found is the part worth hiring:** not from documentation and not from memory, but from the account's own history. Sampling templates across the account showed the two most recently authored native templates using the correct tag, while every imported one carried the foreign token. The defect had a lineage — it entered through imported content and propagated every time somebody duplicated one of those templates.
+
+So the fix was not the live campaigns. **The fix was the saved templates**, because the next thing anyone does is recreate a campaign from one. Repairing what is in flight and leaving the source alone means doing it again next quarter.
+
+## We Fixed the Measurement Before We Reported the Result
+
+On the same account, the platform was recording almost no opens.
+
+Not because nobody opened. Because the templates were fragments imported from another system and were missing a closing body tag — and the platform injects its open-tracking pixel immediately before that tag. There was nowhere to put it.
+
+Every open rate on that account, for as long as those templates had been in use, was fiction. After the fix the channel opened at **15.81%**, within a point of a known-good comparable send to the same lists — which is corroboration rather than a lucky number, and we say which one it is.
+
+**You cannot optimise a metric that is not being recorded.** Checking that first is unglamorous, it delays the interesting work by a day, and it is the difference between a report and a guess.
+
+## The Number That Meant "Stop Emailing"
+
+Then the campaign itself. Rebuilt around a single question — *does the product you already own work with the system you already use* — and sent to **12,736 contacts**:
+
+| | This send | Prior campaign |
+|---|---:|---:|
+| Click rate | **1.00%** | 0.51% (nine-email average) |
+| Click-to-open | **12.4%** | a 2–6% norm |
+| Unsubscribes | **0.06%** | 0.72% peak |
+
+Doubled clicks, click-to-open at twice the top of the normal band, unsubscribes at a twelfth of the prior peak. A good result, proven and repeatable.
+
+**And the finding we actually delivered was not that.**
+
+Roughly **790 of the client's paying customers had now ignored two consecutive emails** — the second one written specifically to be useful to people in exactly their position. Their open rate was statistically flat between the two sends.
+
+The reflex is to call that list hygiene and cut them. **That is wrong, and it is wrong in a way that costs real money.** These are customers under contract, not cold prospects. Cutting them saves nothing, and you do not stop emailing people who pay you.
+
+What the number actually says is that **email has stopped working as a retention channel for 790 people who are giving this business money every month.** That is a churn signal wearing a deliverability costume — and it arrived against a backdrop of a large cancellation request and users lost the same month.
+
+So the deliverable was a **phone list**, not another campaign. Two sends had now established that the cheap channel does not reach this cohort. Naming them was the product.
+
+**We are comfortable telling a client that the channel they hired us for is the wrong instrument for the problem they have.** That is what the engagement is for.
+
+## Getting Reinstated, Honestly
+
+When a sending platform suspends an account, the reinstatement is a compliance review by a human who will look at your actual forms.
+
+We have run that review. Two things decided it:
+
+**We corrected the consent description to the weaker truth.** The draft could have claimed double opt-in. The forms use single opt-in with a required consent checkbox. Claiming the stronger mechanism would have failed the moment the reviewer opened the form — so we described what was actually there, and offered to enable the stronger one going forward as the cooperative gesture rather than as a claim about the past.
+
+**We kept the story consistent with the previous ticket.** Providers retain ticket history. An earlier suspension had already conceded a cause; the new reply committed to that same cause rather than resurrecting a more flattering theory from the first incident. A reinstatement request that contradicts your own file is worse than a late one.
+
+The lever that actually clears these reviews is a consent-checkbox screenshot and the form URL. Knowing that is most of the job.
+
+## Platform Administration: The Defaults Nobody Reads
+
+Mail platforms ship with routing behaviour that is documented, sensible, and invisible until it costs you something. Two we have verified in the field:
+
+- **A shared mailbox can silently reject mail from external senders** by default, with no bounce anyone internally sees. The mail simply does not arrive, and nobody is told.
+- **Mail sent on behalf of another mailbox is not copied to the sender's own sent items** by default, so the person who sent it has no record that they did.
+
+Both are default-on behaviours, not faults. Both are the kind of thing found by reading the tenant's actual configuration rather than asking whether email is working.
+
+## Who This Isn't For
+
+**Not for you if you want more sends.** Volume is not the constraint in most accounts we see, and we will usually recommend fewer emails to fewer people.
+
+**Not for you if the number has to go up.** Sometimes the honest report is that a cohort has stopped listening and the answer is a different channel. If that reads as failure rather than as the most valuable thing we could tell you, this will be frustrating.
+
+**Not for you if we cannot see the platform.** This work happens inside your sending account and your mail tenant. Screenshots and exports are not enough.
+
+**Not for you if you are buying a list.** We will not send to one, and an account that has sent to one is a remediation engagement before it is a campaign engagement.
+
+## What It Costs
+
+Scoped per engagement. The usual starting point is an audit of what your account is actually measuring and what its compliance mechanics actually do — which is cheap, fast, and has never once come back clean.
+
+Quoted after one conversation, not after a discovery retainer.
