@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/solutions/b2b-email-list',
-        destination: '/services/digital-marketing',
+        destination: '/services/email-operations',
         permanent: true,
       },
       {
@@ -154,7 +154,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ai-powered-b2b-email-list-services/:path*',
-        destination: '/services/digital-marketing',
+        destination: '/services/email-operations',
         permanent: true,
       },
       {
@@ -199,7 +199,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/solutions/b2b-email-lists',
-        destination: '/services/digital-marketing',
+        destination: '/services/email-operations',
         permanent: true,
       },
       {

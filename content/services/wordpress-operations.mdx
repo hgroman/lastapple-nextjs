@@ -8,7 +8,7 @@ features:
   - "Every content intervention measured against a locked pre-change baseline, with an untouched control group where one exists"
   - "Verdicts scheduled in advance — four, eight and thirteen weeks — including the read that could prove the work didn't help"
   - "Alerts triaged to root cause, because most of them are billing signals or config artifacts rather than faults"
-  - "Security posture reviewed beyond the alert that prompted it — standing third-party grants, admin 2FA, credential-rotation completeness"
+  - "Controls verified as enforcing rather than merely present — a robots rule, a redirect or a scheduled task can be in place and silently inert"
   - "Changes we decline, and why, written down as part of the deliverable"
 cta:
   text: "Book a scoping call"
@@ -68,7 +68,7 @@ This is the category we find most often, and it is invisible from a dashboard by
 
 **An entire robots.txt ruleset was silently inert.** A blank line immediately after `User-agent: *` terminates the record per specification, orphaning every rule below it — in this case including the `/wp-admin/` protection everyone assumed was in force. It had been that way for a long time and nothing reported it, because a broken rule and an absent rule look identical from the outside. We repaired it and then verified fifteen of fifteen paths against Google's documented matching behaviour rather than trusting the file to read correctly.
 
-**A security alert was the least important thing on the site.** An outdated-plugin notice prompted a full posture review. That review found a third-party access grant issued in 2020 that was still live and had survived a post-compromise credential rotation earlier that year — the rotation's scope said "all credentials" and this external grant was not in it. It also found no two-factor authentication on any administrator account. Neither would ever have generated an email.
+**A security alert was the least important thing on the site.** An outdated-plugin notice prompted a full posture review, and what it found had nothing to do with the plugin — standing third-party access nobody had revoked, and administrator accounts with no second factor. Neither would ever have generated an email. That review is told in full on the [website security page](/services/website-security), which is where this work goes when the question stops being operational and starts being an incident.
 
 **A repository file was carrying an instruction to destroy a live page.** A frozen snapshot of a client's flagship hub page began with a header telling any future reader to regenerate the page from that file. The snapshot predated three sections that were live. Following its own instruction would have silently deleted all three, dropped the page's citations, reverted its title and broken its links to three other pages. We found it and disarmed it before anyone acted on it.
 
