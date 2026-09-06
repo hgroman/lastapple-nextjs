@@ -27,7 +27,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agency-os/src/vpos-cli/classify-if-ready.sh --from cxm_lastapple"
+          }
+        ]
+      }
     ]
   },
-  "_comment": "Committable Claude Code settings. UserPromptSubmit + PreToolUse run the launch-path-independent session-registration guard (ensure-session-registered.sh): seeds agency_session_registry for job/bridge/headless-p launches where the SessionStart hook (and preflight §10) never run. Marker-guarded, fail-open. Task 80de6ffa / The Engine Room."
+  "_comment": "Committable Claude Code settings. UserPromptSubmit + PreToolUse run the launch-path-independent session-registration guard (ensure-session-registered.sh): seeds agency_session_registry for job/bridge/headless-p launches where the SessionStart hook (and preflight \u00a710) never run. Marker-guarded, fail-open. Task 80de6ffa / The Engine Room. Stop hook added 2026-09-06 (CORTEX): classify-if-ready.sh only ran on UserPromptSubmit, which fires BEFORE the turn is on disk, so it depended on a NEXT prompt to classify the previous one. A single-turn headless session has no next prompt, so it was never classified at all \u2014 579 of the 655 unexamined transcripts on the Mac are that exact shape. Stop fires once the transcript is complete."
 }
