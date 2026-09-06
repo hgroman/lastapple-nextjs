@@ -1,0 +1,84 @@
+---
+title: "AI-Native Application Delivery"
+description: "Custom software built by one operator directing a team of AI specialists. Everyone sells speed. The scarce goods are prioritisation and verification."
+icon: "Layers"
+category: "ai"
+features:
+  - "One operator directing a team of AI specialists, each with its own memory, skills and lane — architect, database, backend, frontend"
+  - "Schema designed for the claim the product makes: append-only with merge-on-read where a citation trail must survive"
+  - "Multi-tenant isolation proved from a single-tenant identity, never from an operator seat that belongs to everything"
+  - "Configuration stored as data rather than code, so a change that would have been a sprint becomes an insert"
+  - "Defects hunted in the classes that fail silently, not just the ones that throw"
+  - "A governor on scope, because delivery capacity without prioritisation is how the wrong thing gets built quickly"
+cta:
+  text: "Book a scoping call"
+  href: "/contact"
+published: false
+order: 5
+---
+
+## What This Is
+
+Custom application development where the build team is one person directing four AI specialists instead of six people in a room.
+
+We are going to describe one we delivered. Then we are going to tell you what went wrong with it, because that part is the actual offer.
+
+## The Build
+
+Six weeks. **Fifty dated shipped items. Eighty-four captured hours.** A complete custom production system for a long-form oral-history project:
+
+- A dedicated machine running a client-owned AI assistant, trained on eighteen of the client's own recorded calls, **fenced onto its own database role**, connected to his mail, reachable from his phone, and running roughly 150 work items a month for him
+- A client-facing platform surface: their own initiatives, self-service create and edit, document upload across six formats with text extraction
+- The content engine itself — **7 tables, 16 foreign keys, zero cascade deletes, 13 client-callable database functions, 13 endpoints, three screens and a multi-form chooser** — plus the provenance machinery that lets a generated story cite which person and which source each individual claim came from
+- An interview instrument that grew from 17 to 32 questions **as data, with no deploy**, gained a second archival questionnaire, and learned to reopen a filled-in form when someone answers across several sittings
+- **329 front-end tests, mutation-checked** — which is to say we checked that the tests would actually fail if the code broke, rather than trusting a green tick
+
+Conventional procurement for that scope is six specialists — architect, database, backend, frontend, DevOps, security — coordinated across three to five months including discovery, spec and QA.
+
+## Three Decisions That Are the Actual Expertise
+
+**Append-only, not upsert.** The product's central promise is that every claim in a generated story can be traced to the person and source it came from. Upsert destroys that trail. The client's own AI assistant proposed upsert, and it would have quietly broken the one thing the product was for. Append-only with merge-on-read preserves it.
+
+**Isolation proved from the right seat.** Multi-tenant separation was verified from a *single-tenant* identity, not from an operator account. A pass from a caller who belongs to everything proves only that membership works — it tells you nothing about whether a tenant can reach another tenant's data, which is the only question that matters.
+
+**Questions as data.** A bet made in week four paid in week six: storing the interview instrument as rows rather than code meant fifteen new questions cost an INSERT instead of a sprint.
+
+## The Defects We Care About Are the Silent Ones
+
+Five defects were caught before they reached the client. Two of them were **silent data corruption** — the class that never throws, never alerts, and is discovered months later when someone notices the records are wrong.
+
+One conflated two questionnaire keys, so "who still needs interviewing" would have quietly dropped people off a chase list with nothing erroring. One was a person-switch that could save one interviewee's answers against a different interviewee — never reported by anyone, and it would have corrupted interview records unnoticed.
+
+**A test suite that only catches crashes is measuring the easy half.** These are the ones worth paying for, and they are found by reasoning about what would fail without complaining, not by clicking through the happy path.
+
+## Now the Part That Should Decide Whether You Hire Us
+
+Everyone selling AI right now is selling speed. Speed is table stakes and it is becoming worthless as a claim, because in eighteen months everyone will have it.
+
+Here is what we learned on our own balance sheet:
+
+**When build cost collapses toward zero, capacity stops being the constraint. The scarce goods become prioritisation and verification.**
+
+We know that because we got it wrong. While those fifty items shipped in six weeks, **our own flagship launch initiative — the one whose entire job is getting our product its first paying customer — received exactly one task in the same window.**
+
+Nothing sat between "client asks" and "team builds." Requests arrived at the speed they could be fulfilled, and being able to deliver same-day meant same-day delivery became the default rather than a decision. The capacity was extraordinary. The governor was missing.
+
+That is not a story we enjoy telling and it is the most useful thing on this page. A prospect evaluating AI vendors has heard "we're fast" from every one of them. They have not heard one explain why fast is dangerous without a governor, and back it with their own scar.
+
+**So the first thing we will build with you is the governor.** What gets built, in what order, against which outcome, and what we will say no to. If that sounds like overhead on a fast team, it is the specific overhead that prevents a fast team from efficiently building the wrong thing.
+
+## Who This Isn't For
+
+**Not for you if the requirements are already fixed and signed.** This works because scope moves in response to what the build teaches you. If the spec is frozen and the job is to implement it exactly, a conventional shop will do that more cheaply and you should let them.
+
+**Not for you if nobody on your side can decide.** The bottleneck moves to prioritisation, which means it moves to you. A team that can ship same-day and a client who takes three weeks to answer is a worse combination than two normal-speed parties.
+
+**Not for you if you want a fixed-price quote before discovery.** We will not price six weeks of adaptive build as if it were a spec implementation. Anyone who does is either padding it or planning to argue with you later.
+
+**Not for you if "AI wrote it" is disqualifying on its own.** It was directed, reviewed and tested by a person who is accountable for it, and that is the honest description. If that is not enough, we would rather find out now.
+
+## What It Costs
+
+Scoped per engagement, and the first scoping conversation is about the governor rather than the feature list — because the feature list is the cheap part now and choosing between features is not.
+
+Quoted after one conversation, not after a discovery retainer.
