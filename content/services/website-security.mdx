@@ -9,6 +9,7 @@ features:
   - "Eradication that includes the persistence you did not go looking for — rogue accounts, standing third-party grants, remote-control channels"
   - "Posture reviews that are not triggered by an alert, and that report a clean verdict as a deliverable in its own right"
   - "Layered form and bot defence, on the assumption that any single challenge will eventually be defeated"
+  - "Fraud controls verified at the row that decides, not the switch that enables — a filter can be on, correctly described, and not acting on your attacker's case"
   - "A written account of what was found, what was changed, and what we deliberately did not touch"
 cta:
   text: "Book a scoping call"
@@ -61,6 +62,42 @@ On another site we ran a multi-vector review — core file integrity against the
 
 We say this plainly because the incentive runs the other way. A security vendor that never finds anything struggles to justify itself, and the temptation is to inflate a housekeeping item into a threat. A clean report you can trust is worth more than a long one you can't.
 
+## The Control Was On. It Was Not Doing Anything.
+
+A client's store was being hit with stolen cards. The team who owned the payment gateway had already applied exactly what they were asked to apply, and had applied it correctly — a velocity limit on attempts per hour, and a rule declining any transaction where the card security code did not match.
+
+Both settings were on. Both were correct. Anyone who opened the panel and asked *"is fraud detection enabled?"* would have been told yes, and **the yes would have been true.**
+
+The attack continued anyway.
+
+The gateway's fraud suite also checks the billing address, and that filter was enabled too. What nobody had read was the row-by-row configuration underneath it. The filter was set to **decline** on structural failures — no billing address supplied, malformed data, a card issued outside the country. Every one of those was correctly set to reject.
+
+And the response that means *the address was supplied and does not match* — which is precisely what a stolen card number with an invented billing address produces — was set to allow, and was being waved straight through to authorization.
+
+So the filter was enabled. The filter was correctly described to the client. The filter was, for this specific attack, doing nothing at all.
+
+**We read the per-code action rows and changed the one that mattered.** We also reset the rate threshold, which had been derived twice from the wrong window: the attack's per-hour peak was three attempts, so any threshold above that could never fire inside the one hour the filter actually evaluates. A threshold set from the span of an attack instead of the width of the filter's window is a control that is switched on and mathematically unable to trigger.
+
+### Why we can say it worked
+
+The store had been reopened once **before** that change, and the attack came back within hours — two fraudulent orders eight minutes apart, matching the earlier wave's signature exactly.
+
+Reopened again with the row closed, the script returned within minutes and met working controls. Four weeks followed with **no fraudulent order at all, against eight clean ones.**
+
+That is not proof, and we will not call it proof. A control that works and an attacker who moved on look identical from outside. But it is the closest thing to a controlled test an incident ever hands you: the same store, the same surface, one variable moved, and a documented precedent showing exactly what unfixed looked like.
+
+The distinction we insist on: **the store going dark for a day is not a defence, and we never counted the quiet as evidence.** Silence while the payment gateways are switched off tells you about opportunity, not about protection. The window that counts is the one where the surface was demonstrably live, demonstrably still being attacked, and held.
+
+### Defeated is not bypassed
+
+One more thing that engagement settled, because it decides what you buy next.
+
+The bot challenge on that checkout had not been skipped. It had been **beaten** — the requests were solving or farming tokens and passing it. Request timing separated the two cases at zero cost: the carding attempts took three to five seconds because they reached the gateway, while a request with no token comes back in under a second having never got there.
+
+That matters commercially. **Bypassed** means a control was skipped, and the fix is to close the skip path. **Defeated** means the control ran, was satisfied, and the attacker met it — and the fix is a second independent layer, never a replacement for the first. Ripping out the bot check would have removed a working control and changed nothing.
+
+The underlying gap was that once a request passed the bot check, there was no gateway-side control behind it. **One layer is not a defence. It is a single point of failure with good branding.**
+
 ## Forms And Bots: Layered, On Purpose
 
 Contact forms are the cheapest way into a site's inbox, its CRM and its sender reputation.
@@ -75,7 +112,7 @@ The other half is knowing that the same-looking symptom can be two different thr
 
 **We do not publish our incident specifics with client names attached.** Everything above is anonymized. If your engagement goes badly, it does not become a case study — and neither does anyone else's without a signed conversation first.
 
-**We will not tell you an incident was neutralized when it was contained.** Those are different words with different meanings, and the difference is the part a buyer deserves to hear accurately.
+**We will not count silence as a defence.** If your attacker went quiet while the surface was switched off, the honest word is *untested*, not *held* — and we will say so even when the reassuring version is right there and easier to sell. What we will claim is what we changed, and what happened when the surface went back up.
 
 ## Who This Isn't For
 
