@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, MapPin, Music, Clock, Compass } from 'lucide-react';
-import { getSkiesEntries, getSkiesByKind, getMapPublication, getLibraryStats } from '@/lib/content';
+import { getSkiesEntries, getSkiesByKind, getMapPublication, getLibraryStats, entryPoster } from '@/lib/content';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { formatDuration, formatPostDate } from '@/lib/utils';
@@ -226,11 +226,11 @@ export default function SkiesPage() {
                       the artifact, and the entry page shows the full sweep
                       undistorted. Cropping a thumbnail is fine; stretching the
                       panorama is not. */}
-                  {(entry.embed || entry.panorama) && (
+                  {entryPoster(entry) && (
                     <div className="relative aspect-video">
                       <Image
-                        src={entry.embed ? entry.embed.poster.src : entry.panorama!.large.src}
-                        alt={entry.embed ? entry.embed.poster.alt : entry.panorama!.alt}
+                        src={entryPoster(entry)!.src}
+                        alt={entryPoster(entry)!.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover"

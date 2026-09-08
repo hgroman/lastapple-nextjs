@@ -10,6 +10,7 @@ import {
   type SkiesEntry,
   type MapPublication,
   type SkiesStat,
+  type SkiesImage,
 } from '../../content/schema/skies';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
@@ -88,6 +89,33 @@ export function getSolution(slug: string): Solution | null {
 
 export function getSolutionsByCategory(category: Solution['category']): Solution[] {
   return getSolutions().filter(s => s.category === category);
+}
+
+
+/**
+ * The one still that represents a skies entry — OG card, listing card, page.
+ *
+ * Lives here rather than in a page file because there are three call sites and
+ * they have already drifted once: the panorama case was added to the component
+ * but not to generateMetadata, the build stayed green, and the entry shipped
+ * with an empty og:image. Presence is not correctness — so there is one copy.
+ *
+ * Order matters. An authored `poster` wins because it is a deliberate crop for
+ * a 1.91:1 social card; a self-hosted band falls back to the band itself, which
+ * is its own honest thumbnail but gets centre-cropped by every social scraper.
+ */
+export function entryPoster(entry: SkiesEntry): SkiesImage | undefined {
+  if (entry.poster) return entry.poster;
+  if (entry.embed) return entry.embed.poster;
+  if (entry.panorama) {
+    return {
+      src: entry.panorama.large.src,
+      alt: entry.panorama.alt,
+      width: entry.panorama.large.width,
+      height: entry.panorama.large.height,
+    };
+  }
+  return undefined;
 }
 
 // Live-Scored Skies — aerial cinematography with original scoring.

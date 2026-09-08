@@ -4,6 +4,13 @@ description: "A 239-degree aerial sweep shot at sunset over Tioga County, Pennsy
 kind: pano
 releaseDate: "2026-09-07"
 order: 5
+# A deliberate 1.91:1 crop for social cards, cut by TOM from the clean master and
+# centred on the lit anvil. Only the CARD is cropped; the panorama below is whole.
+poster:
+  src: /images/skies/tioga-180/tioga-1938-poster-1200x628.jpg
+  alt: "The lit anvil thundercloud standing over the darkened ridges of Tioga County, Pennsylvania at sunset"
+  width: 1200
+  height: 628
 panorama:
   alt: "A wide aerial band looking across the ridges and valley farmland of Tioga County, Pennsylvania at sunset, with a tall anvil-shaped thundercloud lit orange on the right and the land already fallen into blue shadow below"
   small:
@@ -26,9 +33,9 @@ panorama:
   # TOM's independent measurement. The build fails if it disagrees with the tags.
   measuredHaov: 238.7
   measuredVaov: 48.7
-# sourceTrip deliberately UNSET: this is a sky_library trip slug (a real join key
-# into TOM's catalogue) and TOM did not supply one in the handoff. Inventing a
-# plausible-looking slug would create a foreign key that resolves to nothing.
+# sky_library trip slug, supplied by TOM 2026-09-08. The Sep 7 outing
+# (westfield-burn-2026-09-07) is a DIFFERENT trip — these panoramas are not on it.
+sourceTrip: westfield-2026-09-02
 locationName: Westfield, Tioga County
 state: PA
 filmedOn: "2026-09-02"
@@ -38,9 +45,15 @@ This is a band of sky, not a globe.
 
 Seven frames, thirty degrees of yaw apart, stitched into one strip that covers
 **238.7 degrees across and 48.7 degrees top to bottom** — about two-thirds of the
-way around, and roughly a quarter of the way up. The horizon runs close to the
-centre of the band. Drag it left and right and you run out of picture, because that
-is where the camera stopped.
+way around, and roughly a quarter of the way up. Drag it left and right and you run
+out of picture, because that is where the camera stopped.
+
+The camera was level, so the middle of the band is the level plane. That is worth
+saying because the skyline you can see is **not** the horizon: from 155 metres up,
+the true horizon sits about four-tenths of a degree *below* level, and the crests in
+this picture stand roughly two degrees *above* it. Tioga is a dissected plateau and
+the drone launched low, so the surrounding ridges are higher than it ever flew. What
+looks like the edge of the earth is hills.
 
 There is no floor and no ceiling in it. Nothing was filled in, blurred out, or
 generated to close the gaps, so there is nothing to look at straight up or straight

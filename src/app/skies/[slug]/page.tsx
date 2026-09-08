@@ -4,8 +4,7 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { ArrowLeft, MapPin, Music, Clock } from 'lucide-react';
-import { getSkiesEntries, getSkiesEntry } from '@/lib/content';
-import type { SkiesEntry } from '../../../../content/schema/skies';
+import { getSkiesEntries, getSkiesEntry, entryPoster } from '@/lib/content';
 import { artifactPath } from '@/lib/skies-artifacts';
 import { BaseLayout } from '@/components/content/layouts/BaseLayout';
 import { MediaFacade } from '@/components/skies/MediaFacade';
@@ -13,30 +12,6 @@ import { PanoramaViewer } from '@/components/skies/PanoramaViewer';
 import { mdxComponents } from '@/lib/mdx-components';
 import { formatDuration, isoDuration, formatPostDate } from '@/lib/utils';
 
-
-/**
- * The one still that represents an entry — for the OG card and the page.
- *
- * Shared by generateMetadata and the component ON PURPOSE. They had two copies
- * of this expression; the panorama case was added to one of them and the entry
- * shipped with an empty og:image while the build passed clean. A page that
- * looks right and cards blank on LinkedIn is the exact failure shape this
- * project keeps rediscovering: presence is not correctness.
- */
-function entryPoster(entry: SkiesEntry) {
-  if (entry.poster) return entry.poster;
-  if (entry.embed) return entry.embed.poster;
-  // A self-hosted band is its own still — no separate poster is authored.
-  if (entry.panorama) {
-    return {
-      src: entry.panorama.large.src,
-      alt: entry.panorama.alt,
-      width: entry.panorama.large.width,
-      height: entry.panorama.large.height,
-    };
-  }
-  return undefined;
-}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -170,7 +145,7 @@ export default async function SkiesEntryPage({ params }: PageProps) {
 
       {/* Guarded: a panorama-only entry has no film, no embed and no map, and an
           unguarded wrapper renders as a bare 3rem of empty space above the prose. */}
-      {(entry.poster || entry.embed || entry.map) && (
+      {((entry.kind === 'film' && entry.poster) || entry.embed || entry.map) && (
       <div className={entry.map ? 'grid gap-6 lg:grid-cols-2 mb-12' : 'mb-12'}>
         {entry.kind === 'film' && entry.poster && (
           <MediaFacade
