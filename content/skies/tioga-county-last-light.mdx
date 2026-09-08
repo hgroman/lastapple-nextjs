@@ -1,0 +1,101 @@
+---
+title: "Last Light Over Tioga County"
+description: "A 239-degree aerial sweep shot at sunset over Tioga County, Pennsylvania. Drag along the ridge line to look around."
+kind: pano
+releaseDate: "2026-09-07"
+order: 5
+panorama:
+  alt: "A wide aerial band looking across the ridges and valley farmland of Tioga County, Pennsylvania at sunset, with a tall anvil-shaped thundercloud lit orange on the right and the land already fallen into blue shadow below"
+  small:
+    src: /images/skies/tioga-180/tioga-1938-2048.jpg
+    width: 2048
+    height: 418
+  large:
+    src: /images/skies/tioga-180/tioga-1938-4096.jpg
+    width: 4096
+    height: 836
+  # Copied from the delivered JPEG's own XMP, not typed from a note. Verify with:
+  #   exiftool -XMP-GPano:all public/images/skies/tioga-180/tioga-1938-4096.jpg
+  gpano:
+    croppedLeftPixels: 0
+    croppedTopPixels: 1125
+    croppedWidthPixels: 4096
+    croppedHeightPixels: 836
+    fullWidthPixels: 6179
+    fullHeightPixels: 3090
+  # TOM's independent measurement. The build fails if it disagrees with the tags.
+  measuredHaov: 238.7
+  measuredVaov: 48.7
+# sourceTrip deliberately UNSET: this is a sky_library trip slug (a real join key
+# into TOM's catalogue) and TOM did not supply one in the handoff. Inventing a
+# plausible-looking slug would create a foreign key that resolves to nothing.
+locationName: Westfield, Tioga County
+state: PA
+filmedOn: "2026-09-02"
+---
+
+This is a band of sky, not a globe.
+
+Seven frames, thirty degrees of yaw apart, stitched into one strip that covers
+**238.7 degrees across and 48.7 degrees top to bottom** — about two-thirds of the
+way around, and roughly a quarter of the way up. The horizon runs close to the
+centre of the band. Drag it left and right and you run out of picture, because that
+is where the camera stopped.
+
+There is no floor and no ceiling in it. Nothing was filled in, blurred out, or
+generated to close the gaps, so there is nothing to look at straight up or straight
+down. A viewer that offers you those directions is offering you something the drone
+never saw.
+
+## What is in it
+
+Westfield, in Brookfield Township, Tioga County, Pennsylvania, on 2 September 2026
+at 19:38:00 in the evening. The drone was 155 metres above its launch point and the
+ground there is 529 metres up, which puts the camera at **684 metres above sea
+level** — about 2,244 feet — at 41.955061, -77.553538.
+
+The sun was at **plus two-tenths of a degree**: not below the horizon, but as close
+to it as makes no difference, and behind a deck of cloud, so none of its light
+reaches the ground in this frame directly.
+
+The orange is on the anvil. That thunderhead is tall enough to still be standing in
+sunlight while everything underneath it has already gone blue, and it is the last
+direct sun in the picture. Everything below the ridge line is lit by the sky, not by
+the sun.
+
+Shot on a DJI Mini 4K — a sub-250-gram consumer drone, not a cinema rig. Seven
+frames at thirty-degree steps gave thirty-nine degrees of overlap at each seam,
+which is what makes the stitch hold together across that much sky.
+
+## The one that got away
+
+Thirty-two seconds later the same view was gone:
+
+![The same sweep 32 seconds later, with the land fallen almost entirely into black silhouette beneath the still-lit anvil cloud](/images/skies/tioga-180/tioga-1938b-2048.jpg)
+
+Same position, same lens, same seven-frame sweep — trimmed to its own slightly
+different rectangle, because the usable edge of a stitch moves when the light does.
+The sun had dropped to **plus one-tenth of a degree** by 19:38:32, and the land is
+**1.8 stops darker**,
+and just under five per cent of the ground pixels have gone to flat black with
+nothing recoverable in them. At that hour the exposure you get is the exposure the
+sky hands you, and half a minute is enough to lose it.
+
+It is kept here because it is honest about how narrow the window was, not because it
+is a second photograph. The one above is the photograph.
+
+## Why it is presented this way
+
+The obvious move with a wide strip is to stretch it into a shape that fills a
+screen. Doing that to this file would bend the horizon and invent sky at the top and
+bottom that nobody flew for.
+
+So the frame is 4.9 to 1 because the picture is 4.9 to 1, and the viewer's
+projection is computed from the angular metadata written into the file itself rather
+than typed in by hand to taste. If those two ever disagree, the site fails to build.
+That is a deliberately annoying gate, and it is there because the tool that
+originally packaged this panorama got exactly this wrong — it was written for full
+spheres, and it labelled a partial band as a complete 360 and squashed it to fit.
+The files here were tagged by hand instead.
+
+A picture of a place should be checkable against the place.
