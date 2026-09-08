@@ -219,11 +219,18 @@ export default function SkiesPage() {
               <RevealOnScroll key={entry.slug}>
                 <article className="group relative rounded-xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden transition-colors hover:border-accent/50">
                   <Link href={`/skies/${entry.slug}`} className="absolute inset-0 z-10" aria-label={entry.title} />
-                  {entry.embed && (
+                  {/* Either delivery path yields one still for the card. A
+                      self-hosted band has no separate poster — the picture is
+                      its own thumbnail. The card frame stays 16:9 for a tidy
+                      grid and crops via object-cover; that is a thumbnail, not
+                      the artifact, and the entry page shows the full sweep
+                      undistorted. Cropping a thumbnail is fine; stretching the
+                      panorama is not. */}
+                  {(entry.embed || entry.panorama) && (
                     <div className="relative aspect-video">
                       <Image
-                        src={entry.embed.poster.src}
-                        alt={entry.embed.poster.alt}
+                        src={entry.embed ? entry.embed.poster.src : entry.panorama!.large.src}
+                        alt={entry.embed ? entry.embed.poster.alt : entry.panorama!.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover"

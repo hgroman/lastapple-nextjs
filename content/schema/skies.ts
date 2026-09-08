@@ -58,7 +58,11 @@ export const StatSchema = z.object({
 
 /**
  * A published interactive artifact hosted on its own Vercel project — the
- * cross-country trip maps and the 360 aerial spheres.
+ * cross-country trip maps and the Addison 360 sphere.
+ *
+ * This is the EXTERNAL delivery path. A panorama that ships as image files in
+ * this repo does not come through here; it uses `panorama` below, which is the
+ * only shape that carries angular extent.
  *
  * These are EMBEDDED, not rebuilt. The live map (dark satellite basemap, points
  * clustered and coloured by the light they were shot in, live filters) is better
@@ -78,6 +82,152 @@ export const EmbedSchema = z.object({
   publicationSlug: z.string().optional(),
 });
 
+/**
+ * THE ANGULAR CONTRACT — a panorama this repo hosts and serves itself.
+ *
+ * Separate from EmbedSchema on purpose. An embed is a URL and a poster; it has
+ * no opinion about how much sky the picture actually contains, because the
+ * artifact it points at carries its own viewer. A panorama served from
+ * public/images is different: THIS repo decides how it is projected, and a
+ * projection is a factual claim about the world. Get it wrong and the site
+ * shows a prospect a landscape that does not exist.
+ *
+ * The failure this schema exists to prevent is not hypothetical. The upstream
+ * builder (drone-panorama/scripts/build_site.py) was written for a 26-tile full
+ * sphere, and when handed a partial sweep it wrote FullPanoWidth ==
+ * CroppedAreaWidth with Left 0 / Top 0 and resized a ~4.9:1 image into 2:1 —
+ * declaring a partial band to be a complete 360 sphere and stretching it to fit.
+ * Flagged by TOM 2026-09-07; the delivered files were hand-tagged instead.
+ *
+ * So the angles are NOT hand-typed here. They are derived from the GPano crop
+ * numbers, which are the authority — TOM's words: the tags "already describe
+ * the true crop inside a full sphere, so a GPano-aware viewer places them
+ * correctly with no help from you." What a human types below is the six
+ * integers that are also embedded in the JPEG, and `measuredHaov`/`measuredVaov`
+ * as an independent cross-check. If a typed integer drifts, the derived angles
+ * stop matching either the cross-check or the image's own aspect ratio, and the
+ * build fails rather than the horizon quietly tilting.
+ */
+const RenditionSchema = z.object({
+  src: z.string(),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+});
+
+/**
+ * The GPano crop, exactly as embedded in the delivered JPEG's XMP.
+ *
+ * Read them back at any time with:
+ *   exiftool -XMP-GPano:all public/images/skies/<file>.jpg
+ * These six numbers ARE the geometry. Everything the viewer does is arithmetic
+ * on them.
+ */
+const GPanoCropSchema = z.object({
+  croppedLeftPixels: z.number().int().nonnegative(),
+  croppedTopPixels: z.number().int().nonnegative(),
+  croppedWidthPixels: z.number().int().positive(),
+  croppedHeightPixels: z.number().int().positive(),
+  fullWidthPixels: z.number().int().positive(),
+  fullHeightPixels: z.number().int().positive(),
+});
+
+export const PanoramaSchema = z
+  .object({
+    alt: z.string().min(20),
+
+    /**
+     * Two renditions, both the FULL band — never a re-crop.
+     *
+     * `small` is what a phone loads. `large` is capped at 4096px wide for a
+     * reason that is not bandwidth: WebGL MAX_TEXTURE_SIZE is 4096 on a large
+     * share of mobile GPUs, and a 6788px equirect silently fails to bind on
+     * those devices, showing a black frame. The full-width masters stay in the
+     * vault and are never shipped to the browser.
+     */
+    small: RenditionSchema,
+    large: RenditionSchema,
+
+    gpano: GPanoCropSchema,
+
+    /**
+     * TOM's independently measured extent, in degrees. NOT used to render —
+     * it exists solely to disagree with the derived value when something is
+     * wrong. Two sources that must agree beat one source that cannot be checked.
+     */
+    measuredHaov: z.number().positive().max(360),
+    measuredVaov: z.number().positive().max(180),
+  })
+  /**
+   * The image's shape must match the sky it claims to cover.
+   *
+   * An equirectangular crop has pixels-per-degree equal in both axes, so
+   * width/height MUST equal haov/vaov. This single check is what makes the
+   * upstream defect unshippable: stretching a ~4.9:1 band into 2:1 to fill a
+   * viewport breaks this identity immediately, in the build, before a prospect
+   * sees a horizon that bends.
+   */
+  .superRefine((p, ctx) => {
+    const haov = (p.gpano.croppedWidthPixels / p.gpano.fullWidthPixels) * 360;
+    const vaov = (p.gpano.croppedHeightPixels / p.gpano.fullHeightPixels) * 180;
+    const expected = haov / vaov;
+
+    for (const [name, r] of [['small', p.small], ['large', p.large]] as const) {
+      const actual = r.width / r.height;
+      if (Math.abs(actual - expected) / expected > 0.01) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [name],
+          message:
+            `Rendition "${r.src}" is ${r.width}x${r.height} (${actual.toFixed(3)}:1) but the GPano ` +
+            `crop describes ${haov.toFixed(1)}deg x ${vaov.toFixed(1)}deg (${expected.toFixed(3)}:1). ` +
+            `An equirectangular image cannot be resized to a different aspect than the sky it covers. ` +
+            `Fix the file or the tags — do NOT adjust the angles to match a stretched image.`,
+        });
+      }
+    }
+
+    // The derived angles and TOM's measurement must corroborate each other.
+    if (Math.abs(haov - p.measuredHaov) > 0.5) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['measuredHaov'],
+        message: `GPano crop derives ${haov.toFixed(2)}deg horizontal, but measuredHaov says ${p.measuredHaov}deg. One of them is wrong — ask TOM, do not average them.`,
+      });
+    }
+    if (Math.abs(vaov - p.measuredVaov) > 0.5) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['measuredVaov'],
+        message: `GPano crop derives ${vaov.toFixed(2)}deg vertical, but measuredVaov says ${p.measuredVaov}deg. One of them is wrong — ask TOM, do not average them.`,
+      });
+    }
+  });
+
+/**
+ * Derive the viewer's parameters from the GPano crop. The ONLY place these
+ * numbers are computed; both the page and the viewer read them from here so a
+ * caption and a projection can never disagree.
+ *
+ * vOffset is the angle of the band's centre above the true horizon. Pannellum
+ * takes positive = up.
+ */
+export function panoramaGeometry(p: Panorama) {
+  const { croppedTopPixels, croppedHeightPixels, croppedWidthPixels, fullWidthPixels, fullHeightPixels } = p.gpano;
+  const haov = (croppedWidthPixels / fullWidthPixels) * 360;
+  const vaov = (croppedHeightPixels / fullHeightPixels) * 180;
+  // Pixel row of the band's centre, measured down from the zenith, converted to
+  // degrees and re-referenced to the equator.
+  const centreDegFromZenith = ((croppedTopPixels + croppedHeightPixels / 2) / fullHeightPixels) * 180;
+  const vOffset = 90 - centreDegFromZenith;
+  return {
+    haov,
+    vaov,
+    vOffset,
+    /** True only for a genuine full rotation with both caps present. */
+    isFullSphere: haov >= 359.5 && vaov >= 179.5,
+  };
+}
+
 export const SkiesEntrySchema = z.object({
   title: z.string().min(5),
   description: z.string().max(160),
@@ -88,7 +238,14 @@ export const SkiesEntrySchema = z.object({
    * or sphere is a content commit rather than a code change.
    *   film — a scored film on the Hank Groman Music channel
    *   map  — a published trip map (flight telemetry)
-   *   pano — an interactive 360 aerial sphere
+   *   pano — an interactive aerial panorama
+   *
+   * A 'pano' is NOT necessarily a sphere, and this comment used to say it was.
+   * Corrected 2026-09-07: the Addison piece is a genuine full rotation, but the
+   * Tioga piece is a single-band 238.7deg x 48.7deg sweep with no nadir and no
+   * zenith. Nothing about "pano" licenses the words 360, sphere, or "look
+   * straight up" — only the measured geometry does. A self-hosted panorama
+   * carries that geometry in `panorama`, where the build gate can check it.
    */
   kind: z.enum(['film', 'map', 'pano']),
 
@@ -144,8 +301,19 @@ export const SkiesEntrySchema = z.object({
   map: EmbedSchema.optional(),
 
   // ── Map / pano entries ───────────────────────────────────────────────────
-  // For kind 'map' and 'pano', the artifact itself.
+  // For kind 'map' and 'pano', the artifact itself — when it is hosted as its
+  // own external deploy.
   embed: EmbedSchema.optional(),
+
+  /**
+   * A panorama served from this repo rather than proxied from its own deploy.
+   *
+   * The alternative to `embed` for kind 'pano', and the shape that carries
+   * angular extent. Use it whenever the image files live in public/images —
+   * there is no external viewer to be authoritative, so the geometry has to be
+   * declared and gated here.
+   */
+  panorama: PanoramaSchema.optional(),
 
   // ── Presentation ─────────────────────────────────────────────────────────
   // Quote stats from the artifact a visitor can click through and check. A
@@ -171,9 +339,22 @@ export const SkiesEntrySchema = z.object({
    * `embed`; `map` is reserved for the film-beside-its-flight-path pairing.
    */
   .refine(
-    (entry) => entry.kind === 'film' || Boolean(entry.embed),
-    { message: 'A map or pano entry requires an embed', path: ['embed'] }
-  );
+    (entry) => entry.kind === 'film' || Boolean(entry.embed) || Boolean(entry.panorama),
+    {
+      message:
+        'A map or pano entry requires either an `embed` (hosted as its own deploy) ' +
+        'or a `panorama` (image files served from this repo)',
+      path: ['embed'],
+    }
+  )
+  /**
+   * One delivery path per entry. Both set means two viewers claiming to be the
+   * same artifact, and no way to tell which one the caption describes.
+   */
+  .refine((entry) => !(entry.embed && entry.panorama), {
+    message: 'Set `embed` OR `panorama`, not both — they are two ways to serve one artifact',
+    path: ['panorama'],
+  });
 
 /**
  * THE BUILD-TIME SNAPSHOT — content/skies/map-publications.json
@@ -253,6 +434,7 @@ export const MapPublicationsSnapshotSchema = z.object({
 export type MapPublication = z.infer<typeof MapPublicationSchema>;
 export type MapPublicationsSnapshot = z.infer<typeof MapPublicationsSnapshotSchema>;
 
+export type Panorama = z.infer<typeof PanoramaSchema>;
 export type SkiesEntry = z.infer<typeof SkiesEntrySchema>;
 export type SkiesStat = z.infer<typeof StatSchema>;
 export type SkiesEmbed = z.infer<typeof EmbedSchema>;
