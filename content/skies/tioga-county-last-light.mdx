@@ -36,6 +36,14 @@ panorama:
 # sky_library trip slug, supplied by TOM 2026-09-08. The Sep 7 outing
 # (westfield-burn-2026-09-07) is a DIFFERENT trip — these panoramas are not on it.
 sourceTrip: westfield-2026-09-02
+# These coordinates were CHALLENGED on 2026-09-08 and survived. The catalogue then
+# disagreed with them by 279 m, and the catalogue was the one that was wrong:
+# sky-footage-ingest.py had been stamping each flight's TAKEOFF point onto every
+# media row instead of each file's own GPS — 964 of 1,238 drone rows estate-wide.
+# Settled by reading EXIF off the panorama tiles themselves (VAULT Intake 2/
+# PANORAMA/100_0003 and 100_0004): 41.9550610556, -77.5535382778 at 19:38:00 and
+# 41.9550618611, -77.5535364722 at 19:38:32. The catalogue now agrees.
+# Do not "correct" these to a flight launch point.
 geo:
   lat: 41.955061
   lng: -77.553538
@@ -66,9 +74,15 @@ never saw.
 ## What is in it
 
 Westfield, in Brookfield Township, Tioga County, Pennsylvania, on 2 September 2026
-at 19:38:00 in the evening. The drone was 155 metres above its launch point and the
-ground there is 529 metres up, which puts the camera at **684 metres above sea
-level** — about 2,244 feet — at 41.955061, -77.553538.
+at 19:38:00 in the evening, at 41.955061, -77.553538.
+
+The drone was **155 metres above its launch point**. That one is barometric, and it
+is the number the horizon arithmetic above rests on. Height above sea level is a
+softer figure: a terrain model puts the ground under that point at 520 metres, which
+sets the camera near **676 metres** — about 2,216 feet — while the aircraft's own GPS
+reads nine metres higher. Nine metres is ordinary vertical error on a drone, and
+there is no third instrument here to break the tie, so the number is quoted with its
+spread instead of picked.
 
 The sun was at **plus two-tenths of a degree**: not below the horizon, but as close
 to it as makes no difference, and behind a deck of cloud, so none of its light
