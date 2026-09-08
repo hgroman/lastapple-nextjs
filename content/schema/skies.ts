@@ -288,6 +288,16 @@ export const SkiesEntrySchema = z.object({
   // The trip that PRODUCED this work, as a sky_library trip slug.
   sourceTrip: z.string().optional(),
   locationName: z.string().optional(),
+
+  /**
+   * Where the camera was, for ImageObject/VideoObject contentLocation.
+   *
+   * Optional and only ever the flight's own launch coordinates, which are
+   * already printed in the caption. Never a person's location, and never
+   * inferred from a place name — an aerial frame's value is that the position
+   * is measured, so a guessed pair would be worse than none.
+   */
+  geo: z.object({ lat: z.number(), lng: z.number() }).optional(),
   state: z.string().optional(),
   filmedOn: z.string().optional(),
 

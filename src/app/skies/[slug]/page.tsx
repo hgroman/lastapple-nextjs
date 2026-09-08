@@ -79,8 +79,65 @@ export default async function SkiesEntryPage({ params }: PageProps) {
         }
       : null;
 
+  /**
+   * ImageObject for a panorama entry.
+   *
+   * A film gets VideoObject and a map gets nothing; a self-hosted photograph got
+   * nothing either, which left the page's only machine-readable claim as the
+   * site-wide Organization block. This describes the actual work — when it was
+   * made, where the camera was, who made it, and the true pixel dimensions of
+   * the file being served.
+   *
+   * Deliberately ImageObject and NOT any of the 360/VR panorama types: those
+   * assert a full spherical capture, which is precisely the false claim this
+   * whole entry exists to avoid making. Structured data is read by machines that
+   * cannot see the picture, so it is the LAST place to get loose with the word.
+   */
+  const imageLd =
+    entry.panorama && poster
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ImageObject',
+          '@id': `https://lastapple.com/skies/${slug}#panorama`,
+          name: entry.title,
+          description: entry.description,
+          contentUrl: `https://lastapple.com${entry.panorama.large.src}`,
+          thumbnailUrl: `https://lastapple.com${poster.src}`,
+          width: entry.panorama.large.width,
+          height: entry.panorama.large.height,
+          datePublished: entry.releaseDate,
+          ...(entry.filmedOn ? { dateCreated: entry.filmedOn } : {}),
+          creator: { '@type': 'Person', name: 'Hank Groman' },
+          copyrightHolder: { '@type': 'Organization', name: 'Last Apple' },
+          creditText: 'Hank Groman / Last Apple',
+          ...(entry.locationName
+            ? {
+                contentLocation: {
+                  '@type': 'Place',
+                  name: [entry.locationName, entry.state].filter(Boolean).join(', '),
+                  ...(entry.geo
+                    ? {
+                        geo: {
+                          '@type': 'GeoCoordinates',
+                          latitude: entry.geo.lat,
+                          longitude: entry.geo.lng,
+                        },
+                      }
+                    : {}),
+                },
+              }
+            : {}),
+        }
+      : null;
+
   return (
     <BaseLayout maxWidth="lg" showGrid>
+      {imageLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(imageLd) }}
+        />
+      )}
       {videoLd && (
         <script
           type="application/ld+json"
