@@ -39,7 +39,14 @@ sourceTrip: westfield-2026-09-02
 # These coordinates were CHALLENGED on 2026-09-08 and survived. The catalogue then
 # disagreed with them by 279 m, and the catalogue was the one that was wrong:
 # sky-footage-ingest.py had been stamping each flight's TAKEOFF point onto every
-# media row instead of each file's own GPS — 964 of 1,238 drone rows estate-wide.
+# media row instead of each file's own GPS. The defect is real and this entry was
+# one of its victims. Its ESTATE-WIDE SCOPE is not settled: a figure of "964 of
+# 1,238 drone rows" was reported to this seat on 2026-09-08 and repeated here
+# before it was checked, which was the error. Measured independently on
+# 2026-09-08 by two seats that agree with each other and not with that figure:
+# 1,253 drone rows (media.flight_id NOT NULL), of which 511 sit byte-identical to
+# their parent flight's takeoff point, 536 match at 4dp and 589 at 3dp. Quote
+# those, with the population, or quote nothing.
 # Settled by reading EXIF off the panorama tiles themselves (VAULT Intake 2/
 # PANORAMA/100_0003 and 100_0004): 41.9550610556, -77.5535382778 at 19:38:00 and
 # 41.9550618611, -77.5535364722 at 19:38:32. The catalogue now agrees.
