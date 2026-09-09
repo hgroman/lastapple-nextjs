@@ -71,6 +71,17 @@ export const SKIES_ARTIFACTS: SkiesArtifact[] = [
     origin: 'https://skypano-addison-aug-2026.vercel.app',
     noindexVerified: true,
   },
+  {
+    // Verified from this seat 2026-09-08, not taken on report: curl -L over
+    // production returned 200 with <meta name="robots" content="noindex"> in the
+    // served HTML. The tag was ABSENT on TOM's first deploy — sky-publish.py's
+    // template never emitted a robots meta at all — which is the second time this
+    // gate has caught a real one.
+    slug: 'westfield-2026-09-02',
+    path: '/skies/map/westfield-2026-09-02',
+    origin: 'https://skymap-westfield-2026-09-02.vercel.app',
+    noindexVerified: true,
+  },
   // NOT listed: skypano-delmar-aug-2026. It serves a deliberate "withdrawn for
   // re-capture" notice, and a branded path pointing at a tombstone is worse than
   // no path at all.

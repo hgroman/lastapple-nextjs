@@ -130,6 +130,14 @@ export default async function SkiesEntryPage({ params }: PageProps) {
         }
       : null;
 
+  // How many media tiles this entry actually renders. Drives the one-vs-two
+  // column split below; see the comment on the wrapper.
+  const mediaTiles = [
+    entry.kind === 'film' && entry.poster,
+    entry.embed,
+    entry.map,
+  ].filter(Boolean).length;
+
   return (
     <BaseLayout maxWidth="lg" showGrid>
       {imageLd && (
@@ -201,9 +209,12 @@ export default async function SkiesEntryPage({ params }: PageProps) {
       )}
 
       {/* Guarded: a panorama-only entry has no film, no embed and no map, and an
-          unguarded wrapper renders as a bare 3rem of empty space above the prose. */}
-      {((entry.kind === 'film' && entry.poster) || entry.embed || entry.map) && (
-      <div className={entry.map ? 'grid gap-6 lg:grid-cols-2 mb-12' : 'mb-12'}>
+          unguarded wrapper renders as a bare 3rem of empty space above the prose.
+          The grid follows the TILE COUNT, not the presence of a map: a pano entry
+          pairs a map with nothing else, and keying the two-column split off
+          `entry.map` alone stranded that single tile at half width. */}
+      {mediaTiles > 0 && (
+      <div className={mediaTiles > 1 ? 'grid gap-6 lg:grid-cols-2 mb-12' : 'mb-12'}>
         {entry.kind === 'film' && entry.poster && (
           <MediaFacade
             kind="film"
@@ -232,7 +243,11 @@ export default async function SkiesEntryPage({ params }: PageProps) {
             artifactPath={artifactPath(entry.map.publicationSlug!)}
             poster={entry.map.poster}
             label={`Flight map for ${entry.title}`}
-            caption="The flight path it was scored from"
+            caption={
+              entry.kind === 'film'
+                ? 'The flight path it was scored from'
+                : 'The flight it was shot on'
+            }
           />
         )}
       </div>
