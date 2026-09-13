@@ -20,6 +20,15 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agency-os/src/vpos-cli/secret-egress-guard.sh"
+          }
+        ]
+      },
+      {
         "hooks": [
           {
             "type": "command",
