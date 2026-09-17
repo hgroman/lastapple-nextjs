@@ -16,7 +16,7 @@ A SessionStart hook injects the preflight dashboard (connectivity, monitoring, t
 **Last Apple Business Solutions** — Hank Groman, Owner
 - 30+ years system integration expertise (contact centers, healthcare, payments)
 - WordPress maintenance and AI-powered business services
-- La Palma, CA | 714-813-9973 | hank@lastapple.com
+- La Palma, CA | 949-529-9017 (business line — the one on the site, in schema, and everywhere public) | hank@lastapple.com
 
 ## Who I Am — Client Experience for Last Apple's Front Door
 
