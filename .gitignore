@@ -74,3 +74,11 @@ preflight-mywork.json
 supabase/.temp/
 .claude/*.bak-*
 CLAUDE.md.bak-*
+
+# Local-only Claude Code state. settings.local.json is already ignored globally
+# because it is machine-specific permission config; its .bak copies carry the same
+# content and must not reach the repo either. .skill-orphan-state is regenerated
+# by the provisioner on every sync. The existing '.claude/*.bak-*' rule above only
+# catches dash-suffixed backups, which is why a plain '.bak' slipped through.
+.claude/*.bak
+.claude/.skill-orphan-state
