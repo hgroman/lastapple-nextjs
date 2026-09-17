@@ -40,7 +40,10 @@ const itemVariants = {
 
 export function SolutionsSection({ solutions }: SolutionsSectionProps) {
   return (
-    <section id="solutions" className="relative py-24 overflow-hidden">
+    // scroll-mt matches BaseLayout's top padding: the logo is fixed at top-6
+    // with h-28 and covers y 24..136px, so an anchor jump to #solutions would land
+    // the heading underneath it. Same collision as #skies, swept here.
+    <section id="solutions" className="relative py-24 overflow-hidden scroll-mt-40 sm:scroll-mt-32">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-accent/5 blur-3xl" />

@@ -57,7 +57,10 @@ function FeaturedCard({ client, index }: { client: typeof clients[number]; index
 
 export function ClientsPortfolio() {
   return (
-    <section id="clients" className="relative py-24 overflow-hidden">
+    // scroll-mt matches BaseLayout's top padding: the logo is fixed at top-6
+    // with h-28 and covers y 24..136px, so an anchor jump to #clients would land
+    // the heading underneath it. Same collision as #skies, swept here.
+    <section id="clients" className="relative py-24 overflow-hidden scroll-mt-40 sm:scroll-mt-32">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
