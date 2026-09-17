@@ -221,10 +221,30 @@ const nextConfig: NextConfig = {
         destination: '/stream',
         permanent: true,
       },
+      // ============================================================
+      // COFFEE-SHOP / SOLOPRENEUR CLUSTER PRUNED — operator ruling 2026-09-17
+      // ============================================================
+      // Measured over 2026-06-17..2026-09-15: the cluster drew 322 impressions
+      // and ZERO clicks, sitting at position 18-48 for "coffee shop seo",
+      // "seo for solopreneurs" and "seo για καφέ". It ranked a $10K+ agentic
+      // consultancy as a small-business SEO shop. 293 of those 322 impressions
+      // were already landing on 301'd WordPress URLs; the only live page in the
+      // cluster was /stream/coffee-shop-seo (36 impressions, 0 clicks, no
+      // inbound internal links). The post is removed and its URL, plus the three
+      // legacy paths that used to land on it, now point at the service pillar
+      // that carries the surviving capability. Nothing takes two hops.
+      // There was never a live solopreneur page — /seo-guide-for-solopreneurs/
+      // has pointed at /services/seo-content-engine since cutover, unchanged.
+      {
+        source: '/stream/coffee-shop-seo',
+        destination: '/services/digital-marketing',
+        permanent: true,
+      },
+
       // Individual blog posts - WordPress slug → /stream/[slug]
       {
         source: '/coffee-shop-seo-how-local-businesses-can-brew-better-search-rankings/:path*',
-        destination: '/stream/coffee-shop-seo',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       {
@@ -329,7 +349,7 @@ const nextConfig: NextConfig = {
       // Coffee shop landing page → related blog post
       {
         source: '/java-seo-technical-audits-coffee-shops/:path*',
-        destination: '/stream/coffee-shop-seo',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
 
@@ -447,7 +467,7 @@ const nextConfig: NextConfig = {
       // ============================================================
       {
         source: '/java/:path*',
-        destination: '/stream/coffee-shop-seo',
+        destination: '/services/digital-marketing',
         permanent: true,
       },
       {
