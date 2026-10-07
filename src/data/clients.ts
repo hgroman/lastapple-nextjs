@@ -6,55 +6,14 @@ export interface Client {
   featured?: boolean;
 }
 
+// Public portfolio is own properties only (CARD R4 / no-client-identification).
 export const clients: Client[] = [
-  {
-    name: 'DaxCopilot.ai',
-    url: 'https://daxcopilot.ai',
-    screenshot: '/images/portfolio/daxcopilot.webp',
-    tags: ['AI', 'Copilot'],
-  },
-  {
-    name: 'Carrier Advisors',
-    url: 'https://carrier-advisors.com',
-    screenshot: '/images/portfolio/carrier-advisors.webp',
-    tags: ['WordPress'],
-  },
-  {
-    name: 'Duke Multimedia',
-    url: 'https://duke-multimedia.com',
-    screenshot: '/images/portfolio/duke-multimedia.webp',
-    tags: ['WordPress', 'Video'],
-  },
-  {
-    name: 'Advan Bio',
-    url: 'https://advan-bio.com',
-    screenshot: '/images/portfolio/advan-bio.webp',
-    tags: ['WordPress', 'Biotech', 'Analytics'],
-  },
   {
     name: 'Trust and Obey',
     url: 'https://trustandobey.live',
     screenshot: '/images/portfolio/trustandobey.webp',
     tags: ['WordPress'],
     featured: true,
-  },
-  {
-    name: 'Idyll Awhile',
-    url: 'https://idyll-awhile.com',
-    screenshot: '/images/portfolio/idyll-awhile.webp',
-    tags: ['WordPress'],
-  },
-  {
-    name: 'SAG Exterior Cleaning',
-    url: 'https://sagexteriorcleaning.com',
-    screenshot: '/images/portfolio/sagexteriorcleaning.webp',
-    tags: ['WordPress', 'SEO'],
-  },
-  {
-    name: 'Thriving Numbers',
-    url: 'https://thrivingnumbers.com',
-    screenshot: '/images/portfolio/thrivingnumbers.webp',
-    tags: ['WordPress', 'Automation'],
   },
   {
     name: 'ScraperSky',
@@ -69,12 +28,6 @@ export const clients: Client[] = [
     screenshot: '/images/portfolio/harmonytech.webp',
     tags: ['WordPress', 'Consulting'],
     featured: true,
-  },
-  {
-    name: 'Idaho Telcom Experts',
-    url: 'https://idahotelcomexperts.com',
-    screenshot: '/images/portfolio/idahotelcomexperts.webp',
-    tags: ['WordPress', 'Telecom'],
   },
   {
     name: 'Improve My Rankings',
