@@ -12,14 +12,12 @@ export const clients: Client[] = [
     url: 'https://daxcopilot.ai',
     screenshot: '/images/portfolio/daxcopilot.webp',
     tags: ['AI', 'Copilot'],
-    featured: true,
   },
   {
     name: 'Carrier Advisors',
     url: 'https://carrier-advisors.com',
     screenshot: '/images/portfolio/carrier-advisors.webp',
     tags: ['WordPress'],
-    featured: true,
   },
   {
     name: 'Duke Multimedia',
@@ -32,13 +30,13 @@ export const clients: Client[] = [
     url: 'https://advan-bio.com',
     screenshot: '/images/portfolio/advan-bio.webp',
     tags: ['WordPress', 'Biotech', 'Analytics'],
-    featured: true,
   },
   {
     name: 'Trust and Obey',
     url: 'https://trustandobey.live',
     screenshot: '/images/portfolio/trustandobey.webp',
     tags: ['WordPress'],
+    featured: true,
   },
   {
     name: 'Idyll Awhile',
@@ -57,19 +55,20 @@ export const clients: Client[] = [
     url: 'https://thrivingnumbers.com',
     screenshot: '/images/portfolio/thrivingnumbers.webp',
     tags: ['WordPress', 'Automation'],
-    featured: true,
   },
   {
     name: 'ScraperSky',
     url: 'https://scrapersky.com',
     screenshot: '/images/portfolio/scrapersky.webp',
     tags: ['AI', 'SaaS', 'Data'],
+    featured: true,
   },
   {
     name: 'HarmonyTech',
     url: 'https://harmonytech.io',
     screenshot: '/images/portfolio/harmonytech.webp',
     tags: ['WordPress', 'Consulting'],
+    featured: true,
   },
   {
     name: 'Idaho Telcom Experts',
@@ -82,5 +81,6 @@ export const clients: Client[] = [
     url: 'https://improvemyrankings.com',
     screenshot: '/images/portfolio/improvemyrankings.webp',
     tags: ['SEO'],
+    featured: true,
   },
 ];

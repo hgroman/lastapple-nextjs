@@ -432,7 +432,7 @@ export function Navigation() {
                     onClick={() => setMenuOpen(false)}
                     className="text-xl font-medium text-foreground hover:text-primary transition-colors"
                   >
-                    Client Work
+                    Our Work
                   </Link>
                   <Link
                     href="/skies"

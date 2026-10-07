@@ -220,21 +220,6 @@ export function JournalHero({ latestPost }: JournalHeroProps) {
                   </div>
                 </div>
 
-                {/* Stats */}
-                <div className="mt-8 pt-6 border-t border-border grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold gradient-text">2.4k</div>
-                    <div className="text-xs text-muted-foreground">Leads Enriched</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold gradient-text-accent">89%</div>
-                    <div className="text-xs text-muted-foreground">Match Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold gradient-text">12s</div>
-                    <div className="text-xs text-muted-foreground">Avg Time</div>
-                  </div>
-                </div>
               </motion.div>
 
               {/* Floating Elements */}
