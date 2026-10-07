@@ -82,3 +82,6 @@ CLAUDE.md.bak-*
 # catches dash-suffixed backups, which is why a plain '.bak' slipped through.
 .claude/*.bak
 .claude/.skill-orphan-state
+# Dated pre-change snapshots of settings.local.json (e.g. .pre-session-boot-20260922)
+# carry the same machine-specific permission config and stay local too.
+.claude/settings.local.json.*
