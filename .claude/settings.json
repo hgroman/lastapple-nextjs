@@ -20,6 +20,15 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Bash|mcp__claude_ai_Supabase__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/agency-os/src/vpos-cli/policy-deny-explainer.sh"
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {
